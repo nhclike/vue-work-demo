@@ -1,111 +1,159 @@
 /*消息聊天模板*/
 <template>
-<div class="container-message">
+  <div class="container-message">
     <div class="header">
-        <div class="title">消息聊天</div>
+      <div class="title">消息聊天</div>
     </div>
     <div class="container-body">
-        <div class="chat-title">
-            <ul>
-                <li class="published" >
-                    <i></i>
-                    已发表
-                    <span id="publishedNum">0</span>
-                    人
-                </li>
+      <div class="chat-title">
+        <ul>
+            <li class="published" >
+                <i></i>
+                已发表
+                <span id="publishedNum">0</span>
+                人
+            </li>
+            <li class="unpublished">
+                <i></i>
+                未发表
+                <span id="unpublishedNum">0</span>
+                人
+            </li>
+            <li class="detail">查看详情</li>
+        </ul>
+      </div>
+      <!-- 聊天面板 -->
+      <div class="chat-area">
+        <!-- 上方信息区域 -->
+        <div class="chat-content">
+          <div class="chat-list">
+              <div class="chat-right">
+                <div>
+                    <p>
+                        <i>2010-2-2 10:00:00</i>
+                        <b>张三</b>
+                    </p>
+                    <div class="msg">收到</div>
+                </div>
+                <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
+              </div>
+              <div class="chat-left">
+                  <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
+                  <div>
+                      <p>
+                          <b>张三</b>
+                          <i>2010-2-2 10:00:00</i>
 
-
-                <li class="unpublished">
-                    <i></i>
-                    未发表
-                    <span id="unpublishedNum">0</span>
-                    人
-                </li>
-
-               <li class="detail">查看详情</li>
-            </ul>
-
+                      </p>
+                      <div class="msg">大幅度</div>
+                  </div>
+              </div>
+              <div class="chat-right">
+                  <div>
+                      <p>
+                          <i>2010-2-2 10:00:00</i>
+                          <b>张三</b>
+                      </p>
+                      <div class="msg">afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方</div>
+                  </div>
+                  <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
+              </div>
+              <div class="chat-left">
+                  <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
+                  <div>
+                      <p>
+                          <b>张三</b>
+                          <i>2010-2-2 10:00:00</i>
+                      </p>
+                      <div class="msg">收到是多少多撒大声地撒大声地收到收到撒大声地收到所多收到是多少多撒大声地撒大声地收到收到撒大声地收到所多收到是多少多撒大声地撒大声地收到收到撒大声地收到所多</div>
+                  </div>
+              </div>
+          </div>
         </div>
-
-        <!-- 聊天面板 -->
-        <div class="chat-area">
-            <!-- 上方信息区域 -->
-            <div class="chat-content">
-                <div class="chat-list">
-                   <div class="chat-right">
-                    <div>
-                        <p>
-                            <i>2010-2-2 10:00:00</i>
-                            <b>张三</b>
-                        </p>
-                        <div class="msg">收到</div>
-                    </div>
-                    <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
-                </div>
-                    <div class="chat-left">
-                        <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
-                        <div>
-                            <p>
-                                <b>张三</b>
-                                <i>2010-2-2 10:00:00</i>
-
-                            </p>
-                            <div class="msg">大幅度</div>
-
-                        </div>
-                    </div>
-                    <div class="chat-right">
-                        <div>
-                            <p>
-                                <i>2010-2-2 10:00:00</i>
-                                <b>张三</b>
-                            </p>
-                            <div class="msg">afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方afaaaaaa辅导辅导费对方答复地方的负担地方的负担对方答复的辅导辅导费对方答复地方</div>
-                        </div>
-                        <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
-                    </div>
-                    <div class="chat-left">
-                        <span><img src="@/assets/images/icon/icon-person.png" alt=""></span>
-                        <div>
-                            <p>
-                                <b>张三</b>
-                                <i>2010-2-2 10:00:00</i>
-
-                            </p>
-                            <div class="msg">收到是多少多撒大声地撒大声地收到收到撒大声地收到所多收到是多少多撒大声地撒大声地收到收到撒大声地收到所多收到是多少多撒大声地撒大声地收到收到撒大声地收到所多</div>
-
-                        </div>
-                    </div>
-                </div>
+        <!-- 消息发送区域 -->
+        <div class="chat-send">
+          <div class="inputBox">
+            <div class="chooseBox">
+                <span>参会人员</span>
+                <select class="form-control" name="attendMember" id="attendMember">
+                    <option value="">参会人</option>
+                </select>
+                <button class="finishBtn">完成</button>
             </div>
-
-
-                <div class="chat-send">
-
-                    <div class="inputBox">
-                            <div class="chooseBox">
-                                <span>参会人员</span>
-                                <select class="form-control" name="attendMember" id="attendMember">
-                                    <option value="">参会人</option>
-                                </select>
-                                <button class="finishBtn">完成</button>
-
-                        <textarea rows="2" placeholder="" id="content" name="content"></textarea>
-                    </div>
-                    <div class="action">
-                        <button type="button" class="publishBtn">发表</button>
-                    </div>
-                </div>
+            <textarea rows="2" placeholder="" id="content" name="content"></textarea>
+          </div>
+          <div class="action">
+              <button type="button" class="publishBtn">发表</button>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-</div>
-
+  </div>
 </template>
 
 <script>
+import SockJS from  'sockjs-client';
+import  Stomp from 'stompjs';
 export default {
-
+    data() {
+        return {
+            stompClient: '',
+            timer: ''
+        };
+    },
+    mounted() {
+        this.initWebSocket();
+    },
+    beforeDestroy: function() {
+        // 页面离开时断开连接,清除定时器
+        this.disconnect();
+        clearInterval(this.timer);
+    },
+    methods: {
+        initWebSocket() {
+            this.connection();
+            let that = this;
+            // 断开重连机制,尝试发送消息,捕获异常发生时重连
+            this.timer = setInterval(() => {
+                try {
+                    that.stompClient.send('test');
+                } catch (err) {
+                    console.log('断线了: ' + err);
+                    that.connection();
+                }
+            }, 5000);
+        },
+        connection() {
+            // 建立连接对象
+            let socket = new SockJS('http://10.10.91.4:8081/ws');
+            // 获取STOMP子协议的客户端对象
+            this.stompClient = Stomp.over(socket);
+            // 定义客户端的认证信息,按需求配置
+            let headers = {
+                Authorization: ''
+            };
+            // 向服务器发起websocket连接
+            this.stompClient.connect(headers, () => {
+                this.stompClient.subscribe('/topic/public', (msg) => { // 订阅服务端提供的某个topic
+                    console.log('广播成功');
+                    console.log(msg);  // msg.body存放的是服务端发送给我们的信息
+                }, headers);
+                this.stompClient.send('/app/chat.addUser',
+                    headers,
+                    JSON.stringify({sender: '', chatType: 'JOIN'})
+                );   // 用户加入接口
+            }, (err) => {
+                // 连接发生错误时的处理函数
+                console.log('失败');
+                console.log(err);
+            });
+        },    // 连接 后台
+        disconnect() {
+            if (this.stompClient) {
+                this.stompClient.disconnect();
+            }
+        }  // 断开连接
+    }
 };
 </script>
 
