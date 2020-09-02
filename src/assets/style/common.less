@@ -1,0 +1,278 @@
+/* 公用样式总入口 */
+@import "normalize_v8.0.1.css";// 引入处理兼容性的公共样式
+@import "variables.less";// 引入less定义变量
+@import "./element-reset.less";
+@import "./form/form.less";
+@import "./theme.less";
+// @import "./table/el-table.less";
+// @import "./table/el-table.less";
+
+* {
+  box-sizing: border-box;
+}
+
+/* 一般公共样式书写 */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  overflow-y: hidden;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+textarea {
+  border: 0;
+  outline: none;
+}
+
+button {
+  outline: none;
+}
+
+i {
+  font-style: normal;
+}
+
+a,
+a:active,
+a:focus,
+a:hover,
+a:visited {
+  color: #333;
+  text-decoration: none;
+  outline: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+// 移动端项目需要设置
+/* body{
+    font-size: 12px;
+} */
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.hidden {
+  overflow: hidden;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+/*文字溢出...*/
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.txt-left {
+  text-align: left;
+}
+
+.pos-r {
+  position: relative;
+}
+
+.pos-a {
+  position: absolute;
+}
+
+.pos-f {
+  position: fixed;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* 系统公共样式书写 */
+.content-page{
+  box-shadow: 0 0 20px 1px @box_shadow;
+  height: 100%;
+  background: #fff;
+  overflow: auto;
+  position: relative;
+}
+
+// 按钮组
+.btn-box {
+  height: @form_item_h;
+  line-height: @form_item_h;
+  display: inline-block;
+
+  button,
+  span {
+    &:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
+}
+
+
+/* 字体图标 */
+.i-box {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  font-size: @font24px;
+  padding-left: 40px;
+  &:not(:first-child) {
+    margin-left: 20px;
+  }
+  i {
+    position: absolute;
+    display: inline-block;
+    font-size: 35px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+}
+
+.icon-box {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding-left: 30px;
+  width: 100%;
+  i {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-size: 100% 100%;
+  }
+}
+
+.vertical-middle-left {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.vertical-middle-right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.horizontal-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.vertical-horizontal-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 视频播放 */
+.video-player {
+  .video-js {
+    font-size: 20px;
+    width: 1024px;
+    height: 576px;
+  }
+}
+.video-box {
+  .video-player {
+    .video-js {
+      font-size: 20px;
+      width: 1024px;
+      height: 576px;
+    }
+  }
+}
+
+/* 自定义图标 */
+
+.i-phone {
+  background: url("");
+  background-size: 16px 16px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.i-user {
+  background: url("");
+  background-size: 16px 16px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+/* 背景色 */
+.bg-color-primary {
+  background: @color_primary;
+}
+
+.bg-color-error {
+  background: @color_danger;
+}
+
+.bg-color-cancel {
+  background: @color_info;
+}
+
+.bg-color-black {
+  background: @color_black;
+}
+
+/* 字体颜色 */
+.font-color-primary {
+  color: @color_primary;
+}
+
+.font-color-error {
+  color: @color_danger;
+}
+
+.font-color-cancel {
+  color: @color_info;
+}
+
+.font_color {
+  color: @text_color_black;
+}

@@ -1,0 +1,131 @@
+@charset "utf-8";
+/* less变量定义 */
+/* 文字颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 边框阴影颜色 */
+/* 边框大小 */
+/* 边框圆角大小 */
+/* 高度|宽度 */
+/* 圆点 */
+/* 图片大小 */
+/* 备用 */
+/* 页面整体框架大小 */
+/*文字色*/
+/* less变量定义 */
+/* -------------------- 主题色-开始 -------------------- */
+/* -------------------- 主题色-结束 -------------------- */
+/* -------------------- 文字设置-开始 -------------------- */
+/* -------------------- 文字设置-结束 -------------------- */
+/* -------------------- 背景颜色-开始 -------------------- */
+/* -------------------- 背景颜色-结束 -------------------- */
+/* -------------------- 边框设置-开始 -------------------- */
+/* -------------------- 边框设置-结束 -------------------- */
+/* -------------------- 高度|宽度-开始 -------------------- */
+/* -------------------- 高度|宽度-结束 -------------------- */
+/* -------------------- 布局-开始 -------------------- */
+.main {
+  width: 100%;
+  height: 100%;
+}
+.wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+.container {
+  width: 100%;
+}
+.list {
+  width: 100%;
+}
+.content {
+  width: 100%;
+}
+/* -------------------- 布局-结束 -------------------- */
+/* -------------------- 盒子-开始 -------------------- */
+.box {
+  border: 1px solid #0072ff;
+  border-radius: 5px;
+  background: #0c2a96;
+}
+.area {
+  border: 1px solid rgba(151, 151, 151, 0.6);
+  border-radius: 5px;
+  background: rgba(0, 24, 113, 0.6);
+}
+/* -------------------- 盒子-结束 -------------------- */
+/* -------------------- 按钮-开始 -------------------- */
+.shj-btn {
+  color: #409eff;
+  border: 2px solid #409eff;
+  border-radius: 5px;
+  background: transparent;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  margin: 0;
+  outline: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+  -webkit-appearance: none;
+  /* 去除系统默认appearance的样式 */
+  -moz-user-select: none;
+  /* 文本不能被选择 */
+  -webkit-user-select: none;
+  /* 文本不能被选择 */
+  -ms-user-select: none;
+  /* 文本不能被选择 */
+}
+.shj-btn--primary {
+  color: #fff;
+  border: 2px solid #409eff;
+  border-radius: 5px;
+  background: #409eff;
+}
+.shj-btn--success {
+  color: #fff;
+  border: 2px solid #67c23a;
+  border-radius: 5px;
+  background: #67c23a;
+}
+.shj-btn--info {
+  color: #fff;
+  border: 2px solid #909399;
+  border-radius: 5px;
+  background: #909399;
+}
+.shj-btn--warning {
+  color: #fff;
+  border: 2px solid #e6a23c;
+  border-radius: 5px;
+  background: #e6a23c;
+}
+.shj-btn--danger {
+  color: #fff;
+  border: 2px solid #f56c6c;
+  border-radius: 5px;
+  background: #f56c6c;
+}
+.shj-button--medium {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 10px 20px;
+}
+.shj-button--small {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 9px 15px;
+}
+.shj-button--mini {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 7px 15px;
+}
+/* -------------------- 按钮-结束 -------------------- */

@@ -1,0 +1,58 @@
+/* 主框架-左菜单-组件 */
+<template>
+    <div class="left-menu">
+        左菜单
+        <ul>
+            <li>
+                <router-link to="ueditor">百度编译器</router-link>
+            </li>
+            <li>
+                <router-link to="videojs">视频播放</router-link>
+            </li>
+            <li>
+                <router-link to="Ntko">Ntko</router-link>
+            </li>
+            <li>
+                <router-link to="chat">消息聊天</router-link>
+            </li>
+        </ul>
+
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'LeftMenu',
+    components: {},
+    inject: ['reload'],
+    filters: {},
+    props: {
+    },
+    data() {
+        return {
+        };
+    },
+    computed: {
+    },
+    watch: {},
+    created() {
+        // this.init();
+    },
+    mounted() {
+        this.init();
+    },
+    methods: {
+        // 初始化
+        init() {
+            //
+        }
+    }
+};
+</script>
+
+<style lang="less" scoped>
+</style>
+
+<style lang="less">
+</style>
+

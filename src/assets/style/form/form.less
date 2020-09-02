@@ -1,0 +1,188 @@
+/* 表单
+ * @Author: ShiHuiJun 
+ * @Date: 2020-03-12 17:06:06 
+ * @Last Modified by: ShiHuiJun
+ * @Last Modified time: 2020-09-01 16:09:38
+ */
+@import './../variables.less';
+@import './../table/shj-el-table.less';// 引入less定义变量
+
+// !!!element-ui中的样式由于是外部引入组件样式,所以不需要加/deep/,如在组件内部使用如.el-table,请在前jia/deep/,即/deep/.el-table
+@bg_from_view: rgba(238, 238, 238, 1); //表单-查看#eeeeee
+@form_content_width_xsmall: 150px;
+@form_content_width_small: 200px;
+@form_content_width: 250px; //默认label后content宽度
+@form_content_width_middle: 300px;
+@form_content_width_large: 350px;
+@form_content_width_xlarge: 400px;
+
+/* 表单页面 */
+.form-page {
+}
+
+//表单头部
+.form-top {
+}
+
+//表单头部-字体图标-右侧
+.form-top-icon {
+}
+
+// 表单头部-按钮-右侧
+.form-top-button {  
+}
+
+// 表单标题
+.form-title {
+}
+
+// 每章节标题
+.form-section {
+}
+
+// 表单内容-默认
+.form-body {
+  // 表单
+  .el-form {
+    // 表单项
+    .el-form-item {
+      // 内容
+      .el-form-item__content {
+        // 横线-
+        .line {
+          text-align: center;
+          font-size: @font20px;
+        }
+        // 图片
+        .image {
+          .el-image {
+            border-radius: @border_radius_middle;
+            width: @image_upload_h;
+            height: @image_upload_h;
+            margin: 0 30px 10px 0;
+
+            &:nth-child(3n + 0) {
+              margin-right: 0;
+            }
+          }
+        }
+        // 内容-中
+        .textarea {
+          .el-textarea__inner {
+            height: 200px;
+          }
+        }
+        // 输入-隐藏
+        .form-input {
+          &.hide {
+            opacity: 0;
+            position: relative;
+          }
+        }
+        // 输入样式的span
+        .form-span {
+          position: absolute;
+          left: 0;
+          border: @border_small solid @border_color_form;
+          border-radius: @border_radius_middle;
+          display: inline-block;
+          width: 225px;
+          height: @form_item_h;
+          overflow-y: auto;
+        }
+        // 按钮
+        .form-button {
+          position: absolute;
+          right: 0;
+          font-size: @font20px;
+          padding: 0 20px;
+          height: @form_item_h;
+          line-height: @form_item_h;
+          border-radius: @border_radius_middle;
+          border: none;
+          color: #fff;
+        }
+        // 查看-默认
+        .form-view {
+          line-height: @form_item_h;
+          border-radius: @border_radius_middle;
+          padding: 0 15px;
+          background: @bg_from_view;
+          a {
+            display: block;
+            width: 100%;
+          }
+          // &.grey {
+          //   background: @bg_from_view;
+          // }
+        }
+        // 内容
+        .form-content {
+          height: 100px;
+          overflow-y: auto;
+          word-wrap: break-word;
+          &.small {
+            height: 100px;
+          }
+          .middle {
+            height: 300px;
+          }
+          .big {
+            height: 500px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 表单底部
+.form-bottom {
+}
+
+/* 弹窗表单 */
+.alert-box {
+  height: 100%;
+  width: 100%;
+  background: @bg_maskLayer_black7;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1999;
+  .alert-box-body {
+    background: #fff;
+    width: 900px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &.wider {
+    width: 1300px;
+  }
+  .form-body {
+    max-height: 750px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .tableContent {
+      height: 500px;
+      margin-bottom: 10px;
+      overflow-y: auto;
+      .el-table-theme(
+        @text_color_content,
+        @text_color_black,
+        #ebecec,
+        @bg_td_focus,
+        @border_color_divider
+      );
+      .el-table-size(@font20px, 50px, 50px);
+    }
+    .tablePagination {
+      position: unset;
+      right: unset;
+      left: unset;
+      bottom: unset;
+    }
+  }
+}

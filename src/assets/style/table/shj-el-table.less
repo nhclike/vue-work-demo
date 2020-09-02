@@ -1,0 +1,84 @@
+/* el-table-theme 参数说明
+ * @color 表格文字颜色
+ * @color_thead 表头文字颜色
+ * @bg_thead 表头背景颜色
+ * @bg_td_focus 单元格聚焦背景颜色
+ * @border_color_divider 单元格底部线颜色
+ */
+ @import './../variables.less';// 引入less定义变量
+ .el-table-theme(@color: @text_color_content,@color_thead:@text_color_black,@bg_thead:#ebecec,@bg_td_focus:@bg_td_focus,@border_color_divider:@border_color_divider){
+    .el-table {
+      color: @color;
+      border-radius: 5px;
+      thead {
+        tr {
+          border-bottom-width: 0;
+          th {
+            font-weight: bold;
+            color: @color_thead;
+            background-color: @bg_thead;
+            padding: 0;
+            text-align: center;
+          }
+        }
+      }
+      tbody {
+        .el-table__row--striped td {
+          background: @bg_td_focus;
+        }
+        tr {
+          td {
+            padding: 0;
+            border-bottom: 1px solid @border_color_divider;
+  
+            .cell {
+              .el-button {
+                padding: 0 10px;
+              }
+              span,
+              div {
+                &:hover {
+                  opacity: 0.7;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  /* el-table--size 参数说明
+   * @font_Size 字体大小
+   * @thead_h 表头行高
+   * @tr_h 表格行高
+   */
+  .el-table-size(@font_Size:@font22px,@thead_h:@thead_h,@tr_h:@tr_h) {
+    .el-table {
+      font-size: @font_Size;
+      thead {
+        tr {
+          height: @thead_h;
+          line-height: @thead_h;
+        }
+      }
+      tbody {
+        tr {
+          height: @tr_h;
+          line-height: @tr_h;
+          td {
+            .cell {
+              .el-button {
+                font-size: @font_Size;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .shj-el-table{
+    .el-table-theme();
+    .el-table-size();
+  }

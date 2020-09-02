@@ -1,0 +1,52 @@
+[
+  {
+    "name": "表格模板",
+    "url": "/main/table",
+    "menuList": [
+      {
+        "name": "listPage",
+        "url": "/main/table/listPage"
+      },
+      {
+        "name": "listPageScope",
+        "url": "/main/table/listPageScope"
+      },
+      {
+        "name": "dynamicTable",
+        "url": "/main/table/dynamicTable"
+      },
+      {
+        "name": "multipleTable",
+        "url": "/main/table/multipleTable"
+      },
+      {
+        "name": "pictureTable",
+        "url": "/main/table/pictureTable"
+      }
+    ]
+  },
+  {
+    "name": "插件模板",
+    "url": "/main/plugins",
+    "menuList": [
+      {
+        "name": "videojs",
+        "url": "/main/plugins/videojs"
+      },
+      {
+        "name": "ueditor",
+        "url": "/main/plugins/ueditor"
+      }
+    ]
+  },
+  {
+    "name": "表单模板",
+    "url": "/main/form",
+    "menuList": [
+      {
+        "name": "generalForm",
+        "url": "/main/form/generalForm"
+      }
+    ]
+  }
+]

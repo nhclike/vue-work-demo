@@ -1,0 +1,96 @@
+@charset "utf-8";
+@import './variables.less'; // 引入less定义变量
+/* -------------------- 布局-开始 -------------------- */
+// 页面主体
+.main {
+  width: 100%;
+  height: 100%;
+}
+// 盒容器 控制整体布局宽度
+.wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+// 容器
+.container {
+  width: 100%;
+}
+// 列表
+.list {
+  width: 100%;
+}
+// 内容
+.content {
+  width: 100%;
+}
+/* -------------------- 布局-结束 -------------------- */
+
+/* -------------------- 盒子-开始 -------------------- */
+.box(@border_color:#0072ff,@bg_color: #0c2a96) {
+  border: 1px solid @border_color;
+  border-radius: 5px;
+  background: @bg_color;
+}
+// 盒子
+.box {
+  .box();
+}
+.area {
+  .box(rgba(151,151,151,0.6),rgba(0,24,113,0.6));
+}
+/* -------------------- 盒子-结束 -------------------- */
+
+/* -------------------- 按钮-开始 -------------------- */
+@border_btn: 2px;
+.btn(@color:@color_primary,@border_color:@color_primary,@bg_color: transparent) {
+  color: @color;
+  border: @border_btn solid @border_color;
+  border-radius: 5px;
+  background: @bg_color;
+}
+.btn-size(@font-size:24px,@ptb:10px,@plr:20px) {
+  font-size: @font-size;
+  font-weight: 500;
+  line-height: 1;
+  padding: @ptb @plr;
+}
+.shj-btn {
+  .btn;
+  .btn-size;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  margin: 0;
+  outline: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+  -webkit-appearance: none; /* 去除系统默认appearance的样式 */
+  -moz-user-select: none; /* 文本不能被选择 */
+  -webkit-user-select: none; /* 文本不能被选择 */
+  -ms-user-select: none; /* 文本不能被选择 */
+}
+.shj-btn--primary {
+  .btn(@text_color_white,@color_primary,@color_primary);
+}
+.shj-btn--success {
+  .btn(@text_color_white,@color_success,@color_success);
+}
+.shj-btn--info {
+  .btn(@text_color_white,@color_info,@color_info);
+}
+.shj-btn--warning {
+  .btn(@text_color_white,@color_warning,@color_warning);
+}
+.shj-btn--danger {
+  .btn(@text_color_white,@color_danger,@color_danger);
+}
+.shj-button--medium {
+  .btn-size(20px,10px,20px);
+}
+.shj-button--small {
+  .btn-size(16px,9px,15px);
+}
+.shj-button--mini {
+  .btn-size(12px,7px,15px);
+}
+/* -------------------- 按钮-结束 -------------------- */

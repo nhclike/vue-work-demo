@@ -1,0 +1,309 @@
+/* element-ui样式
+ * @Author: ShiHuiJun 
+ * @Date: 2020-03-12 17:05:59 
+ * @Last Modified by: ShiHuiJun
+ * @Last Modified time: 2020-06-09 14:26:08
+ */
+/* less变量定义 */
+/* 圆点 */
+/* 图片大小 */
+/* less变量定义 */
+/* -------------------- 主题色-开始 -------------------- */
+/* -------------------- 主题色-结束 -------------------- */
+/* -------------------- 文字设置-开始 -------------------- */
+/* -------------------- 文字设置-结束 -------------------- */
+/* -------------------- 背景颜色-开始 -------------------- */
+/* -------------------- 背景颜色-结束 -------------------- */
+/* -------------------- 边框设置-开始 -------------------- */
+/* -------------------- 边框设置-结束 -------------------- */
+/* -------------------- 高度|宽度-开始 -------------------- */
+/* -------------------- 高度|宽度-结束 -------------------- */
+.el-message {
+  font-size: 22px;
+}
+.el-tabs .el-tabs__header {
+  margin: 0 0 19px;
+}
+.el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .el-tabs__active-bar {
+  height: 2px;
+  background-color: #409eff;
+}
+.el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .el-tabs__item {
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+}
+.el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .el-tabs__item.is-active {
+  color: #409eff;
+}
+.el-tabs .el-tabs__content {
+  font-size: 20px;
+}
+.el-form .el-form-item {
+  margin: 0 10px 25px 0;
+}
+.el-form .el-form-item .el-form-item__label {
+  vertical-align: middle;
+  font-size: 20px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px 0 0;
+}
+.el-form .el-form-item .el-form-item__content {
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 40px;
+}
+.el-form .el-form-item .el-form-item__content .el-form-item__error {
+  font-size: 14px;
+  height: 25px;
+  line-height: 25px;
+  padding-top: 0;
+}
+.el-input {
+  font-size: 20px;
+}
+.el-input .el-input__inner {
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 0 30px 0 15px;
+  height: 40px;
+  line-height: 40px;
+}
+.el-input .el-input__icon {
+  height: 40px;
+  line-height: 40px;
+  width: 25px;
+}
+.el-input .el-input__suffix {
+  right: 5px;
+}
+.el-input .el-input__suffix .el-input__icon {
+  width: 25px;
+  height: 40px;
+  line-height: 40px;
+}
+.el-input .el-input__suffix .el-input__suffix-inner .el-input__icon {
+  font-size: 20px;
+}
+.el-date-editor {
+  width: 100%;
+}
+.el-date-editor .el-input__inner {
+  padding-left: 40px;
+}
+.el-range-editor.el-input__inner {
+  width: 100%;
+  border-radius: 5px;
+  padding: 3px 10px;
+  line-height: 40px;
+  height: 40px;
+}
+.el-range-editor .el-range__icon {
+  line-height: 30px;
+  font-size: 20px;
+  margin-left: -5px;
+}
+.el-range-editor .el-range-input {
+  font-size: 20px;
+  line-height: 40px;
+}
+.el-range-editor .el-range-separator {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 5px;
+  font-size: 20px;
+}
+.el-picker-panel .el-date-range-picker__time-header .el-input .el-input__inner {
+  font-size: 16px;
+}
+.el-picker-panel .el-picker-panel__content .el-date-range-picker__header div {
+  font-size: 16px;
+}
+.el-picker-panel .el-picker-panel__content .el-date-table {
+  font-size: 16px;
+}
+.el-select {
+  width: 100%;
+  line-height: 40px;
+  height: 40px;
+}
+.el-scrollbar {
+  text-align: left;
+}
+.el-scrollbar .el-select-dropdown__item {
+  font-size: 20px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+}
+.el-radio .el-radio__input .el-radio__inner {
+  width: 24px;
+  height: 24px;
+}
+.el-radio .el-radio__label {
+  font-size: 20px;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.el-radio-group {
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+}
+.el-checkbox .el-checkbox__label {
+  font-size: 20px;
+}
+.el-checkbox .el-checkbox__input .el-checkbox__inner {
+  width: 24px;
+  height: 24px;
+}
+.el-checkbox .el-checkbox__input .el-checkbox__inner::after {
+  height: 14px;
+  width: 6px;
+  left: 7px;
+}
+.el-checkbox-group .el-checkbox {
+  margin-right: 140px;
+}
+.el-checkbox-group .el-checkbox:nth-child(3n + 0) {
+  margin-right: 0;
+}
+.el-textarea {
+  font-size: 20px;
+}
+.el-textarea .el-textarea__inner {
+  height: 80px;
+}
+.el-tag {
+  height: 36px;
+  line-height: 36px;
+  font-size: 20px;
+  border-radius: 5px;
+  border-width: 1px;
+}
+.el-tag .el-icon-close {
+  font-size: 20px;
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  top: 0;
+  right: -5px;
+}
+.el-cascader {
+  font-size: 20px;
+  line-height: 40px;
+  width: 100%;
+}
+.upload .el-upload-list--picture-card .el-upload-list__item {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  margin: 0 30px 10px 0;
+}
+.upload .el-upload-list--picture-card .el-upload-list__item:nth-child(3n + 0) {
+  margin-right: 0;
+}
+.upload .el-upload--picture-card {
+  width: 200px;
+  height: 200px;
+  line-height: 200px;
+  border-radius: 5px;
+  border: 1px dashed #c0ccda;
+}
+.upload .el-upload--picture-card .el-icon-plus {
+  font-size: 24px;
+}
+.upload .el-upload--picture-card:hover,
+.upload .el-upload:focus {
+  border: 1px dashed #409eff;
+}
+.upload .disabled .el-upload--picture-card {
+  display: none;
+}
+.upload .el-upload .el-upload-dragger {
+  width: 360px;
+  height: 180px;
+}
+.upload .el-upload .el-upload-dragger .el-icon-upload {
+  font-size: 67px;
+  line-height: 50px;
+  margin: 40px 0 16px 0;
+}
+.upload .el-upload .el-upload-dragger .el-upload__text {
+  font-size: 20px;
+}
+.upload .el-upload__tip {
+  font-size: 20px;
+  margin-top: 7px;
+}
+.upload .el-upload-list .el-upload-list__item {
+  font-size: 20px;
+  margin-top: 10px;
+}
+.upload .el-upload-list .el-upload-list__item .el-upload-list__item-name {
+  margin-right: 40px;
+  padding-left: 4px;
+}
+.upload .el-upload-list .el-upload-list__item .el-upload-list__item-name .el-icon-document {
+  margin-right: 7px;
+}
+.upload .el-upload-list .el-upload-list__item .el-upload-list__item-status-label {
+  right: 5px;
+}
+.upload .el-upload-list .el-upload-list__item .el-icon-close,
+.upload .el-upload-list .el-upload-list__item .el-icon-close-tip {
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+}
+.confirm-success .el-message-box__status {
+  font-size: 24px !important;
+}
+.confirm-success .el-message-box__header .el-message-box__title {
+  font-size: 24px;
+}
+.confirm-success .el-message-box__header .el-message-box__headerbtn .el-message-box__close {
+  font-size: 24px;
+}
+.confirm-success .el-message-box__status + .el-message-box__message {
+  padding: 0 10px 0 35px;
+}
+.confirm-success .el-message-box__content {
+  font-size: 20px;
+  padding: 10px 15px;
+}
+.confirm-success .el-message-box__content .el-message-box__message {
+  font-size: 20px;
+}
+.confirm-success .el-message-box__content .el-message-box__message p {
+  line-height: 24px;
+}
+.confirm-success .el-message-box__content .el-message-box__input {
+  padding-top: 15px;
+}
+.confirm-success .el-message-box__content .el-message-box__input .el-input {
+  font-size: 20px;
+}
+.confirm-success .el-message-box__content .el-message-box__input .el-input .el-input__inner {
+  border-radius: 5px;
+  font-size: 20px;
+  border: 1px solid #dcdfe6;
+}
+.confirm-success .el-message-box__content .el-message-box__input .el-message-box__errormsg {
+  font-size: 20px;
+}
+.confirm-success .el-message-box__btns {
+  padding: 10px 15px 0;
+}
+.confirm-success .el-message-box__btns button:nth-child(2) {
+  margin-left: 10px;
+}
+.confirm-success .el-message-box__btns .el-button {
+  font-size: 20px;
+}
+.confirm-success .el-message-box__btns .el-button--small {
+  font-size: 20px;
+  padding: 10px 15px;
+}

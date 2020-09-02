@@ -1,0 +1,323 @@
+/* 列表页样式 非全局引入 按需引入
+ * @Author: ShiHuiJun 
+ * @Date: 2020-03-12 10:29:14 
+ * @Last Modified by: ShiHuiJun
+ * @Last Modified time: 2020-08-05 11:12:05
+ */
+/* less变量定义
+ * @Author: ShiHuiJun 
+ * @Date: 2020-06-09 14:45:01 
+ * @Last Modified by: ShiHuiJun
+ * @Last Modified time: 2020-08-05 11:07:31
+ */
+/* -------------------- 主题色-开始 -------------------- */
+/* -------------------- 主题色-结束 -------------------- */
+/* -------------------- 文字设置-开始 -------------------- */
+/* -------------------- 文字设置-结束 -------------------- */
+/* -------------------- 背景颜色-开始 -------------------- */
+/* -------------------- 背景颜色-结束 -------------------- */
+/* -------------------- 边框设置-开始 -------------------- */
+/* -------------------- 边框设置-结束 -------------------- */
+/* -------------------- 高度|宽度-开始 -------------------- */
+/* -------------------- 高度|宽度-结束 -------------------- */
+/* el-table-theme 参数说明
+ * @color 表格文字颜色
+ * @color_thead 表头文字颜色
+ * @bg_thead 表头背景颜色
+ * @bg_td_focus 单元格聚焦背景颜色
+ * @border_color_divider 单元格底部线颜色
+ */
+/* el-table--size 参数说明
+ * @font_Size 字体大小
+ * @thead_h 表头行高
+ * @tr_h 表格行高
+ */
+.shj-el-table .el-table {
+  color: #595959;
+  border-radius: 5px;
+}
+.shj-el-table .el-table thead tr {
+  border-bottom-width: 0;
+}
+.shj-el-table .el-table thead tr th {
+  font-weight: bold;
+  color: #333333;
+  background-color: #ebecec;
+  padding: 0;
+  text-align: center;
+}
+.shj-el-table .el-table tbody .el-table__row--striped td {
+  background: #f5f5f5;
+}
+.shj-el-table .el-table tbody tr td {
+  padding: 0;
+  border-bottom: 1px solid #e9e9e9;
+}
+.shj-el-table .el-table tbody tr td .cell .el-button {
+  padding: 0 10px;
+}
+.shj-el-table .el-table tbody tr td .cell span:hover,
+.shj-el-table .el-table tbody tr td .cell div:hover {
+  opacity: 0.7;
+}
+.shj-el-table .el-table {
+  font-size: 22px;
+}
+.shj-el-table .el-table thead tr {
+  height: 65px;
+  line-height: 65px;
+}
+.shj-el-table .el-table tbody tr {
+  height: 65px;
+  line-height: 65px;
+}
+.shj-el-table .el-table tbody tr td .cell .el-button {
+  font-size: 22px;
+}
+.listPage {
+  box-shadow: 0 0 20px 1px #e9e9e9;
+  height: 100%;
+  background: #fff;
+  overflow: auto;
+}
+.shjListPage {
+  height: 100%;
+  position: relative;
+  padding: 0 20px;
+}
+.shjListPage.total {
+  height: calc(100% - 30px);
+}
+.shjListPage.ptb40 {
+  padding: 40px 0;
+}
+.table-top {
+  height: 70px;
+  line-height: 70px;
+  padding-left: 35px;
+  position: relative;
+  font-size: 22px;
+  border-bottom: 1px solid #e9e9e9;
+}
+.table-top .flag {
+  width: 5px;
+  height: 22px;
+  line-height: 22px;
+  display: inline-block;
+  background: #33a5fb;
+}
+.table-top .title {
+  font-weight: bold;
+}
+.table-top .button-box {
+  position: absolute;
+  right: 35px;
+}
+.table-top .button-box button {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 0 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background: #409eff;
+  line-height: 40px;
+}
+.table-top .button-box button:first-child {
+  margin-left: 0;
+}
+.table-top .button-box button.disabled {
+  opacity: 0.5;
+}
+.table-top .button-box button:hover {
+  opacity: 0.7;
+}
+.table-top .button-box .confirm {
+  background: #409eff;
+}
+.table-top .button-box .cancel {
+  background: #909399;
+}
+.table-top .button-box .warning {
+  background: #f56c6c;
+}
+.tableContent {
+  overflow-y: auto;
+}
+.tableContent .el-table {
+  color: #595959;
+  border-radius: 5px;
+}
+.tableContent .el-table thead tr {
+  border-bottom-width: 0;
+}
+.tableContent .el-table thead tr th {
+  font-weight: bold;
+  color: #333333;
+  background-color: #ebecec;
+  padding: 0;
+  text-align: center;
+}
+.tableContent .el-table tbody .el-table__row--striped td {
+  background: #f5f5f5;
+}
+.tableContent .el-table tbody tr td {
+  padding: 0;
+  border-bottom: 1px solid #e9e9e9;
+}
+.tableContent .el-table tbody tr td .cell .el-button {
+  padding: 0 10px;
+}
+.tableContent .el-table tbody tr td .cell span:hover,
+.tableContent .el-table tbody tr td .cell div:hover {
+  opacity: 0.7;
+}
+.tableContent .el-table {
+  font-size: 22px;
+}
+.tableContent .el-table thead tr {
+  height: 65px;
+  line-height: 65px;
+}
+.tableContent .el-table tbody tr {
+  height: 65px;
+  line-height: 65px;
+}
+.tableContent .el-table tbody tr td .cell .el-button {
+  font-size: 22px;
+}
+.tableContent .shj-el-table--small .el-table {
+  font-size: 20px;
+}
+.tableContent .shj-el-table--small .el-table thead tr {
+  height: 50px;
+  line-height: 50px;
+}
+.tableContent .shj-el-table--small .el-table tbody tr {
+  height: 50px;
+  line-height: 50px;
+}
+.tableContent .shj-el-table--small .el-table tbody tr td .cell .el-button {
+  font-size: 20px;
+}
+.activeCell .cell {
+  color: #409eff;
+  cursor: pointer;
+}
+.listButton {
+  display: inline-block;
+  color: #409eff;
+  padding: 0 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.listButton:not(:last-child) {
+  border-right: 1px solid #cccccc;
+}
+.listButton.error {
+  color: #f56c6c;
+}
+.list-img {
+  width: 100%;
+  height: 65px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.list-img img {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.list-view {
+  cursor: pointer;
+}
+.list-view img {
+  height: 100%;
+}
+.list-view:hover {
+  color: #409eff;
+  text-decoration: underline;
+}
+.tablePagination {
+  z-index: 1998;
+  background: #fff;
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  padding: 20px;
+}
+.tablePagination .el-pagination {
+  font-weight: 500;
+}
+.tablePagination .el-pagination span:not([class*='suffix']) {
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  color: rgba(51, 51, 51, 0.8);
+  min-width: 0;
+  vertical-align: middle;
+}
+.tablePagination .el-pagination .el-pagination__total {
+  color: rgba(51, 51, 51, 0.8);
+}
+.tablePagination .el-pagination .el-pagination__sizes .el-select .el-input .el-input__inner {
+  border-radius: 5px;
+  color: rgba(51, 51, 51, 0.8);
+  font-size: 20px;
+  width: 150px;
+}
+.tablePagination .el-pagination .el-pagination__sizes .el-select .el-input .el-select__caret {
+  color: rgba(51, 51, 51, 0.8);
+  font-size: 20px;
+}
+.tablePagination .el-pagination .el-pagination__jump {
+  margin-left: 25px;
+  height: 40px;
+  line-height: 40px;
+}
+.tablePagination .el-pagination .el-pagination__jump .el-input {
+  width: 60px;
+}
+.tablePagination .el-pagination .el-pagination__jump .el-input .el-input__inner {
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  height: 40px;
+  line-height: 40px;
+  color: rgba(51, 51, 51, 0.8);
+  font-size: 20px;
+  width: 50px;
+  padding: 0 10px;
+}
+.tablePagination .el-pagination .el-pagination__jump .el-pagination__editor {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 2px;
+  margin: 0 2px;
+  border-radius: 5px;
+}
+.tablePagination .el-pagination button .el-icon {
+  font-size: 20px;
+}
+.tablePagination .el-pagination .el-pager li {
+  padding: 0;
+  font-size: 20px;
+}
+.tablePagination .el-pagination.is-background .el-pager li,
+.tablePagination .el-pagination.is-background .btn-prev,
+.tablePagination .el-pagination.is-background .btn-next {
+  font-size: 20px;
+  background-color: #fff;
+  margin: 0 1px;
+  border-radius: 0;
+  color: rgba(51, 51, 51, 0.8);
+  width: 40px;
+  min-width: 0;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #ddd;
+}
