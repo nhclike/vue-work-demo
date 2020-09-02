@@ -1,11 +1,11 @@
-/* 主框架 */
+/* 庭审主页面框架---包含2个子路由 */
 <template>
   <div class="basic-layout full-height">
     <div class="top">
       <MainHeader></MainHeader>
     </div>
     <div class="content">
-      <div class="left">电子卷宗</div>
+      <div class="left">left内容</div>
       <div class="middle full-height">
         <!-- 路由匹配到的组件将显示在这里 -->
         <router-view :name="leftRouterName"></router-view>
@@ -61,11 +61,13 @@ export default {
 <style scoped lang="less">
 .basic-layout {
   font-size: @font20px;
+  background: yellow;
   .content {
     height: calc(100% - @top_menu_h);
     display: flex;
     .left {
       flex: 1;
+      background: #ddd;
     }
     .middle {
       flex: 2;
@@ -75,6 +77,7 @@ export default {
     }
     .opt-btns {
       flex: 1;
+      background: red;
     }
   }
 }

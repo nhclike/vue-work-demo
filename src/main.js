@@ -5,6 +5,7 @@ import store from './store';
 // import '@babel/polyfill'// 兼容ie
 import 'default-passive-events';
 import 'style/common.less';// 引入公用样式
+import './plugins/Antd.js';// 引入ant-design-vue插件
 
 import './plugins/element.js';// 引入element-ui插件
 // import './plugins/echarts';// 引入echarts

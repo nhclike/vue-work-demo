@@ -5,11 +5,21 @@ import {
 } from '@/layouts';
 
 /* 插件 */
+/* 视频播放 */
 const Videojs = () => import(/* webpackChunkName: "Videojs" */ '@/views/plugins/Videojs');
+/* 富文本编辑器 */
 const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko');
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
 /* 组件 */
+/* tree */
+const searchTree = () => import(/* webpackChunkName: "chat" */ '@/components/tree/searchTree');
+/* 上传插件 */
+const BaseUpload = () => import(/* webpackChunkName: "chat" */ '@/components/upload/base');
+
+/* 常用业务功能 */
+/* websocket消息聊天 */
 const chat = () => import(/* webpackChunkName: "chat" */ '@/views/chat/chat');
+
 export default [
     {
         path: '/main',
@@ -44,6 +54,16 @@ export default [
                         path: 'chat',
                         name: 'chat',
                         component: chat
+                    },
+                    {
+                        path: 'searchTree',
+                        name: 'searchTree',
+                        component: searchTree
+                    },
+                    {
+                        path: 'BaseUpload',
+                        name: 'BaseUpload',
+                        component: BaseUpload
                     }
                 ]
             }

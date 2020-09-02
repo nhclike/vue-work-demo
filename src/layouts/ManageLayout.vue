@@ -1,3 +1,4 @@
+/* 管理系统通用框架---包含头部和左菜单 */
 <template>
   <div class="manage-layout">
     <div class="top">
@@ -29,27 +30,29 @@ export default {
 </script>
 
 <style scoped lang="less">
+@left-width:150px;
+@top-height:100px;
 .manage-layout{
   height: 100%;
   width: 100%;
-  background: red;
+  background: #fff;
   font-size: @font20px;
   position: relative;
   .top{
-    height: 100px;
+    height: @top-height;
     width: 100%;
     background: yellow;
   }
   .left{
-    height: calc(100% - 100px);
-    width: 100px;
+    height: calc(100% - @top-height);
+    width: @left-width;
     background: #ddd;
   }
   .main{
     position: absolute;
     top:100px;
     bottom: 0;
-    left: 100px;
+    left: @left-width;
     right: 0;
   }
 }

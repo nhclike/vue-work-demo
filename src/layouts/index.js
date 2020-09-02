@@ -1,7 +1,7 @@
-import BasicLayout from './BasicLayout';
+import MainLayout from './MainLayout';
 import Blank from './Blank';
 import ManageLayout from './ManageLayout';
 
 import RouteView from './RouteView';
 
-export { Blank, BasicLayout, ManageLayout, RouteView };
+export { Blank, MainLayout, ManageLayout, RouteView };

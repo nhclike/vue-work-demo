@@ -15,6 +15,12 @@
             <li>
                 <router-link to="chat">消息聊天</router-link>
             </li>
+            <li>
+                <router-link to="searchTree">搜索树</router-link>
+            </li>
+            <li>
+                <router-link to="BaseUpload">基本文件上传</router-link>
+            </li>
         </ul>
 
     </div>
