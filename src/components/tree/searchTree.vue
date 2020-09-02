@@ -4,17 +4,22 @@
     <a-tree
       :expanded-keys="expandedKeys"
       :auto-expand-parent="autoExpandParent"
-      :tree-data="gData"
+      :tree-data="treeData"
       @expand="onExpand"
+      show-icon
+      show-line
     >
-      <template slot="title" slot-scope="{ title }">
-        <span v-if="title.indexOf(searchValue) > -1">
-          {{ title.substr(0, title.indexOf(searchValue)) }}
-          <span style="color: #f50">{{ searchValue }}</span>
-          {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
-        </span>
-        <span v-else>{{ title }}</span>
-      </template>
+        <a-icon slot="switcherIcon" type="down" />
+        <a-icon slot="smile" type="smile-o" />
+        <a-icon slot="meh" type="smile-o" />
+        <template slot="title" slot-scope="{ title }">
+            <span v-if="title.indexOf(searchValue) > -1">
+            {{ title.substr(0, title.indexOf(searchValue)) }}
+            <span style="color: #f50">{{ searchValue }}</span>
+            {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+            </span>
+            <span v-else>{{ title }}</span>
+        </template>
     </a-tree>
   </div>
 </template>
@@ -75,7 +80,14 @@ const getParentKey = (key, tree) => {
     }
     return parentKey;
 };
+
 export default {
+    props: {
+        treeData: {
+            default: () => [],
+            required: false
+        }
+    },
     data() {
         return {
             expandedKeys: [],
