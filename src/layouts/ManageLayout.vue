@@ -8,7 +8,7 @@
       left
        <LeftMenu></LeftMenu>
     </div>
-    <div class="main">
+    <div class="main-box">
       <router-view></router-view>
     </div>
   </div>
@@ -48,7 +48,7 @@ export default {
     width: @left-width;
     background: #ddd;
   }
-  .main{
+  .main-box{
     position: absolute;
     top:100px;
     bottom: 0;
