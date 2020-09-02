@@ -21,6 +21,9 @@
             <li>
                 <router-link to="BaseUpload">基本文件上传</router-link>
             </li>
+            <li>
+                <router-link to="BaseTable">基本表格显示</router-link>
+            </li>
         </ul>
 
     </div>

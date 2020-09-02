@@ -15,6 +15,8 @@ const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/
 const searchTree = () => import(/* webpackChunkName: "chat" */ '@/components/tree/searchTree');
 /* 上传插件 */
 const BaseUpload = () => import(/* webpackChunkName: "chat" */ '@/components/upload/base');
+/* 表格 */
+const BaseTable = () => import(/* webpackChunkName: "BaseTable" */ '@/components/table/basic');
 
 /* 常用业务功能 */
 /* websocket消息聊天 */
@@ -64,6 +66,11 @@ export default [
                         path: 'BaseUpload',
                         name: 'BaseUpload',
                         component: BaseUpload
+                    },
+                    {
+                        path: 'BaseTable',
+                        name: 'BaseTable',
+                        component: BaseTable
                     }
                 ]
             }
