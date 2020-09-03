@@ -76,6 +76,7 @@ const data = [
 ];
 
 export default {
+    name: 'base-table',
     data() {
         return {
             data,

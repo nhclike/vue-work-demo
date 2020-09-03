@@ -9,7 +9,6 @@
 import { mapActions } from 'vuex';
 const nsName = 'ModuleName';// 命名空间namespace
 export default {
-    name: 'pageName',
     components: {},
     inject: ['reload'],
     filters: {},

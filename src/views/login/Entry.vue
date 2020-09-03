@@ -72,7 +72,6 @@ import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 import menuList from '@/assets/data/menuList';
 // import {encrypt, decrypt} from '@/utils/crypt';
 export default {
-    name: 'AdminEntry',
     components: {},
     inject: ['reload'],
     props: {},

@@ -1,6 +1,6 @@
-/* 组件-新增/编辑/查看-视频 */
+/* videojs视频播放 */
 <template>
-  <div class="content-page">
+  <div class="videojs-box">
     <div class="video-box vertical-horizontal-center" >
       <video-player
         class="vjs-custom-skin video-player"
@@ -8,7 +8,7 @@
         :options="playerOptions"
         :playsinline="true"
         customEventName="customstatechangedeventname"
-        @ready="playerReadied"
+        @ready="playerReadied($event)"
         @loadeddata="onPlayerLoadeddata($event)"
         @canplay="onPlayerCanplay($event)"
         @canplaythrough="onPlayerCanplaythrough($event)"
@@ -21,29 +21,19 @@
         @statechanged="playerStateChanged($event)"
       ></video-player>
     </div>
+    <button @click="playMP4()">播放MP4</button>
   </div>
 </template>
 
 <script>
+import { videoPlayer } from 'vue-video-player';
 export default {
-    name: 'VideoItem',
-    components: {},
+    name: 'Videojs-play',
+    components: {videoPlayer},
     inject: ['reload'],
     filters: {},
-    props: {
-        operateBtnName: {
-            type: String,
-            default: 'add',
-            required: false
-        },
-        rowId: {
-            default: '',
-            required: false
-        }
-    },
     data() {
         return {
-            realVideo: {},
             playerOptions: {
                 techOrder: ['html5', 'flash'], // 兼容顺序,使用flash播放，可以播放flv格式的文件
                 playbackRates: [0.7, 1.0, 1.5, 2.0], // 播放速度
@@ -85,7 +75,7 @@ export default {
                     }
                     // {
                     //     type: 'video/mp4', // 资源格式写法：'video/mp4'，否则控制台会出现notSupportedMessage设置的错误
-                    //     src: '/video/1.mp4' // url地址
+                    //     src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm' // url地址
                     // }
                 ],
                 poster: '/static/images/author.jpg', // 你的封面地址
@@ -107,64 +97,41 @@ export default {
         };
     },
     computed: {
-    // computeFunction() {
-    //     return value;
-    // }
         player() {
             return this.$refs.videoPlayer.player;
         }
     },
     watch: {
-    // 监听-操作名称
-        operateBtnName: {
-            handler() {
-                this.$nextTick(() => {
-                    if (
-                        this.operateBtnName === 'edit' ||
-            this.operateBtnName === 'view'
-                    ) {
-                        console.log('rowId', this.rowId);
-                        let params = { id: this.rowId };
-                        // 请求接口-获取详情-
-                        this.postView(params);
-                    }
-                });
-            },
-            deep: true,
-            immediate: true
-        }
-    },
-    created() {
-    // this.init();
+
     },
     mounted() {
-    // console.log('当前videojs对象', this.player);
-    // this.player.play();// 播放
-    // this.player.pause(); // 暂停
-    // this.player.src(src); // 重置进度条
+        console.log('当前videojs对象', this.player);
+
     },
     methods: {
-    // 按钮点击-取消/关闭
+        // 按钮点击-取消/关闭
         close() {
+            console.log('video close');
             this.$emit('close');
         },
 
         // 播放
-        play() {
+        playMP4() {
             this.playerOptions.sources = [
-                // {
-                //     type: 'video/mp4',
-                //     src: '/video/1.mp4'
-                // }
+                {
+                    type: 'video/mp4',
+                    src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
+                }
             ];
+            this.player.play();
         },
 
         // --------------------视频播放-开始-------------------- */
 
         // 初始化话播放-在onPlayerCanplay中调用
-        initPlay(player) {
+        initPlay() {
             console.log('initPlay>当前视频播放器实例对象', this.player);
-            player.play();
+            this.player.play();
         },
 
         /* 视频播放 */
@@ -181,7 +148,7 @@ export default {
         // 可以播放视频
         onPlayerCanplay(player) {
             console.log('Canplay>可以播放视频!', player);
-            // this.initPlay(player);
+            this.initPlay(player);
         },
 
         // 拖动视频条会触发事件-视频暂停>可以播放视频>可以播放视频至拖动位置>视频播放>视频加载中>可以播放视频>视频播放中>视频加载中>可以播放视频>视频播放中>视频加载中>可以播放视频>视频播放中>可以播放视频至拖动位置
@@ -202,7 +169,7 @@ export default {
 
         // 视频时间更新中
         onPlayerTimeupdate(player) {
-            // console.log('Timeupdate>视频时间更新中!', player);
+            console.log('Timeupdate>视频时间更新中!', player);
         },
 
         // 视频暂停
@@ -231,8 +198,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-</style>
-
-<style lang="less">
 </style>
 

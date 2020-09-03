@@ -1,6 +1,6 @@
 /* 模版-页面-百度编辑器 */
 <template>
-    <div class="listPage">
+    <div class="ueditor-box">
         <vue-ueditor-wrap v-model="content" :config="myConfig"></vue-ueditor-wrap>
         <div class="form-bottom">
             <span class="save" @click="submit()">提交保存</span>

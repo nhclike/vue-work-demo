@@ -7,7 +7,7 @@
                 <router-link to="ueditor">百度编译器</router-link>
             </li>
             <li>
-                <router-link to="videojs">视频播放</router-link>
+                <router-link to="videojs">videojs视频播放</router-link>
             </li>
             <li>
                 <router-link to="Ntko">Ntko</router-link>

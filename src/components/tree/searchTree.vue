@@ -1,6 +1,12 @@
+/* 带搜索功能并且可以动态追加节点的树组件 */
 <template>
   <div>
-    <a-input-search style="margin-bottom: 8px" placeholder="Search" @change="onChange" />
+    <a-input-search
+        style="margin-bottom: 8px"
+        placeholder="Search"
+        @change="onChange"
+        v-if="isSearch"
+    />
     <a-tree
       :expanded-keys="expandedKeys"
       :auto-expand-parent="autoExpandParent"
@@ -11,7 +17,6 @@
     >
         <a-icon slot="switcherIcon" type="down" />
         <a-icon slot="smile" type="smile-o" />
-        <a-icon slot="meh" type="smile-o" />
         <template slot="title" slot-scope="{ title }">
             <span v-if="title.indexOf(searchValue) > -1">
             {{ title.substr(0, title.indexOf(searchValue)) }}
@@ -82,9 +87,15 @@ const getParentKey = (key, tree) => {
 };
 
 export default {
+    name: 'searchTree',
     props: {
         treeData: {
             default: () => [],
+            required: false
+        },
+        isSearch: {
+            type: Boolean,
+            default: true,
             required: false
         }
     },

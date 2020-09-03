@@ -12,7 +12,7 @@ const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko')
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
 /* 组件 */
 /* tree */
-const searchTree = () => import(/* webpackChunkName: "chat" */ '@/views/tree/searchTree');
+const searchTree = () => import(/* webpackChunkName: "chat" */ '@/views/tree/tree');
 /* 上传插件 */
 const BaseUpload = () => import(/* webpackChunkName: "chat" */ '@/components/upload/base');
 /* 表格 */

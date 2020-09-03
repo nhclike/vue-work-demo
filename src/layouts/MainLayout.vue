@@ -25,7 +25,7 @@
 <script>
 import MainHeader from '@/components/main/MainHeader';
 export default {
-    name: 'BasicLayout',
+    name: 'MainLayout',
     components: {
         MainHeader
     },
