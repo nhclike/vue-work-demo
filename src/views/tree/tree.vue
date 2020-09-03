@@ -22,7 +22,7 @@ let treeData = [{
     'title': '0-1',
     'key': '0-1',
     'slots': {
-        'icon': 'meh'
+        'icon': 'smile'
     },
     'scopedSlots': {'title': 'title'},
     'children': [
@@ -71,9 +71,12 @@ export default {
             // eslint-disable-next-line radix
             let randomNum = parseInt(Math.random() * 1000);
             let newNode = {
-                'title': '新增加的节点' + randomNum,
-                'key': '0-' + randomNum,
-                'scopedSlots': {'title': 'title'}
+                title: '新增加的节点' + randomNum,
+                key: '0-' + randomNum,
+                scopedSlots: {'title': 'title'},
+                slots: {
+                    switcherIcon: 'smile'
+                }
             };
             let newTreeData = treeData.push(newNode);
             console.log(newTreeData, treeData);
