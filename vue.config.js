@@ -4,12 +4,19 @@ const projectName = '/protal/';// 配置应用的基路径
 function resolve(dir) {
     return path.join(__dirname, dir);
 }
-/* module.exports = {
-  entry: ["@babel/polyfill", "./app/js"],
-}; */
+module.exports = {
+    entry: ['@babel/polyfill', './app/js']
+};
 
 module.exports = {
     // publicPath: projectName, // 配置应用的基路径
+    // 解决ie报错问题
+    transpileDependencies: ['ant-design-vue'],
+    // 改变webpack
+    chainWebpack(config) {
+        config.entry('main').add('babel-polyfill');
+    },
+
     // 配置postcss
     css: {
         loaderOptions: {
