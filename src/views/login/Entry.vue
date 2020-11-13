@@ -211,7 +211,7 @@ export default {
 
         // 按钮点击-组织申请
         register() {
-            this.$router.push('/login/register');
+            this.$router.push('/main');
         }
     }
 };

@@ -17,6 +17,13 @@ const searchTree = () => import(/* webpackChunkName: "chat" */ '@/views/tree/tre
 const BaseUpload = () => import(/* webpackChunkName: "chat" */ '@/components/upload/base');
 /* 表格 */
 const BaseTable = () => import(/* webpackChunkName: "BaseTable" */ '@/components/table/basic');
+/* pdf阅读插件 */
+const PdfView = () => import(/* webpackChunkName: "PdfView" */ '@/components/PdfView/PdfView');
+/* pdf阅读插件查看单页面 */
+const PdfViewSingle = () => import(/* webpackChunkName: "PdfViewSingle" */ '@/components/PdfView/PdfViewSingle');
+
+const uploadFileAndPdfView = () => import(/* webpackChunkName: "uploadFileAndPdfView" */ '@/components/PdfView/uploadFileAndPdfView');
+
 
 /* 常用业务功能 */
 /* websocket消息聊天 */
@@ -71,6 +78,21 @@ export default [
                         path: 'BaseTable',
                         name: 'BaseTable',
                         component: BaseTable
+                    },
+                    {
+                        path: 'PdfView',
+                        name: 'PdfView',
+                        component: PdfView
+                    },
+                    {
+                        path: 'PdfViewSingle',
+                        name: 'PdfViewSingle',
+                        component: PdfViewSingle
+                    },
+                    {
+                        path: 'uploadFileAndPdfView',
+                        name: 'uploadFileAndPdfView',
+                        component: uploadFileAndPdfView
                     }
                 ]
             }
