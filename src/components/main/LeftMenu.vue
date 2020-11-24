@@ -25,9 +25,6 @@
                 <router-link to="BaseTable">基本表格显示</router-link>
             </li>
             <li>
-                <router-link to="PdfView">pdf插件</router-link>
-            </li>
-            <li>
                 <router-link to="PdfViewSingle">pdf单页面查看</router-link>
             </li>
             <li>

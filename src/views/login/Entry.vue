@@ -203,7 +203,7 @@ export default {
             console.log('userInfoGet', this.userInfoGet);
 
             if (this.$route.fullPath === '/login/entry') {
-                this.$router.push('/home');
+                this.$router.push('/main');
             } else {
                 this.reload();
             }
@@ -211,7 +211,7 @@ export default {
 
         // 按钮点击-组织申请
         register() {
-            this.$router.push('/main');
+            this.$router.push('/manage');
         }
     }
 };

@@ -17,8 +17,7 @@ const searchTree = () => import(/* webpackChunkName: "chat" */ '@/views/tree/tre
 const BaseUpload = () => import(/* webpackChunkName: "chat" */ '@/components/upload/base');
 /* 表格 */
 const BaseTable = () => import(/* webpackChunkName: "BaseTable" */ '@/components/table/basic');
-/* pdf阅读插件 */
-const PdfView = () => import(/* webpackChunkName: "PdfView" */ '@/components/PdfView/PdfView');
+
 /* pdf阅读插件查看单页面 */
 const PdfViewSingle = () => import(/* webpackChunkName: "PdfViewSingle" */ '@/components/PdfView/PdfViewSingle');
 
@@ -31,10 +30,10 @@ const chat = () => import(/* webpackChunkName: "chat" */ '@/views/chat/chat');
 
 export default [
     {
-        path: '/main',
-        name: 'main',
+        path: '/manage',
+        name: 'manage',
         component: ManageLayout,
-        redirect: '/main/plugins',
+        redirect: '/manage/plugins',
         // meta: {
         //     requireAuth: true  // 添加该字段，表示进入这个路由是需要登录的
         // },
@@ -78,11 +77,6 @@ export default [
                         path: 'BaseTable',
                         name: 'BaseTable',
                         component: BaseTable
-                    },
-                    {
-                        path: 'PdfView',
-                        name: 'PdfView',
-                        component: PdfView
                     },
                     {
                         path: 'PdfViewSingle',

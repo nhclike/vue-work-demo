@@ -8,10 +8,10 @@ const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/
 
 export default [
     {
-        path: '/home',  // 庭审主页面
-        name: 'home',
+        path: '/main',  // 庭审主页面
+        name: 'main',
         component: MainLayout,
-        redirect: '/home',
+        redirect: '/main',
         // meta: {
         //     requireAuth: true  // 添加该字段，表示进入这个路由是需要登录的
         // },
