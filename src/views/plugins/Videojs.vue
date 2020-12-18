@@ -22,6 +22,10 @@
       ></video-player>
     </div>
     <button @click="playMP4()">播放MP4</button>
+        <button @click="playLocalMP4()">播放本地MP4</button>
+
+        <button @click="playRTMP()">播放RTMP</button>
+
   </div>
 </template>
 
@@ -65,13 +69,17 @@ export default {
                     //     type: 'application/x-mpegURL', // hls
                     //     src: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8' // url地址
                     // }
-                    {
-                        type: 'rtmp/flv', // rtmp
-                        src: `rtmp://172.19.82.228:1960/NBVod/mp4|D:\\SNTest\\1\\2`// rtmp
-                    }
                     // {
                     //     type: 'rtmp/flv', // rtmp
-                    //     src: `rtmp://58.200.131.2:1935/livetv/hunantv`
+                    //     src: `rtmp://172.19.82.228:1960/NBVod/mp4|D:\\SNTest\\1\\2`// rtmp
+                    // }
+                    {
+                        type: 'rtmp/flv', // rtmp
+                        src: `rtmp://58.200.131.2:1935/livetv/hunantv`
+                    }
+                    // {
+                    //     type: 'rtsp/flv', // rtsp
+                    //     src: `rtsp://172.19.82.176:554/feed1`
                     // }
                     // {
                     //     type: 'video/mp4', // 资源格式写法：'video/mp4'，否则控制台会出现notSupportedMessage设置的错误
@@ -121,11 +129,30 @@ export default {
                 {
                     type: 'video/mp4',
                     src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
+
                 }
             ];
             this.player.play();
         },
+        playLocalMP4() {
+            this.playerOptions.sources = [
+                {
+                    type: 'video/mp4',
+                    src: require('../../../public/video/1.mp4')
 
+                }
+            ];
+            this.player.play();
+        },
+        playRTMP() {
+            this.playerOptions.sources = [
+                {
+                    type: 'rtmp/flv', // rtmp
+                    src: `rtmp://58.200.131.2:1935/livetv/hunantv`
+                }
+            ];
+            this.player.play();
+        },
         // --------------------视频播放-开始-------------------- */
 
         // 初始化话播放-在onPlayerCanplay中调用
