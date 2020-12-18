@@ -3,6 +3,7 @@ import { MainLayout } from '@/layouts';
 
 /* 插件 */
 const Videojs = () => import(/* webpackChunkName: "Videojs" */ '@/views/plugins/Videojs');
+const TopicReader = () => import(/* webpackChunkName: "Videojs" */ '@/views/common/TopicReader');
 
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
 
@@ -19,8 +20,9 @@ export default [
             {
                 path: '',
                 components: {
-                    left: Videojs,
-                    right: Ueditor
+                    TopicReader: TopicReader,
+                    Ueditor: Ueditor,
+                    Videojs: Videojs
                 }
             }
         ]

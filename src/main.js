@@ -16,7 +16,16 @@ import '@/plugins/mock';// 引入mock.js模拟接口插件
 import '@/plugins/rem';// 引入px与rem换算方法
 import { showLoading, hideLoading } from './utils/loading';// 用于接口请求前后加载中
 import vfilter from './mixins/filter';// 过滤
+import VueLazyload from 'vue-lazyload';
+let loadingImg = require('@/assets/images/icon/icon-loading.gif');
+let errorImg = require('@/assets/images/icon/icon-error.png');
 
+Vue.use(VueLazyload, {
+    preLoad: 1.3,
+    error: errorImg,
+    loading: loadingImg,
+    attempt: 1
+});
 // 注册comm.js为全局js，页面中使用this.comm.方法名即可
 const commJs = require('@/utils/comm.js');
 let comm = {

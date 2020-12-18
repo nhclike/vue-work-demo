@@ -1,0 +1,606 @@
+/* canvas涂鸦组件
+ * @Author: ShiHuiJun
+ * @Date: 2020-04-03 09:40:03
+ * @Last Modified by: nihc
+ * @Last Modified time: 2020-12-18 17:45:46
+ */
+<template>
+  <div class="drawCanvas">
+    <!-- 画板 -->
+    <canvas
+      ref="canvas"
+      :class="{'canvas':true,'cursorPen':isWrite&&config.shape==='line','cursorEraser':isEraser,'cursorCrosshair':config.shape!=='line'&&isWrite&&!isEraser}"
+      :style="canvasStyle"
+      @mousedown="canvasDown($event)"
+      @mousemove="canvasMove($event)"
+      @mouseup="canvasUp($event)"
+      @touchmove="canvasMove($event)"
+      @touchstart="canvasDown($event)"
+      @touchend="canvasUp($event)"
+    ></canvas>
+  </div>
+</template>
+
+<script>
+import { mapActions } from 'vuex';
+import { getRelativePath, base64ToBlob } from '@/utils/utils';
+export default {
+    props: {
+    // 批注图片信息列表
+        curFileNotationURL: {
+            type: Array,
+            default: () => []
+        },
+        // 当前是第几个canvas
+        index: {
+            type: Number,
+            default: 0
+        },
+        // 目前动作所涉及的时那个canvas,用于动作相应
+        activeIndex: {
+            type: Number,
+            default: 0
+        },
+        // 材料id
+        fileId: {
+            type: String,
+            default: ''
+        },
+        // 类型
+        type: {
+            type: String,
+            default: ''
+        },
+        // canvas样式,用于放大或缩小时尺寸改变
+        canvasStyle: {
+            default: 'width:13rem;height:18.39rem'
+        },
+        // canvas尺寸
+        canvasSize: {
+            default: {
+                width: 960,
+                height: 1367,
+                scale: 1
+            }
+        },
+        // canvas配置
+        config: {
+            default: {
+                lineWidth: 3,
+                lineColor: '#ff0000',
+                shadowBlur: 2,
+                shape: 'line'
+            }
+        },
+        // 是否可以涂鸦
+        isWrite: {
+            type: Boolean,
+            default: false
+        },
+        // 是否可以使用橡皮擦
+        isEraser: {
+            type: Boolean,
+            default: false
+        },
+        // 是否在可涂鸦区域
+        isArea: {
+            type: Boolean,
+            default: false
+        },
+        // 鼠标是否已抬起
+        isMouseUp: {
+            type: Boolean,
+            default: false
+        },
+        // 动作
+        action: {
+            type: String,
+            default: '' // fnScale 放大缩小|prev上一步|next下一步|clear清除
+        },
+        // 父组件所存储的所有涂鸦信息
+        actionStepObjFather: {
+            default: {
+                preDrawAry: [
+                    // {
+                    //   index:null,
+                    //   preData:preData
+                    // }
+                ],
+                nextDrawAry: [
+                    // {
+                    //   index:null,
+                    //   preData:preData
+                    // }
+                ],
+                middleAry: []
+            }
+        }
+    },
+    data() {
+        return {
+            // 批注图片信息
+            canvasBgInfo: {
+                /* bookScale: null,
+                caseId: '11',
+                creator: '00c7d8ffae6aa409175879851f7d7f97',
+                creatorTime: '2020-09-17 11:47:56',
+                fileId: '1301201902010001340001',
+                imgData: null,
+                imgUrl:
+                    '/file/annotate/1/11/00c7d8ffae6aa409175879851f7d7f97/1301201902010001340001/1.png',
+                pageNo: '1',
+                typeCode: '1' */
+            },
+            context: {}, // canvas上下文
+            canvasMoveUse: false, // 是否处于绘制状态
+            // 子组件(当前canvas)所存储的所有涂鸦信息
+            actionStepObj: {
+                // 存储当前表面状态数组-上一步
+                preDrawAry: [],
+                // 存储当前表面状态数组-下一步
+                nextDrawAry: [],
+                // 中间数组
+                middleAry: [
+                    // {
+                    //   index:null,
+                    //   preData:preData
+                    // }
+                ]
+            },
+            //  鼠标在当前canvas move后的在当前canvas中的位置信息
+            canvasPosition: {
+                canvasX: 0,
+                canvasY: 0
+            },
+            preDrawAry: [], // 存储当前表面状态数组-上一步
+            nextDrawAry: [], // 存储当前表面状态数组-下一步
+            middleAry: [], // 中间数组
+            // 绘制矩形和椭圆时用来保存起始点信息
+            beginRec: {
+                x: '',
+                y: '',
+                imageData: ''
+            }
+        };
+    },
+    watch: {
+    // 监听-操作名称
+        action: {
+            handler() {
+                this.$nextTick(() => {
+                    // let _this = this;
+                    let action = this.action.split('num')[0];
+                    switch (action) {
+                        case 'init':
+                            this.init();
+                            break;
+                        case 'fnScale': // 放大或缩小
+                            if (this.context.canvas) {
+                                this.resetDraw(
+                                    this.context.canvas.toDataURL(),
+                                    this.canvasSize.scale
+                                );
+                                this.context.canvas.width = this.canvasSize.width;
+                                this.context.canvas.height = this.canvasSize.height;
+                            }
+                            break;
+                        case 'prev': // 上一步
+                            if (
+                                (this.activeIndex === this.index || this.activeIndex === -1) &&
+                this.actionStepObj.preDrawAry.length
+                            ) {
+                                // 子组件 当前绘图表面
+                                let popData = this.actionStepObj.preDrawAry.pop(); // 上一步数组 删除最后一步
+                                let midData = this.actionStepObj.middleAry[this.actionStepObj.preDrawAry.length + 1]; // 中间数组 取上一步数组的最后一步
+                                this.actionStepObj.nextDrawAry.push(midData); // 下一步数组 加入上一步数组的最后一步
+                                this.context.putImageData(popData, 0, 0);
+                                this.$emit('emitActionStep');
+                                // console.log(`第${this.index + 1}页`,this.actionStepObj);
+                            }
+                            break;
+                        case 'next': // 下一步
+                            if (
+                                (this.activeIndex === this.index || this.activeIndex === -1) &&
+                this.actionStepObj.nextDrawAry.length
+                            ) {
+                                // 子组件 当前绘图表面
+                                let popData = this.actionStepObj.nextDrawAry.pop(); // 下一步数组 删除最后一步
+                                let midData = this.actionStepObj.middleAry[this.actionStepObj.middleAry.length - this.actionStepObj.nextDrawAry.length - 1]; // 中间数组 取下一步数组的最后一步
+                                this.actionStepObj.preDrawAry.push(midData); // 上一步数组 加入下一步数组的最后一步
+                                this.context.putImageData(popData, 0, 0);
+                                this.$emit('emitActionStep');
+                                // console.log(`第${this.index + 1}页`, this.actionStepObj);
+                            }
+                            break;
+                        case 'clear': // 清除
+                            if (String(this.activeIndex) === String(this.index)) {
+                                this.removeDraw();
+                                this.$emit('emitActionStep');
+                            }
+                            break;
+                        case 'save': // 保存
+                            this.saveDraw();
+                            this.$emit('emitActionStep');
+                            break;
+                        case 'saveAndExit': // 保存并退出
+                            this.saveDraw(true);
+                            this.$emit('emitActionStep');
+                            break;
+                    }
+                });
+            },
+            deep: true,
+            immediate: true
+        }
+    },
+    created() {
+    },
+    mounted() {
+        this.initDraw();
+    },
+    methods: {
+        ...mapActions({
+        }),
+        init() {
+            this.getCanvasBgInfo(); // 获取批注信息
+        },
+        // 获取批注信息
+        getCanvasBgInfo() {
+            this.canvasBgInfo = {};
+            // 匹配当前页的批注图片信息
+            for (let row of this.curFileNotationURL.values()) {
+                if (String(row.sort) === String(this.index + 1)) {
+                    this.canvasBgInfo = row;
+                    break;
+                }
+            }
+            this.initDraw(); // 初始化 画板
+        },
+        // 初始化 画板
+        initDraw() {
+            this.initCanvasStyle(); // 初始化 canvas样式
+            this.setCanvasBrush(); // 设置画笔样式
+            let canvas = this.$refs.canvas;
+            if (!canvas) {
+                return false;
+            }
+            this.context = canvas.getContext('2d');
+            this.context.canvas.width = this.canvasSize.width;
+            this.context.canvas.height = this.canvasSize.height;
+            this.clearDraw();
+            if (this.canvasBgInfo.url) {
+                let bookScale =
+          this.canvasBgInfo.bookScale || this.context.canvas.width;
+                let scale = this.context.canvas.width / bookScale;
+                let relativePath = getRelativePath(this.canvasBgInfo.url);
+                // console.log(relativePath);
+                let url = `/webapi/${relativePath}?t=${new Date().getTime()}`; // 解决canvas跨域问题
+                // console.log('url',url)
+                this.resetDraw(url, scale);
+            }
+            let preData = this.context.getImageData(
+                0,
+                0,
+                this.context.canvas.width,
+                this.context.canvas.height
+            );
+            // 父组件 空绘图表面进栈
+            this.actionStepObjFather.middleAry = [
+                {
+                    index: -1,
+                    preData: preData
+                }
+            ];
+            // 子组件 空绘图表面进栈
+            this.actionStepObj.middleAry = [preData];
+            // 子传父
+            this.$emit('emitActionStep');
+        },
+        // 初始化 canvas样式
+        initCanvasStyle() {
+            let img = this.$refs.canvas.parentNode.parentNode.children[0];
+            let width = img.offsetWidth;
+            let height = img.offsetHeight;
+            this.$emit('emitCanvasStyle', width, height);
+        },
+        // 设置画笔样式
+        setCanvasBrush() {
+            this.context.lineWidth = this.config.lineWidth;
+            this.context.shadowBlur = this.config.shadowBlur;
+            this.context.strokeStyle = this.config.lineColor;
+        },
+        // 重新绘制
+        resetDraw(src, scale) {
+            console.log('resetDraw');
+            let _this = this;
+            let imgObject = new Image();
+            imgObject.onload = function() {
+                _this.context.save();
+                _this.context.clearRect(
+                    0,
+                    0,
+                    _this.context.canvas.width,
+                    _this.context.canvas.height
+                );
+                _this.context.scale(scale, scale);
+                _this.context.drawImage(imgObject, 0, 0);
+                _this.context.restore();
+            };
+            // imgObject.onerror=function(){alert("error!")};
+            // let url=src.replace(/\\/g,"/");
+            imgObject.src = src;
+        },
+        // 清除绘制信息
+        clearDraw() {
+            this.context.clearRect(
+                0,
+                0,
+                this.context.canvas.width,
+                this.context.canvas.height
+            ); // 清除指定的矩形区域，然后这块区域会变的完全透明
+            // 子组件 清除 当前绘图表面
+            this.actionStepObj.preDrawAry = [];
+            this.actionStepObj.nextDrawAry = [];
+            if (this.actionStepObj.middleAry.length > 0) {
+                this.actionStepObj.middleAry = [this.actionStepObj.middleAry[0]];
+            } else {
+                this.actionStepObj.middleAry = [];
+            }
+        },
+        // 保存绘制信息
+        saveDraw(isExit) {
+            if (this.actionStepObj.middleAry.length > 1) {
+                let src = this.$refs.canvas.toDataURL('image/png');
+                let blobObj = base64ToBlob(src);
+                // 保存图片到后台
+            }
+        },
+        // 删除绘制信息
+        removeDraw() {
+            this.clearDraw();
+            if (this.canvasBgInfo.pageNo) {
+                // 删除批注图片
+            } else {
+                this.initDraw();
+            }
+        },
+
+
+        // canvas区域 mousedown 用于画笔组表移动以及上一步数据存储
+        canvasDown(e) {
+            if (!this.context.canvas) {
+                return false;
+            }
+            if (this.isWrite) {
+                // console.log('canvasDown');
+                this.$emit('emitDrawStatus', true, false);
+                this.canvasMoveUse = true;
+                // client是基于整个页面的坐标,offset是cavas距离顶部以及左边的距离
+                let canvasX = this.getCanvasPosition().canvasX;
+                let canvasY = this.getCanvasPosition().canvasY;
+                // 当前绘图表面状态
+                let preData = this.context.getImageData(
+                    0,
+                    0,
+                    this.context.canvas.width,
+                    this.context.canvas.height
+                );
+                // 子组件 当前绘图表面
+                this.actionStepObj.preDrawAry.push(preData);
+
+                // 父组件 当前绘图表面
+                this.actionStepObjFather.preDrawAry.push({
+                    index: this.index,
+                    preData: preData
+                });
+                this.$emit('emitActionStep');
+                // 存储本次绘制坐标信息
+                // 记录起始点和起始状态
+                this.beginRec.x = canvasX;
+                this.beginRec.y = canvasY;
+                this.beginRec.imageData = preData;
+                this.canvasPosition.canvasX = canvasX;
+                this.canvasPosition.canvasY = canvasY;
+            }
+        },
+        // canvas区域 mousemove 用于画笔线条绘制
+        canvasMove(e) {
+            if (!this.isWrite) {
+                return false;
+            }
+            // client是基于整个页面的坐标,offset是cavas距离顶部以及左边的距离
+            let canvasX = this.getCanvasPosition().canvasX;
+            let canvasY = this.getCanvasPosition().canvasY;
+            if (this.canvasMoveUse && this.isArea && !this.isMouseUp) {
+                // console.log('canvasMove');
+                if (!this.isEraser) {
+                    this.setCanvasBrush();
+                    if (this.config.shape === 'line') {
+                        // 清除子路径
+                        this.context.beginPath();
+                        this.context.moveTo(
+                            this.canvasPosition.canvasX,
+                            this.canvasPosition.canvasY
+                        ); // 把画笔移动到指定的坐标(x, y)。相当于设置路径的起始点坐标。
+                        // console.log('moveTo', canvasX, canvasY);
+                        this.context.lineTo(canvasX, canvasY); // 添加一个新点，然后在画布中创建从该点到最后指定点的线条
+                        this.context.closePath();
+                        this.context.stroke(); // 通过线条来绘制图形轮廓
+                        this.canvasPosition.canvasX = canvasX;
+                        this.canvasPosition.canvasY = canvasY;
+                    }
+                    if (this.config.shape === 'rect') {
+                        // 绘制矩形时恢复起始点状态再重新绘制
+                        this.context.putImageData(this.beginRec.imageData, 0, 0);
+                        // 清除子路径
+                        this.context.beginPath();
+                        let width = canvasX - this.beginRec.x;
+                        let height = canvasY - this.beginRec.y;
+                        this.context.rect(this.beginRec.x, this.beginRec.y, width, height);
+                        // this.context.closePath();
+                        // this.context.fillStyle = 'rgba(255,255,255,0)';
+                        // this.context.fill();
+                        this.context.stroke(); // 通过线条来绘制图形轮廓
+                    }
+                    if (this.config.shape === 'circle') { // 绘制椭圆时恢复起始点状态再重新绘制
+                        this.context.putImageData(this.beginRec.imageData, 0, 0);
+                        this.context.beginPath();
+                        let a = (canvasX - this.beginRec.x) / 2;
+                        let b = (canvasY - this.beginRec.y) / 2;
+                        this.drawEllipse(this.context, this.beginRec.x + a, this.beginRec.y + b, a > 0 ? a : -a, b > 0 ? b : -b);
+                    }
+                } else {
+                    // globalCompositeOperation 属性设置或返回如何将一个源（新的）图像绘制到目标（已有）的图像上。 source-over 默认,在目标图像上显示源图像; destination-out 在源图像外显示目标图像。只有源图像外的目标图像部分会被显示，源图像是透明的。
+                    this.context.globalCompositeOperation = 'destination-out';
+                    this.context.beginPath();
+                    this.context.arc(canvasX, canvasY, 10, 0, Math.PI * 2);
+                    this.context.strokeStyle = 'rgba(255,255,255,0)';
+                    this.context.fill();
+                    this.context.globalCompositeOperation = 'source-over';
+                    this.canvasPosition.canvasX = canvasX;
+                    this.canvasPosition.canvasY = canvasY;
+                }
+            }
+        },
+
+        // 绘制椭圆
+        drawEllipse(context, x, y, a, b) {
+            context.save();
+            let r = (a > b) ? a : b;
+            let ratioX = a / r;
+            let ratioY = b / r;
+            context.scale(ratioX, ratioY);
+            context.beginPath();
+            context.arc(x / ratioX, y / ratioY, r, 0, 2 * Math.PI, false);
+            this.context.stroke(); // 通过线条来绘制图形轮廓
+            context.closePath();
+            context.restore();
+        },
+
+        setActionStepObj() {
+            let preData = this.context.getImageData(
+                0,
+                0,
+                this.context.canvas.width,
+                this.context.canvas.height
+            ); // 返回 ImageData 对象，该对象为画布上指定的矩形复制像素数据
+            if (!this.actionStepObj.nextDrawAry.length) {
+                // 子组件 当前绘图表面进栈
+                this.actionStepObj.middleAry.push(preData);
+
+                // 父组件 当前绘图表面进栈
+                this.actionStepObjFather.middleAry.push({
+                    index: this.index,
+                    preData: preData
+                });
+            } else {
+                // 子组件 当前绘图表面
+                this.actionStepObj.middleAry = [];
+                this.actionStepObj.middleAry = this.actionStepObj.middleAry.concat(
+                    this.actionStepObj.preDrawAry
+                );
+                this.actionStepObj.middleAry.push(preData);
+                this.actionStepObj.nextDrawAry = [];
+
+                // 父组件 当前绘图表面
+                this.actionStepObjFather.middleAry = [];
+                this.actionStepObjFather.middleAry = this.actionStepObjFather.middleAry.concat(
+                    this.actionStepObjFather.preDrawAry
+                );
+                this.actionStepObjFather.middleAry.push({
+                    index: this.index,
+                    preData: preData
+                });
+                this.actionStepObjFather.nextDrawAry = [];
+            }
+            this.$emit('emitActionStep');
+        },
+
+        // canvas区域 mouseup 主要用于存储绘图数据
+        canvasUp(e) {
+            if (!this.context.canvas) {
+                return false;
+            }
+            if (this.isWrite) {
+                console.log('canvasUp');
+                this.setActionStepObj();
+                this.canvasMoveUse = false;
+            }
+        },
+        // 是否是PC
+        isPc() {
+            let userAgentInfo = navigator.userAgent;
+            let Agents = [
+                'Android',
+                'iPhone',
+                'SymbianOS',
+                'Windows Phone',
+                'iPad',
+                'iPod'
+            ];
+            let flag = true;
+            for (let v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        },
+        // 获取鼠标在canvas 中位置
+        getCanvasPosition() {
+            // let position = {};
+            let touch = this.isPc() ? event : event.touches[0]; // 检测触摸屏设备
+            let material =
+        touch.target.parentNode.parentNode.parentNode.parentNode ||
+        this.$refs.canvas.parentNode.parentNode.parentNode.parentNode;
+            let page =
+        touch.target.parentNode.parentNode ||
+        this.$refs.material.children[0].children[0];
+            let scrollTop = material.scrollTop;
+            let scrollLeft = material.scrollLeft;
+            // console.log('scrollTop',scrollTop,'pageY',touch.pageY,'scrollLeft',scrollLeft,'pageX',touch.pageX,'materialTop',this.getOffset(material).top,'pageH',page.offsetHeight);
+            let canvasPosition = {
+                canvasX: touch.pageX - this.getOffset(material).left + scrollLeft,
+                canvasY:
+          touch.pageY -
+          this.getOffset(material).top +
+          scrollTop -
+          page.offsetHeight * this.index
+            };
+            return canvasPosition;
+        },
+        // 获取当前元素距离body元素的距离
+        getOffset(Node, offset) {
+            if (!offset) {
+                offset = {};
+                offset.top = 0;
+                offset.left = 0;
+            }
+            if (Node == document.body) {
+                // 当该节点为body节点时，结束递归
+                return offset;
+            }
+            offset.top += Node.offsetTop;
+            offset.left += Node.offsetLeft;
+            return this.getOffset(Node.offsetParent, offset); // 向上累加offset里的值
+        }
+    }
+};
+</script>
+<style lang="less">
+.drawCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cursorCrosshair {
+  cursor: crosshair ;
+}
+.cursorPen {
+  cursor: url('/images/icon/mouse_pen.ico'), crosshair;
+}
+.cursorEraser {
+  cursor: url('/images/icon/mouse_eraser.ico'), default;
+}
+</style>

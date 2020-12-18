@@ -14,10 +14,18 @@
         <!-- 路由匹配到的组件将显示在这里 -->
         <router-view :name="rightRouterName"></router-view>
       </div>
-      <div class="opt-btns">
-        <button class="shj-btn--primary shj-button--medium" @click="changeLeftUrl('left')">切换左侧路由</button>
-        <button class="shj-btn--primary shj-button--medium" @click="changeRightUrl('right')">切换右侧路由</button>
-      </div>
+      <div class="opt-btns pos-r" v-if="optBtns.length>0">
+                <button
+                    v-for="(btn,index) in optBtns"
+                    :key="index"
+                    @click="clickBtn(btn.func,btn,index)"
+                    v-show="btn.isShow"
+                    :class="[activeIndex==index?'active':'']">
+                <img :src="`/images/trial/${btn.icon}.png`" alt="">
+                <!-- <img src="/images/trial/caseInfo.png" alt=""> -->
+                {{btn.name}}
+                </button>
+            </div>
     </div>
   </div>
 </template>
@@ -32,8 +40,10 @@ export default {
     inject: ['reload'],
     data() {
         return {
-            leftRouterName: 'right',
-            rightRouterName: 'left'
+            leftRouterName: 'TopicReader',
+            rightRouterName: '',
+            optBtns: [],
+            activeIndex: -1
         };
     },
     computed: {},
@@ -42,18 +52,51 @@ export default {
     // this.init();
     },
     mounted() {
-    // this.init();
+        this.init();
     },
     methods: {
     // 初始化
         init() {
             //
+            this.initBtnAuthorize();
         },
-        changeLeftUrl(routeName) {
-            this.leftRouterName = routeName;
+        clickBtn(func, item, index) {
+            this.activeIndex = index;
+            if (this[func]) {
+                this[func](item);
+            }
         },
-        changeRightUrl(routeName) {
-            this.rightRouterName = routeName;
+        initBtnAuthorize() {
+            this.optBtns = [
+                {
+                    isShow: true,
+                    icon: 'caseInfo',
+                    name: '案件信息',
+                    leftRouterName: 'TopicReader',
+                    rightRouterName: '',
+                    url: '',
+                    func: 'changeRouter'
+                }
+            ];
+            this.activeIndex = 0;
+        },
+        // 路由切换
+        changeRouter(item) {
+            if (item.leftRouterName) {
+                this.leftRouterName = item.leftRouterName;
+            }
+            if (item.rightRouterName) {
+                this.rightRouterName = item.rightRouterName;
+
+            }
+            if (item.url) {
+                this.$router.push({
+                    path: item.url
+                    // query: {
+                    //     id: 'id'
+                    // }
+                });
+            }
         }
     }
 };
