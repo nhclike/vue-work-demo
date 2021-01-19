@@ -2,7 +2,7 @@
  * @Author: ShiHuiJun
  * @Date: 2020-04-03 09:40:03
  * @Last Modified by: nihc
- * @Last Modified time: 2020-12-18 17:45:46
+ * @Last Modified time: 2020-12-18 17:59:15
  */
 <template>
   <div class="drawCanvas">
@@ -258,26 +258,12 @@ export default {
         },
         // 初始化 画板
         initDraw() {
-            this.initCanvasStyle(); // 初始化 canvas样式
+            let img = this.$refs.canvas.parentNode.parentNode.children[0];
+            let width = img.offsetWidth;
+            let height = img.offsetHeight;
+            this.$emit('emitCanvasStyle', width, height);
             this.setCanvasBrush(); // 设置画笔样式
-            let canvas = this.$refs.canvas;
-            if (!canvas) {
-                return false;
-            }
-            this.context = canvas.getContext('2d');
-            this.context.canvas.width = this.canvasSize.width;
-            this.context.canvas.height = this.canvasSize.height;
-            this.clearDraw();
-            if (this.canvasBgInfo.url) {
-                let bookScale =
-          this.canvasBgInfo.bookScale || this.context.canvas.width;
-                let scale = this.context.canvas.width / bookScale;
-                let relativePath = getRelativePath(this.canvasBgInfo.url);
-                // console.log(relativePath);
-                let url = `/webapi/${relativePath}?t=${new Date().getTime()}`; // 解决canvas跨域问题
-                // console.log('url',url)
-                this.resetDraw(url, scale);
-            }
+            this.initCanvas();
             let preData = this.context.getImageData(
                 0,
                 0,
@@ -296,12 +282,25 @@ export default {
             // 子传父
             this.$emit('emitActionStep');
         },
-        // 初始化 canvas样式
-        initCanvasStyle() {
-            let img = this.$refs.canvas.parentNode.parentNode.children[0];
-            let width = img.offsetWidth;
-            let height = img.offsetHeight;
-            this.$emit('emitCanvasStyle', width, height);
+        initCanvas() {
+            let canvas = this.$refs.canvas;
+            if (!canvas) {
+                return false;
+            }
+            this.context = canvas.getContext('2d');
+            this.context.canvas.width = this.canvasSize.width;
+            this.context.canvas.height = this.canvasSize.height;
+            this.clearDraw();
+            if (this.canvasBgInfo.url) {
+                let bookScale =
+          this.canvasBgInfo.bookScale || this.context.canvas.width;
+                let scale = this.context.canvas.width / bookScale;
+                let relativePath = getRelativePath(this.canvasBgInfo.url);
+                // console.log(relativePath);
+                let url = `/webapi/${relativePath}?t=${new Date().getTime()}`; // 解决canvas跨域问题
+                // console.log('url',url)
+                this.resetDraw(url, scale);
+            }
         },
         // 设置画笔样式
         setCanvasBrush() {

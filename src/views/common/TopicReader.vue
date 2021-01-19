@@ -2,7 +2,7 @@
  * @Author: ShiHuiJun
  * @Date: 2020-03-19 09:36:04
  * @Last Modified by: nihc
- * @Last Modified time: 2020-12-18 17:43:31
+ * @Last Modified time: 2020-12-18 17:50:22
  */
 
 <template>
@@ -170,21 +170,17 @@
       <!-- 底部操作区 -->
       <div class="material-operate-box">
         <span
-          v-if="curFile.filePic&&curFile.filePic.length?true:false"
           class="btn txt-justify"
           @click="fnScale('big')"
         >&nbsp;放大&nbsp;</span>
         <span
-          v-if="curFile.filePic&&curFile.filePic.length?true:false"
           class="btn txt-justify"
           @click="scrollToPage(curPageNum-1)"
         >上一页</span>
         <span
-          v-if="curFile.filePic&&curFile.filePic.length?true:false"
           class="btn txt-justify"
         >&nbsp;{{curPageNum}}&nbsp;/&nbsp;{{curFile.filePic.length}}&nbsp;</span>
         <span
-          v-if="curFile.filePic&&curFile.filePic.length?true:false"
           class="btn txt-justify"
           @click="scrollToPage(curPageNum+1)"
         >下一页</span>
@@ -389,14 +385,14 @@ export default {
             setTimeout(() => {
                 if (newValue == this.$refs.material.scrollTop) {
                     // 延时执行后当 newValue 等于新的scrollTop，代表滚动结束
-                    // console.log('滚动结束');
+                    console.log('滚动结束');
                     this.lastScrollTop = newValue; // 每次滚动结束后都要给 lastScrollTop 赋值
                     this.isScrollEnd(); // 滚动结束提示批注保存
                 }
             }, 500); // 必须使用延时器，否则每次newValue和window.scrollY都相等，无法判断，watch的侦听周期大于20ms
             if (this.lastScrollTop == oldValue) {
                 // 每次滚动开始时 lastScrollTop 与 oldValue相等
-                // console.log('滚动开始');
+                console.log('滚动开始');
             }
         }
     },

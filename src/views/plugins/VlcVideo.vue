@@ -1,23 +1,7 @@
 /* vlc播放器 */
 <template>
-  <div class="vlc-box">
-    <div v-if="videoError!=='-1'" class="vlcVideo pos-r">
-      <div
-        v-if="videoError==='0'"
-        class="notSupportVlc pos-a vertical-horizontal-center"
-      >您的浏览器不支持播放该视频,请使用IE浏览器!</div>
-      <div
-        v-if="videoError==='1'"
-        class="notSupportVlc pos-a vertical-horizontal-center"
-      >该视频链接不存在,暂无法播放!</div>
-      <div
-        v-if="videoError==='2'"
-        class="notSupportVlc pos-a vertical-horizontal-center"
-      >议题已结束,无法查看直播视频!</div>
-    </div>
-
-    <div v-if="videoError==='-1'" ref="vlcVideo" class="vlcVideo">
-      <object
+  <div class="vlc-box" ref="vlcVideo" style="width:400px;height:400px">
+    <object
         class="vlcObj"
         type="application/x-vlc-plugin"
         id="vlc"
@@ -33,11 +17,15 @@
         <param name="loop" value="false" />
         <param name="fullscreen" value="true" />
       </object>
-    </div>
+       <div v-if="videoError === '0'" class="notSupportVlc">
+                您的浏览器不支持播放该视频,请使用IE浏览器!
+            </div>
   </div>
 </template>
 
 <script>
+import { IEVersion } from '@/utils/utils';
+
 export default {
     name: 'VlcVideo',
     components: {},
@@ -58,33 +46,26 @@ export default {
     methods: {
         // 切换视频
         playVideo(url) {
-            if (url) {
-                if (this.isIE) {
-                    this.videoError = '-1';
-                    this.$nextTick(() => {
-                        let vlc = document.getElementById('vlc');
-                        let mrl = encodeURI(url);
-                        // let mrl = encodeURI(
-                        //   'rtsp://admin1:admin1@172.19.82.241:554/cam/realmonitor?channel=21&subtype=0'
-                        // );
-                        // let mrl = encodeURI(
-                        //   'rtmp://172.19.82.130:1960/NBVod/mp4|D:\\NBVideo\\202004\\(2018)黔23行初235号1/(2018)黔23行初235号_0409_141825_CH52000'
-                        // );
-                        let id = vlc.playlist.add(mrl);
-                        vlc.video.aspectRatio = '4:3'; // 获取和设置长宽比使用视频屏幕。该属性采用字符串作为输入值。有效值为：“1:1”，“4:3”，“16:9”，“16:10”，“221:100”和“5:4”
-                        let vlcVideo = this.$refs.vlcVideo;
-                        let vlcH = vlcVideo.clientHeight;
-                        let vlcW = vlcVideo.clientWidth;
-                        vlc.style.height = `${vlcH}px`;
-                        vlc.style.width = `${vlcW}px`;
-                        vlc.style.position = `absolute`;
-                        vlc.playlist.playItem(id);
-                    });
-                } else {
-                    this.videoError = '0';
-                }
+            if (IEVersion() === -1) {
+                this.videoError = '0';
             } else {
-                this.videoError = '1';
+                let vlc = document.getElementById('vlc');
+                let mrl = encodeURI(url);
+                // let mrl = encodeURI(
+                //   'rtsp://admin1:admin1@172.19.82.241:554/cam/realmonitor?channel=21&subtype=0'
+                // );
+                // let mrl = encodeURI(
+                //   'rtmp://172.19.82.130:1960/NBVod/mp4|D:\\NBVideo\\202004\\(2018)黔23行初235号1/(2018)黔23行初235号_0409_141825_CH52000'
+                // );
+                let id = vlc.playlist.add(mrl);
+                vlc.video.aspectRatio = '4:3'; // 获取和设置长宽比使用视频屏幕。该属性采用字符串作为输入值。有效值为：“1:1”，“4:3”，“16:9”，“16:10”，“221:100”和“5:4”
+                let vlcVideo = this.$refs.vlcVideo;
+                let vlcH = vlcVideo.clientHeight;
+                let vlcW = vlcVideo.clientWidth;
+                vlc.style.height = `${vlcH}px`;
+                vlc.style.width = `${vlcW}px`;
+                vlc.style.position = `absolute`;
+                vlc.playlist.playItem(id);
             }
         }
     }

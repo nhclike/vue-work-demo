@@ -7,6 +7,8 @@ import {
 /* 插件 */
 /* 视频播放 */
 const Videojs = () => import(/* webpackChunkName: "Videojs" */ '@/views/plugins/Videojs');
+const VlcVideo = () => import(/* webpackChunkName: "VlcVideo" */ '@/views/plugins/VlcVideo');
+
 /* 富文本编辑器 */
 const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko');
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
@@ -20,7 +22,7 @@ const BaseTable = () => import(/* webpackChunkName: "BaseTable" */ '@/components
 
 /* pdf阅读插件查看单页面 */
 const PdfViewSingle = () => import(/* webpackChunkName: "PdfViewSingle" */ '@/components/PdfView/PdfViewSingle');
-
+/* 上传并且查看pdf */
 const uploadFileAndPdfView = () => import(/* webpackChunkName: "uploadFileAndPdfView" */ '@/components/PdfView/uploadFileAndPdfView');
 
 
@@ -47,6 +49,11 @@ export default [
                         path: 'videojs',
                         name: 'videojs',
                         component: Videojs
+                    },
+                    {
+                        path: 'VlcVideo',
+                        name: 'VlcVideo',
+                        component: VlcVideo
                     },
                     {
                         path: 'ueditor',

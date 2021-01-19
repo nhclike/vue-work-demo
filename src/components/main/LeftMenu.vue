@@ -30,6 +30,9 @@
             <li>
                 <router-link to="uploadFileAndPdfView">本地文件pdf查看</router-link>
             </li>
+             <li>
+                <router-link to="VlcVideo">vlc播放</router-link>
+            </li>
         </ul>
 
     </div>
