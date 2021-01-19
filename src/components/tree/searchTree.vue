@@ -1,4 +1,10 @@
-/* 带搜索功能并且可以动态追加节点的树组件 */
+/*带搜索功能并且可以动态追加节点的树组件
+ * @Author: nihc
+ * @Date: 2021-01-19 14:20:23
+ * @Last Modified by:   nihc
+ * @Last Modified time: 2021-01-19 14:20:23
+ */
+
 <template>
   <div>
     <a-input-search

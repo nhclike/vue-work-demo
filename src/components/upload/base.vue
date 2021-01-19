@@ -1,3 +1,10 @@
+/*
+ * @Author: nihc
+ * @Date: 2021-01-19 14:19:05
+ * @Last Modified by:   nihc
+ * @Last Modified time: 2021-01-19 14:19:05
+ */
+
 <template>
   <a-upload
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

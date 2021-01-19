@@ -1,3 +1,10 @@
+/*
+ * @Author: nihc
+ * @Date: 2021-01-19 14:19:43
+ * @Last Modified by:   nihc
+ * @Last Modified time: 2021-01-19 14:19:43
+ */
+
 <template>
   <a-table :columns="columns" :data-source="data">
     <a slot="name" slot-scope="text">{{ text }}</a>

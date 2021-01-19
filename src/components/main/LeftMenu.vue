@@ -1,4 +1,11 @@
+/*
+ * @Author: nihc
+ * @Date: 2021-01-19 14:20:51
+ * @Last Modified by: nihc
+ * @Last Modified time: 2021-01-19 14:24:02
+ */
 /* 主框架-左菜单-组件 */
+
 <template>
     <div class="left-menu">
         左菜单
@@ -22,6 +29,9 @@
                 <router-link to="BaseUpload">基本文件上传</router-link>
             </li>
             <li>
+                <router-link to="VueSimpleUploader">VueSimpleUploader插件</router-link>
+            </li>
+            <li>
                 <router-link to="BaseTable">基本表格显示</router-link>
             </li>
             <li>
@@ -30,9 +40,10 @@
             <li>
                 <router-link to="uploadFileAndPdfView">本地文件pdf查看</router-link>
             </li>
-             <li>
+            <li>
                 <router-link to="VlcVideo">vlc播放</router-link>
             </li>
+
         </ul>
 
     </div>

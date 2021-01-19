@@ -17,8 +17,11 @@ import '@/plugins/rem';// 引入px与rem换算方法
 import { showLoading, hideLoading } from './utils/loading';// 用于接口请求前后加载中
 import vfilter from './mixins/filter';// 过滤
 import VueLazyload from 'vue-lazyload';
+import uploader from 'vue-simple-uploader';
+
 let loadingImg = require('@/assets/images/icon/icon-loading.gif');
 let errorImg = require('@/assets/images/icon/icon-error.png');
+Vue.use(uploader);
 
 Vue.use(VueLazyload, {
     preLoad: 1.3,

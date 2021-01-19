@@ -1,4 +1,11 @@
+/*
+ * @Author: nihc
+ * @Date: 2021-01-19 14:20:43
+ * @Last Modified by:   nihc
+ * @Last Modified time: 2021-01-19 14:20:43
+ */
 /* 主框架-头部-组件 */
+
 <template>
     <div class="main-header">
         主页面---公用头部

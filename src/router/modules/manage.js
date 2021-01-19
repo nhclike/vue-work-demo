@@ -14,9 +14,13 @@ const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko')
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
 /* 组件 */
 /* tree */
-const searchTree = () => import(/* webpackChunkName: "chat" */ '@/views/tree/tree');
+const searchTree = () => import(/* webpackChunkName: "searchTree" */ '@/views/tree/tree');
 /* 上传插件 */
-const BaseUpload = () => import(/* webpackChunkName: "chat" */ '@/components/upload/base');
+const BaseUpload = () => import(/* webpackChunkName: "BaseUpload" */ '@/components/upload/base');
+const VueSimpleUploader = () => import(/* webpackChunkName: "VueSimpleUploader" */ '@/components/upload/VueSimpleUploader');
+
+
+
 /* 表格 */
 const BaseTable = () => import(/* webpackChunkName: "BaseTable" */ '@/components/table/basic');
 
@@ -79,6 +83,11 @@ export default [
                         path: 'BaseUpload',
                         name: 'BaseUpload',
                         component: BaseUpload
+                    },
+                    {
+                        path: 'VueSimpleUploader',
+                        name: 'VueSimpleUploader',
+                        component: VueSimpleUploader
                     },
                     {
                         path: 'BaseTable',
