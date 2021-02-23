@@ -29,6 +29,8 @@ const PdfViewSingle = () => import(/* webpackChunkName: "PdfViewSingle" */ '@/co
 /* 上传并且查看pdf */
 const uploadFileAndPdfView = () => import(/* webpackChunkName: "uploadFileAndPdfView" */ '@/components/PdfView/uploadFileAndPdfView');
 
+/* 南北视频插件 */
+const NBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NBVideo');
 
 /* 常用业务功能 */
 /* websocket消息聊天 */
@@ -58,6 +60,11 @@ export default [
                         path: 'VlcVideo',
                         name: 'VlcVideo',
                         component: VlcVideo
+                    },
+                    {
+                        path: 'NBVideo',
+                        name: 'NBVideo',
+                        component: NBVideo
                     },
                     {
                         path: 'ueditor',

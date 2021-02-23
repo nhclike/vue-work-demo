@@ -2,7 +2,7 @@
  * @Author: nihc
  * @Date: 2021-01-19 14:20:51
  * @Last Modified by: nihc
- * @Last Modified time: 2021-01-19 14:24:02
+ * @Last Modified time: 2021-02-23 14:55:43
  */
 /* 主框架-左菜单-组件 */
 
@@ -42,6 +42,9 @@
             </li>
             <li>
                 <router-link to="VlcVideo">vlc播放</router-link>
+            </li>
+            <li>
+                <router-link to="NBVideo">南北插件播放</router-link>
             </li>
 
         </ul>

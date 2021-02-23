@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import MainHeader from '@/components/main/MainHeader';
+import MainHeader from '@/components/manage/MainHeader';
 export default {
     name: 'MainLayout',
     components: {

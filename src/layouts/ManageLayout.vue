@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import MainHeader from '@/components/main/MainHeader';
-import LeftMenu from '@/components/main/LeftMenu';
+import MainHeader from '@/components/manage/MainHeader';
+import LeftMenu from '@/components/manage/LeftMenu';
 export default {
     name: 'ManageLayout',
     components: {

@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 /*
  * @Author: ShiHuiJun
  * @Date: 2020-01-01 13:22:16
- * @Last Modified by: ShiHuiJun
- * @Last Modified time: 2020-09-01 15:30:19
+ * @Last Modified by: nihc
+ * @Last Modified time: 2021-02-23 15:25:17
  */
 
 import { Message } from 'element-ui';
@@ -96,7 +97,7 @@ let getWsUrl = () => {
 };
 
 /**
- * 使用url传参时，取参数的值公用方法 1
+ * c
  * @method getQueryString
  * @description 使用有局限性,不适用iframe嵌入的页面 decodeURI与encodeURI成对使用,,否则IE会报错
  * @param {String} name 参数名称
@@ -123,7 +124,7 @@ let getParameter = (param) => {
     //
     let url = window.location.href.split('?')[1]; // 获取url里"?"后面的值
     if (url && url.indexOf('&') > 0) {
-    // 多个参数
+        // 多个参数
         let urlParamArray = url.split('&'); // 分开每个参数，并放到数组里
         for (let i = 0; i < urlParamArray.length; i++) {
             let paramName = urlParamArray[i].split('='); // 把每个参数名和值分开，并放到数组里
@@ -133,7 +134,7 @@ let getParameter = (param) => {
             }
         }
     } else {
-    // 只有1个参数
+        // 只有1个参数
         let paramValue = url.split('=')[1];
         return decodeURI(paramValue); // 中文解码
     }
@@ -148,7 +149,7 @@ let getParameter = (param) => {
  */
 let isIE = () => {
     if (!!window.ActiveXObject || 'ActiveXObject' in window) {
-    // if (navigator.userAgent.indexOf('MSIE') != -1) {
+        // if (navigator.userAgent.indexOf('MSIE') != -1) {
         return true;
     }
     return false;
@@ -161,11 +162,9 @@ let isIE = () => {
  */
 let IEVersion = () => {
     let userAgent = navigator.userAgent; // 取得浏览器的userAgent字符串
-    let isLessIE11 =
-    userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1; // 判断是否为小于IE11的浏览器
+    let isLessIE11 = userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1; // 判断是否为小于IE11的浏览器
     let isEdge = userAgent.indexOf('Edge') > -1 && !isLessIE11; // 判断是否为IE的Edge浏览器
-    let isIE11 =
-    userAgent.indexOf('Trident') > -1 && userAgent.indexOf('rv:11.0') > -1; // 判断是否为IE11浏览器
+    let isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf('rv:11.0') > -1; // 判断是否为IE11浏览器
     if (isLessIE11) {
         let IEReg = new RegExp('MSIE (\\d+\\.\\d+);'); // 正则表达式匹配浏览器的userAgent字符串中MSIE后的数字部分，，这一步不可省略！！！
         IEReg.test(userAgent);
@@ -187,13 +186,13 @@ let IEVersion = () => {
             return 6;
         }
     } else if (isEdge) {
-    // edge
+        // edge
         return 'edge';
     } else if (isIE11) {
-    // IE11
+        // IE11
         return 11;
     } else {
-    // 不是ie浏览器
+        // 不是ie浏览器
         return -1;
     }
 };
@@ -220,90 +219,6 @@ let platformName = () => {
 /* --------------------移动应用相关-结束-------------------- */
 
 /* --------------------数据处理-开始-------------------- */
-/**
- * 日期格式化成 指定 形式
- * @method Date.prototype.Format
- * @param {*} formatStr 需要格式化的形式
- * @return 格式化后的日期
- * @description 年(yy|YY|yyyy|YYYY) 可以用 1-4 个占位符 月(M|MM)、日(dd|DD)、小时(hh|HH)、分(m|mm)、秒(s|S|ss|SS) 可以用 1-2 个占位符 星期(w|W)可以用 1 个占位符
- * @description new Date('Fri Mar 06 1899 11:53:44 GMT+0800 (中国标准时间)').getYear() 2020返回120 1999返回99 1900返回0 1899返回-1
- * @description 创建 Date 对象 new Date() ==> Fri Mar 06 2020 14:22:42 GMT+0800 (中国标准时间)
- * @description 创建 Date 对象 new Date(milliseconds) 如 new Date(88) ==> Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间)
- * @description 创建 Date 对象 new Date(dateString) 如 new Date('2078') ==> Sat Jan 01 2078 08:00:00 GMT+0800 (中国标准时间)
- * @description 创建 Date 对象 new Date(year, month, day, hours, minutes, seconds, milliseconds) 如 new Date(2020, 1, 2, 3, 4, 55, 198) ==> Sun Feb 02 2020 03:04:55 GMT+0800 (中国标准时间)
- * @example var curTime=new Date().Format('hh:mm:ss') ==> 08:09:04
- * @example (new Date()).Format("yyyy-MM-dd hh:mm:ss w") ==> 2020-03-06 08:09:04 五
- * @example (new Date()).Format("yyyy-M-d h:m:s") ==> 2020-3-6 8:9:4
- */
-// eslint-disable-next-line no-extend-native
-Date.prototype.Format = function(formatStr) {
-    let str = formatStr;
-    let Week = ['日', '一', '二', '三', '四', '五', '六'];
-
-    str = str.replace(/yyyy|YYYY/, this.getFullYear()); // 年份替换 yyyy|YYYY
-    str = str.replace(
-        /yy|YY/,
-        this.getYear() % 100 > 9
-            ? (this.getYear() % 100).toString()
-            : '0' + (this.getYear() % 100)
-    ); // 年份替换 yy|YY getYear 3位数和2位数的 模 100后 返回 后2位数,getYear 一位数的返回'0'+'1位数 '如 01
-    let month = this.getMonth() + 1; // 月份 从0开始不是从1开始
-    str = str.replace(/MM/, month > 9 ? month.toString() : '0' + month); // 月份替换 MM 返回2位数
-    str = str.replace(/M/g, month); // 月份替换 M 返回1位数或2位数
-    str = str.replace(/w|W/g, Week[this.getDay()]); // 星期替换 w|W 0对应'日'
-    str = str.replace(
-        /dd|DD/,
-        this.getDate() > 9 ? this.getDate().toString() : '0' + this.getDate()
-    ); // 日替换 dd|DD 返回2位数
-    str = str.replace(/d|D/g, this.getDate()); // 日替换 dd|DD 返回1位数或2位数
-    str = str.replace(
-        /hh|HH/,
-        this.getHours() > 9 ? this.getHours().toString() : '0' + this.getHours()
-    ); // 小时替换 hh|HH 返回2位数
-    str = str.replace(/h|H/g, this.getHours()); // 小时替换 hh|HH 返回1位数或2位数
-    str = str.replace(
-        /mm/,
-        this.getMinutes() > 9
-            ? this.getMinutes().toString()
-            : '0' + this.getMinutes()
-    ); // 分钟替换 mm 返回2位数
-    str = str.replace(/m/g, this.getMinutes()); // 分钟替换 mm 返回1位数或2位数
-    str = str.replace(
-        /ss|SS/,
-        this.getSeconds() > 9
-            ? this.getSeconds().toString()
-            : '0' + this.getSeconds()
-    ); // 秒替换 ss|SS 返回2位数
-    str = str.replace(/s|S/g, this.getSeconds()); // 秒替换 ss|SS 返回1位数或2位数
-    return str;
-};
-
-/**
- * 对 String 扩展了一个 trim 方法 用于删除字符串的头尾空格及特殊字符串
- * @description 解决IE8不兼容问题
- * @method String.prototype.trim
- * @param val 需要删除的值
- * @example str.trim('xiaoming')
- */
-// eslint-disable-next-line no-extend-native
-String.prototype.trim = function() {
-    return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-};
-
-/**
- * 对 Array 扩展了一个 remove 方法 用于删除数组中的某个值
- * @method Array.prototype.remove
- * @param val 需要删除的值
- * @example arr.remove('xiaoming')
- */
-// eslint-disable-next-line no-extend-native
-Array.prototype.remove = function(val) {
-    let index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
-};
-
 /**
  * 日期转换成 ms 毫秒数
  * @method formatDateToMs
@@ -345,17 +260,17 @@ let formatDateToNormal = (date) => {
     let mArr = tArr[0].split(':'); // 时分秒
 
     let cur =
-    parseInt(dArr[0], 10) +
-    '/' +
-    parseInt(dArr[1], 10) +
-    '/' +
-    parseInt(dArr[2], 10) +
-    ' ' +
-    parseInt(mArr[0], 10) +
-    ':' +
-    parseInt(mArr[1], 10) +
-    ':' +
-    parseInt(mArr[2], 10);
+        parseInt(dArr[0], 10) +
+        '/' +
+        parseInt(dArr[1], 10) +
+        '/' +
+        parseInt(dArr[2], 10) +
+        ' ' +
+        parseInt(mArr[0], 10) +
+        ':' +
+        parseInt(mArr[1], 10) +
+        ':' +
+        parseInt(mArr[2], 10);
     return cur;
 };
 
@@ -477,7 +392,7 @@ let formateLocation = (v, i) => {
 let arrDeduplication1 = (arr) => {
     // 第一层for 用来控制循环的次数 如 arr[1]=2
     for (let i = 0; i < arr.length; i++) {
-    // 第二层for 用来控制与第一层比较的元素 如 arr[2]=3
+        // 第二层for 用来控制与第一层比较的元素 如 arr[2]=3
         for (let j = i + 1; j < arr.length; j++) {
             // 比较arr[i]与arr[j] 如 arr[1]与arr[2] 如果相等
             if (arr[i] == arr[j]) {
@@ -500,7 +415,7 @@ let arrDeduplication1 = (arr) => {
 let arrDeduplication2 = (arr) => {
     arr.sort(); // sort排序是把元素当字符串排序 如[1,10,2,3,3,4]
     for (let i = 0; i < arr.length - 1; i++) {
-    // 如arr[3]与arr[4]
+        // 如arr[3]与arr[4]
         if (arr[i] == arr[i + 1]) {
             arr.splice(i, 1); // 如[1,10,2,3,4]
             i--; // 如 2
@@ -591,7 +506,7 @@ let arrL2SSort = (arr) => {
     return arr;
 };
 
-/** 方法说明
+/** 通用排序
  * @sortByCommon 通用排序
  * @param {Object} obj1 字段1
  * @param {Object} obj2 字段2
@@ -634,7 +549,7 @@ let delObj = (obj) => {
 };
 
 /**
- * 查询数组中与给定值最相近的数组
+ * 查询数组中与给定值最相近的数字索引
  * @method closestNumberIndex
  * @param {Array} arr 需要查询的数组
  * @param {String} uniqueId 对象数组中的某个属性 非对象数组为空
@@ -712,8 +627,48 @@ let getArrDefValIdx = (arr, uniqueId, value) => {
         }
     } else {
         for (let j = 0; j < arr.length; j++) {
-            if (arr.indexOf(arr[j]) > -1) {
+            if (arr[j] === value) {
                 return j;
+            }
+        }
+    }
+    return -1;
+};
+
+/**
+ * 查询数组中子数组中某个值的索引
+ * @method getchildArrDefValIdx
+ * @param {Array} arr 需要查询的数组
+ * @param {String} childArr 数组中的子数组
+ * @param {String} uniqueId 对象数组中的某个属性 非对象数组为空
+ * @param {*} value 需要查询的值
+ * @returns {Number} 返回索引号 -1 不存在
+ * @example  getchildArrDefValIdx(
+                    this.userGroupTreeData_enable,
+                    'children',
+                    'id',
+                    this.userInfo().deptId
+                )
+ */
+let getchildArrDefValIdx = (arr, childArr, uniqueId, value) => {
+    if (uniqueId) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[childArr]) {
+                for (let [index, row] of arr[childArr].entries()) {
+                    if (row[uniqueId] === value) {
+                        return index;
+                    }
+                }
+            }
+        }
+    } else {
+        for (let j = 0; j < arr.length; j++) {
+            if (arr[childArr]) {
+                for (let [index, row] of arr[childArr].entries()) {
+                    if (row === value) {
+                        return index;
+                    }
+                }
             }
         }
     }
@@ -736,6 +691,7 @@ let removeArrDefVal = (arr, uniqueId, value) => {
 };
 
 /**
+ * 将json数据转为FormData形式
  * @method json2FormData
  * @param {JSON} jsonObj
  * @returns {FormData} 返回FormData形式
@@ -748,6 +704,28 @@ let json2FormData = (jsonObj) => {
     });
     return formData;
 };
+
+/**
+ * 将数组转为只含有指定属性的数组
+ * @method objArr2KeyArr
+ * @param {Array} arr 被查找的对象中的数组
+ * @param {String} key 数组的唯一识别字段
+ * @return  -1:数组错误 -2:key不存在
+ * @example
+ */
+let objArr2KeyArr = (arr, key) => {
+    if (!arr) {
+        return -1;
+    }
+    let newArr = [];
+    arr.forEach(function(v, i) {
+        if (!v[key]) {
+            return -2;
+        }
+        newArr.push(v[key]);
+    });
+    return newArr;
+};
 /* --------------------数据处理-结束-------------------- */
 
 /* --------------------地图相关-开始-------------------- */
@@ -757,8 +735,7 @@ let json2FormData = (jsonObj) => {
  */
 let loadBMapScript = () => {
     let script = document.createElement('script');
-    script.src =
-    'http://api.map.baidu.com/api?v=2.0&ak=k7uT4pdUEKqPr1d9ZSYDq1jxzd8fXtKk&callback=bMapInit';
+    script.src = 'http://api.map.baidu.com/api?v=2.0&ak=k7uT4pdUEKqPr1d9ZSYDq1jxzd8fXtKk&callback=bMapInit';
     document.body.appendChild(script);
 };
 
@@ -822,7 +799,7 @@ let base64ToBlob = (dataUrl) => {
  * @param {Number} rem rem值
  * @example 根节点字体大小16px 如果存在 rem2px(1) ==> 1*16 ==> 16 否则 rem2px(1) ==> 1*100 ==> 100
  */
-let rem2px = rem => {
+let rem2px = (rem) => {
     if (document.documentElement.style.fontSize) {
         return rem * document.documentElement.style.fontSize.replace('px', '');
     } else {
@@ -831,48 +808,475 @@ let rem2px = rem => {
 };
 /* --------------------页面渲染相关-结束-------------------- */
 
+/**
+ * 分页
+ * @method pagination
+ * @param {Number} pageNo 页码
+ * @param {Number} pageSize 每页数量
+ * @param {Array} array 需要分页的数组
+ * @example 根节点字体大小16px 如果存在 pagination(1, 10, [])
+ */
+let pagination = (pageNo, pageSize, array) => {
+    let offset = (pageNo - 1) * pageSize;
+    return offset + pageSize >= array.length
+        ? array.slice(offset, array.length)
+        : array.slice(offset, offset + pageSize);
+};
+
 // axios get请求 参数需要稍微封装
-let axiosDataAdapter = obj => {
+let axiosDataAdapter = (obj) => {
     return {
         params: obj
     };
 };
 
-export default {
-    ctx: ctx,
-    getPath: getPath,
-    getRootPath: getRootPath,
-    getRelativePath: getRelativePath,
-    getWsUrl: getWsUrl,
-    getQueryString: getQueryString,
-    getParameter: getParameter,
-    isIE: isIE,
-    IEVersion: IEVersion,
-    platformName: platformName,
-    formatDateToM: formatDateToM,
-    formatMsToDate: formatMsToDate,
-    formatDateToNormal: formatDateToNormal,
-    formatDateToYMD: formatDateToYMD,
-    formatDateToMD: formatDateToMD,
-    formatDateToTime: formatDateToTime,
-    thousandsSeparator: thousandsSeparator,
-    formateLocation: formateLocation,
-    arrDeduplication1: arrDeduplication1,
-    arrDeduplication2: arrDeduplication2,
-    arrDeduplication3: arrDeduplication3,
-    arrDeduplication4: arrDeduplication4,
-    arrS2LSort: arrS2LSort,
-    arrL2SSort: arrL2SSort,
-    sortByCommon: sortByCommon,
-    replaceStr: replaceStr,
-    delObj: delObj,
-    closestNumberIndex: closestNumberIndex,
-    getJSONArrDefValIdx: getJSONArrDefValIdx,
-    removeArrDefVal: removeArrDefVal,
-    json2FormData: json2FormData,
-    loadBMapScript: loadBMapScript,
-    judgeAddr: judgeAddr,
-    base64ToBlob: base64ToBlob,
-    rem2px: rem2px,
-    axiosDataAdapter: axiosDataAdapter
+// 全屏方法---触发F11
+let requestFullScreen = () => {
+    let el = document.documentElement;
+
+    let rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+    if (typeof rfs != 'undefined' && rfs) {
+        rfs.call(el);
+        return;
+    }
+    let script = new ActiveXObject('WScript.Shell');
+    script.SendKeys('{F11}');
+};
+
+/**
+ * 压缩图片
+ *@param img 被压缩的img对象
+ * @param type 压缩后转换的文件类型
+ * @param mx 触发压缩的图片最大宽度限制
+ * @param mh 触发压缩的图片最大高度限制
+ */
+let compressImg = (img, type, mx, mh) => {
+    return new Promise((resolve, reject) => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const { width: originWidth, height: originHeight } = img;
+        // 最大尺寸限制
+        const maxWidth = mx;
+        const maxHeight = mh;
+        // 目标尺寸
+        let targetWidth = originWidth;
+        let targetHeight = originHeight;
+        if (originWidth > maxWidth || originHeight > maxHeight) {
+            if (originWidth / originHeight > 1) {
+                // 宽图片
+                targetWidth = maxWidth;
+                targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+            } else {
+                // 高图片
+                targetHeight = maxHeight;
+                targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+            }
+        }
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        context.clearRect(0, 0, targetWidth, targetHeight);
+        // 图片绘制
+        context.drawImage(img, 0, 0, targetWidth, targetHeight);
+        // canvas.toBlob(function(blob) {
+        //     resolve(blob);
+        // }, type || 'image/png'); });
+        let baseStr = canvas.toDataURL('image/png');
+        console.log('baseStr', baseStr);
+        resolve(baseStr);
+    });
+};
+
+let dataURLtoBlob = (dataurl) => {
+    let arr = dataurl.split(','); let mime = arr[0].match(/:(.*?);/)[1];
+    let bstr = atob(arr[1]); let n = bstr.length; let
+        u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+};
+
+
+// 压缩前将file转换成img对象
+let readImg = (file) => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+        };
+        reader.onerror = function(e) {
+            reject(e);
+        };
+        reader.readAsDataURL(file);
+        img.onload = function() {
+            resolve(img);
+        };
+        img.onerror = function(e) {
+            reject(e);
+        };
+    });
+};
+/**
+ * [isFullscreen 判断浏览器是否全屏]---此方法只有在调用setFullscreen才能作为是否全屏的依据
+ * @return [全屏则返回当前调用全屏的元素,不全屏返回false]
+ */
+let isFullscreen = () => {
+    console.log(document.fullscreenElement);
+    console.log(document.msFullscreenElement);
+    console.log(document.mozFullScreenElement);
+    console.log(document.webkitFullscreenElement);
+    return document.fullscreenElement ||
+       document.msFullscreenElement ||
+       document.mozFullScreenElement ||
+       document.webkitFullscreenElement || false;
+};
+
+function IsF11Fullscreen() {
+    let explorer = window.navigator.userAgent.toLowerCase();
+    if (explorer.indexOf('chrome') > 0) { // webkit
+        if (document.body.scrollHeight === window.screen.height && document.body.scrollWidth === window.screen.width) {
+            // alert("全屏");
+            return true;
+        } else {
+            // alert("不全屏");
+            return false;
+        }
+    } else { // IE 9+  fireFox
+        if (window.outerHeight === window.screen.height && window.outerWidth === window.screen.width) {
+            // alert("全屏");
+            return true;
+        } else {
+            // alert("不全屏");
+            return false;
+        }
+    }
+}
+
+/**
+ * 树形数据转换
+ * @param {*} data
+ * @param {*} id
+ * @param {*} pid
+ */
+let treeDataTranslate = (data, id = 'id', pid = 'parentId') => {
+    let res = [];
+    let temp = {};
+    for (let i = 0; i < data.length; i++) {
+        temp[data[i][id]] = data[i];
+    }
+    for (let k = 0; k < data.length; k++) {
+        if (temp[data[k][pid]] && data[k][id] !== data[k][pid]) {
+            if (!temp[data[k][pid]]['children']) {
+                temp[data[k][pid]]['children'] = [];
+            }
+            if (!temp[data[k][pid]]['_level']) {
+                temp[data[k][pid]]['_level'] = 1;
+            }
+            data[k]['_level'] = temp[data[k][pid]]._level + 1;
+            temp[data[k][pid]]['children'].push(data[k]);
+        } else {
+            res.push(data[k]);
+        }
+    }
+    return res;
+};
+
+let getByteLen = (str) => {
+    if (str == null) {
+        return 0;
+    }
+    if (typeof str != 'string') {
+        str = String(str);
+    }
+    // eslint-disable-next-line no-control-regex
+    return str.replace(/[^\x00-\xff]/g, '01').length;
+};
+
+let global = {
+    aaa: ''
+};
+
+/**
+ * 获取cpu信息
+ * @method getCpu
+ * @example
+ */
+let getCpu = () => {
+    let locator = new ActiveXObject('WbemScripting.SWbemLocator');
+    let service = locator.ConnectServer('.');
+    let properties = service.ExecQuery('SELECT * FROM Win32_Processor'); // CPU信息
+    let e = new Enumerator(properties);
+    let info = {};
+    // 使用了 atEnd 方法来决定是否到达了一个驱动器列表的末尾;使用了 moveNext 方法在 集合中向下一个驱动器移动
+    for (; !e.atEnd(); e.moveNext()) {
+        let p = e.item();
+        info.Availability = p.Availability; // 设备的状态
+        info.Caption = p.Caption; // -设备的简短描述
+        info.CpuStatus = p.CpuStatus; // -处理器的当前状态
+        info.DeviceID = p.DeviceID; // 在系统上的处理器的唯一标识符
+        info.Level = p.Level; // 处理器类型的定义。该值取决于处理器的体系结构
+        info.Name = p.Name; // 处理器的名称
+        info.ProcessorID = p.ProcessorID; // cpu序列号 描述处理器功能的处理器的信息
+        info.ProcessorType = p.ProcessorType; // 处理器的主要功能
+        info.SystemName = p.SystemName; // 系统的名称
+    }
+    return info;
+};
+
+/**
+ * 获取硬盘信息
+ * @method getDisk
+ * @example
+ */
+let getDisk = () => {
+    let locator = new ActiveXObject('WbemScripting.SWbemLocator');
+    let service = locator.ConnectServer('.');
+    let properties = service.ExecQuery('SELECT * FROM Win32_DiskDrive'); // 硬盘信息
+    let e = new Enumerator(properties);
+    let info = {};
+    for (; !e.atEnd(); e.moveNext()) {
+        let p = e.item();
+        info.Availability = p.Availability; //
+        info.Caption = p.Caption; //
+        info.DeviceID = p.DeviceID; //
+        info.Name = p.Name; //
+        info.SerialNumber = p.SerialNumber.replace(/(^\s*)|(\s*$)/g, ''); // 硬盘序列号
+        info.Signature = p.Signature; //
+        info.Status = p.Status; //
+        info.SystemName = p.SystemName; //
+    }
+    return info;
+};
+
+/**
+ * 获得本机内网ip
+ * @method getAdapterInfo
+ * @example
+ */
+let getAdapterInfo = () => {
+    let locator = new ActiveXObject('WbemScripting.SWbemLocator');
+    let service = locator.ConnectServer('.');
+    let properties = service.ExecQuery('SELECT * FROM Win32_NetworkAdapterConfiguration where IPEnabled=TRUE'); //
+    let e = new Enumerator(properties);
+    let info = {};
+    for (; !e.atEnd(); e.moveNext()) {
+        let p = e.item();
+        info.Caption = p.Caption;
+        info.IP = p.IPAddress(0);
+        info.MAC = p.MACAddress;
+    }
+    return info;
+};
+
+/**
+ * 获得主板信息
+ * @method getBaseBoard
+ * @example
+ */
+let getBaseBoard = () => {
+    let locator = new ActiveXObject('WbemScripting.SWbemLocator');
+    let service = locator.ConnectServer('.');
+    let properties = service.ExecQuery('SELECT * FROM Win32_BaseBoard'); //
+    let e = new Enumerator(properties);
+    let info = {};
+    for (; !e.atEnd(); e.moveNext()) {
+        let p = e.item();
+        info.HostingBoard = p.HostingBoard;
+        info.Manufacturer = p.Manufacturer;
+        info.PoweredOn = p.PoweredOn;
+        info.Product = p.Product; // 主板序列号
+        info.SerialNumber = p.SerialNumber;
+        info.Version = p.Version;
+    }
+    return info;
+};
+
+/**
+ * 检查是否安装xy客户端
+ * @method checkXyClient
+ * @param {String} regKey 私有云 HKEY_CLASSES_ROOT\xylink-private\URL Protocol 公有云 HKEY_CLASSES_ROOT\xylink\URL Protocol
+ * @returns {Boolean} true 已安装xy客户端
+ * @example
+ */
+let checkXyClient = (regKey) => {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    let hasXyClient;
+    if (!isIE()) {
+        hasXyClient = true;
+        return hasXyClient;
+    }
+    try {
+        let shell = new ActiveXObject('WScript.shell');
+        // eslint-disable-next-line no-unused-vars
+        let value = shell.regRead(regKey);
+        value = null;
+        shell = null;
+        hasXyClient = true;
+    } catch (err) {
+        console.log(`[utils]`, 'checkXyClient', err);
+    }
+    return hasXyClient;
+};
+
+/**
+ * 拉起xy客户端
+ * @method pullClient
+ * @param {Boolean} hasXyClient
+ * @param {String} joinmeetingUrl
+ * @param {String} iframeId
+ * @example
+ */
+let pullClient = (hasXyClient, joinmeetingUrl, iframeId) => {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    if (joinmeetingUrl && hasXyClient) {
+        $(`#${iframeId}`).attr('src', joinmeetingUrl);
+    }
+};
+
+
+/**
+ * 删除指定的ActiveX控件
+ * @method checkXyClient
+ * @param {String} AcitveXObjectID 要查找的节点范围，从此节点一下查找待删除的ActiveX
+ * @param {String} ContainerID 要删除的ActiveX控件ID
+ * @returns {Boolean} true 已安装xy客户端
+ * @example
+ */
+
+let ActiveXKiller = (AcitveXObjectID, ContainerID) => {
+    // debugger;
+    let ce = document.getElementById(ContainerID);
+    if (ce) {
+        let cce = ce.children;
+        for (let i = 0; i < cce.length; i = i + 1) {
+            if (cce[i].id == AcitveXObjectID) {
+                ce.removeChild(cce[i]);
+            }
+        }
+    }
+};
+
+
+/**
+ * 函数防抖封装
+ * @method debounce
+ * @description 一个频繁触发的函数，在规定时间内，只让最后一次生效，前面的不生效
+ * @param {Function} fn 回调函数
+ * @param {Number} wait  时间
+ * @param {Boolean} immediate  表示是否立即执行
+ * @example 应用场景:输入框实时搜素，频繁操作点赞和取消点赞
+ */
+let debounce = (fn, wait = 1000, immediate = false) => {
+    let timer;
+    return function() {
+        let context = this;
+        let args = arguments;
+        timer && clearTimeout(timer);
+        if (immediate) {
+            let callNow = !timer;
+            timer = setTimeout(() => {
+                timer = null;
+            }, wait);
+            if (callNow) {
+                fn.apply(context, args);
+            }
+        } else {
+            timer = setTimeout(() => {
+                fn.apply(context, args);
+            }, wait);
+        }
+    };
+};
+
+/**
+ * 函数节流
+ * @method Throttle
+ * @description 一个频繁触发的函数，在规定时间内，函数执行一次后，只有大于设定的执行周期后才会执行第二次
+ * @param {Function} fn 回调函数
+ * @param {Number} interval 时间
+ * @example 应用场景:一般是onrize，onscroll（比如是否滑到底部自动加载更多）等这些频繁触发的函数
+ */
+
+let Throttle = (fn, interval = 500) => {
+    let last;
+    let timer;
+    return function() {
+        let args = arguments;
+        let now = Number(new Date());
+        if (last && now - last < interval) {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                last = now;
+                fn.apply(this, args);
+            }, interval);
+        } else {
+            last = now;
+            fn.apply(this, args);
+        }
+    };
+};
+
+export {
+    ctx,
+    global,
+    getPath, // 获取项目路径
+    getRootPath, // 返回项目的根路径
+    getRelativePath, // 获取相对路径
+    getWsUrl, // 获取 WebSocket 路径
+    getQueryString, // 使用url传参时，取参数的值公用方法 1
+    getParameter, // 使用url传参时，取参数的值公用方法 2
+    isIE, // 判断当前浏览器是否为IE
+    IEVersion, // 获取IE的版本号
+    platformName, // 获取平台名称 android 或 io
+    formatDateToM, // 日期转换成 ms 毫秒数
+    formatMsToDate, // 毫秒数转换成 ms 日期
+    formatDateToNormal, // 将特殊格式日期转化为正常格式日期
+    formatDateToYMD, // 日期格式化成 yyyy-mm-dd 形式
+    formatDateToMD, // 日期格式化成 m月d日 形式
+    formatDateToTime, // 时间格式化成 hh:mm:ss 形式
+    thousandsSeparator, // 添加千分符
+    formateLocation, // 经纬度转化为度分秒
+    arrDeduplication1, // 数组去重 方法1 双重for循环去重
+    arrDeduplication2, // 数组去重 方法2 单层for循环与sort排序结合
+    arrDeduplication3, // 数组去重 方法3 用一个空数组去存首次出现的元素
+    arrDeduplication4, // 数组去重 方法4 利用对象给首次出现的属性赋值并用一个空数组去存首次出现的元素
+    arrS2LSort, // 冒泡排序 从小到大排序
+    arrL2SSort, // 冒泡排序 从大到小排序
+    sortByCommon, // 通用排序
+    replaceStr, // 过滤特殊字符
+    delObj, // 清空对象
+    closestNumberIndex, // 查询数组中与给定值最相近的数字索引
+    getJSONArrDefValIdx, // 获取JSON对象中指定数组中指定值的索引号
+    getArrDefValIdx, // 查询数组中某个值的索引
+    getchildArrDefValIdx, // 查询数组中子数组中某个值的索引
+    removeArrDefVal, // 删除数组中的某个值
+    json2FormData, // 将json数据转为FormData形式
+    objArr2KeyArr, // 将数组转为只含有指定属性的数组
+    loadBMapScript, // 调用百度地图API
+    judgeAddr, // 地址判断
+    base64ToBlob, // 将base64转成blob格式
+    rem2px, // rem值转化为px值
+    pagination, // 分页
+    axiosDataAdapter, // axios get请求 参数需要稍微封装
+    requestFullScreen, // 全屏
+    isFullscreen, // 判断是否全屏
+    IsF11Fullscreen,
+    treeDataTranslate, // 树形数据转换
+    getByteLen, // 获取输入字符长度，汉字算2个字符
+    getCpu, // 获取cpu信息
+    getDisk, // 获取硬盘信息
+    getAdapterInfo, // 获得本机内网ip
+    getBaseBoard, // 获得主板信息
+    checkXyClient, // 检查是否安装xy客户端
+    pullClient, // 拉起xy客户端
+    ActiveXKiller, // 删除指定的ActiveX控件
+    compressImg, // 压缩图片
+    readImg,
+    dataURLtoBlob, // base64转blob
+    debounce, // 防抖动
+    Throttle// 节流
 };
