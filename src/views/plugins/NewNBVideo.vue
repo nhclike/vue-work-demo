@@ -192,6 +192,9 @@ export default {
                 let _this = this;
                 console.log('NBVideo---this.videoObj', this.videoObj);
                 try {
+                    // _this.videoObj::signals_CallBack_JS(Window_num,URL,PlayStatus){
+                    //     console.log("signals_CallBack_JS,")
+                    // }
                     _this.setPlayMode();
                     _this.setWinNum();
                 } catch (error) {

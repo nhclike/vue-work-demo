@@ -2,7 +2,7 @@
  * @Author: ShiHuiJun
  * @Date: 2020-03-19 09:36:04
  * @Last Modified by: nihc
- * @Last Modified time: 2020-12-18 17:50:22
+ * @Last Modified time: 2021-02-24 17:31:12
  */
 
 <template>
@@ -15,33 +15,41 @@
     <div class="content full-w">
       <!-- 材料/笔录/会议纪要 -->
       <div ref="material" class="material" @scroll="handleScroll()">
-        <div v-if="(curFile.filePic&&curFile.filePic.length<1)||!curFile.filePic" class="noFile">
+        <div v-if="(curFile.pngList&&curFile.pngList.length<1)||!curFile.pngList" class="noFile">
           <img class src="../../assets/images/topicReader/noFile.png" />
           <p>{{noFileMsg}}</p>
         </div>
         <div
-          v-if="curFile.filePic&&curFile.filePic.length>0?true:false"
+          v-if="showFile === 1"
           ref="pageBox"
           class="pageBox"
+          :style="materialStyleObj.pageBoxStyle"
+
         >
           <div
             @mouseenter="isArea=true;"
             @mouseout="isArea=false;"
             :id="`page${index+1}`"
-            :style="pageStyle"
+            :style="materialStyleObj.pageStyle"
             class="page"
-            v-for="(item,index) in curFile.filePic"
+            v-for="(item,index) in curFile.pngList"
             :key="index"
           >
-            <el-image :style="imgStyle" class="full-w" :src="item.picUrl" lazy></el-image>
+            <img
+                class="full-width"
+                :style="materialStyleObj.imgStyle"
+                v-lazy="item"
+                alt
+                :key="index"
+            />
             <!-- 画板 -->
             <DrawCanvas
               v-if="(index+1)>Math.floor((curPageNum-1)/canvasPageSize)*10&&(index+1)<=Math.ceil(curPageNum/canvasPageSize)*10"
               :curFileNotationURL="curFileNotationURL"
               :index="index"
               :activeIndex="activeIndex"
-              :fileId="curFile.id||''"
-              :type="activeTab"
+              :fileId="curFile.fileId||''"
+              :bgUrl="item"
               :canvasStyle="canvasStyle"
               :canvasSize="canvasSize"
               :config="brushOptions.config"
@@ -53,16 +61,14 @@
               :actionStepObjFather="actionStepObjFather"
               @emitActionStep="emitActionStep"
               @emitCanvasStyle="emitCanvasStyle"
-              @emitExitNotation="emitExitNotation"
               @emitDrawStatus="emitDrawStatus"
-              @emitActionChange="emitActionChange"
             ></DrawCanvas>
           </div>
         </div>
       </div>
       <!-- 右侧功能区 -->
       <div
-        v-if="curFile.filePic&&curFile.filePic.length?true:false"
+        v-if="curFile.pngList&&curFile.pngList.length?true:false"
         class="material-func-box"
         @click="showAnnotationList=false;showBrushSetting=false"
       >
@@ -168,10 +174,11 @@
         </div>
       </transition>
       <!-- 底部操作区 -->
-      <div class="material-operate-box">
+      <div class="material-operate-box"
+      >
         <span
           class="btn txt-justify"
-          @click="fnScale('big')"
+          @click="scaleBigger"
         >&nbsp;放大&nbsp;</span>
         <span
           class="btn txt-justify"
@@ -179,22 +186,20 @@
         >上一页</span>
         <span
           class="btn txt-justify"
-        >&nbsp;{{curPageNum}}&nbsp;/&nbsp;{{curFile.filePic.length}}&nbsp;</span>
+        >&nbsp;{{curPageNum}}&nbsp;/&nbsp;{{curFile.pngList.length}}&nbsp;</span>
         <span
           class="btn txt-justify"
           @click="scrollToPage(curPageNum+1)"
         >下一页</span>
-        <span v-if="curFile.filePic&&curFile.filePic.length?true:false" class="btn jumpToNum">
+        <span v-if="curFile.pngList&&curFile.pngList.length?true:false" class="btn jumpToNum">
           跳转至第
           <el-input v-model="jumpToNum" placeholder />&nbsp;页
           <span class="font-color-primary" @click="scrollToPage(jumpToNum)">Go</span>
         </span>
         <span
-          v-if="curFile.filePic&&curFile.filePic.length?true:false"
           class="btn txt-justify"
-          @click="fnScale('small')"
+          @click="scaleSmaller"
         >&nbsp;缩小&nbsp;</span>
-
       </div>
     </div>
   </div>
@@ -212,44 +217,29 @@ export default {
     props: {},
     data() {
         return {
-            activeTab: '3', // tab当前激活项 3-material|2-note|1-summary
+            curPage: 'MaterialRead',
+
+            showFile: 1,
             showMaterialList: false, // 是否显示-材料列表
             showAnnotationList: false, // 是否显示批注列表
-            pageStyle: 'width:9.6rem',
-            imgStyle: 'width:9.6rem;height:13.56rem', // 材料区 图片样式
+            materialStyleObj: {
+                pageBoxStyle: 'width:6.36rem;',
+                pageStyle: 'width:6.36rem;min-height:0.5rem;',
+                imgStyle: 'width:6.36rem;min-height:0.5rem;' // 材料区 图片样式
+            },
+
             noFileMsg: '本议题暂无电子材料', // 无材料显示文字
             curFile: {
-                id: 'bb7c95d6-7bf1-4dbc-865f-5ef78e197d25',
-                topicId: 'ee804d53-3b21-ce2b-603e-39c96f3014f8',
-                name: '软件安装后必要配置说明.docx',
-                type: 'word文档',
-                url:
-          'http://172.19.82.246:8080/uploadfiles/notes/1a972507-9b6d-4137-9a2a-9c184eb0b458/eed76e87-00d1-c56d-e409-2e9e2f874905_temp/temp.doc',
-                dataClassification: '汇报提纲',
-                uploadTime: '2020-04-02 10:08:34',
-                filePic: [
-                    {
-                        id: 'a0e7b476-016b-4b4c-a525-18d785b717b0',
-                        fileId: 'bb7c95d6-7bf1-4dbc-865f-5ef78e197d25',
-                        sort: '1',
-                        picUrl: '/images/topicMaterial/1.png',
-                        reportTime: '2020-04-02 10:08:34'
-                    },
-                    {
-                        id: 'dcaa888d-71a3-4b84-9048-1167ba15b2ac',
-                        fileId: 'bb7c95d6-7bf1-4dbc-865f-5ef78e197d25',
-                        sort: '2',
-                        picUrl: '/images/topicMaterial/1.png',
-                        reportTime: '2020-04-02 10:08:34'
-                    },
-                    {
-                        id: '66645b56-a72d-4b6e-9874-418f0d7fa40b',
-                        sort: '3',
-                        picUrl: '/images/topicMaterial/1.png',
-                        fileId: 'bb7c95d6-7bf1-4dbc-865f-5ef78e197d25',
-                        reportTime: '2020-04-02 10:08:34'
-                    }
-                ]
+                fileId: '1301201902010001340001',
+                pngList: [
+                    '/images/topicMaterial/1.png',
+                    '/images/topicMaterial/2.png',
+                    '/images/topicMaterial/3.png'
+                ],
+                pngSize: 3,
+                pngUrl: '/file/123Relese',
+                typeCode: null,
+                url: ''
             }, // 当前材料
             curPageNum: 1, // 当前所在页码
             canvasPageSize: 10, // 每次加载canvas数量
@@ -259,24 +249,42 @@ export default {
 
             /* --------------------DrawCanvas-props-开始-------------------- */
             curFileNotationURL: [
-                /* {
+                {
                     bookScale: null,
-                    conferenceId: '7c54efed-fbc0-49c0-8568-62b07b5c1816',
-                    courtCode: null,
-                    createTime: '2020-04-13 11:12:16',
-                    fileId: null,
-                    id: '21ee804d53-3b21-ce2b-603e-39c96f3014f8',
-                    notationId: '',
-                    notationName: null,
-                    sort: '1',
-                    status: null,
-                    topicId: 'ee804d53-3b21-ce2b-603e-39c96f3014f8',
-                    type: '2',
-                    url: 'http://172.19.82.130:8080/uploadfiles/topicNote/7c54efed-fbc0-49c0-8568-62b07b5c1816/ee804d53-3b21-ce2b-603e-39c96f3014f8/notation/1.png'
-                } */
+                    caseId: '11',
+                    creator: '00c7d8ffae6aa409175879851f7d7f97',
+                    creatorTime: '2020-09-17 11:47:56',
+                    fileId: '1301201902010001340001',
+                    imgData: null,
+                    imgUrl: '/images/notate/1.png',
+                    pageNo: '1',
+                    typeCode: '1'
+                },
+                {
+                    bookScale: null,
+                    caseId: '11',
+                    creator: '00c7d8ffae6aa409175879851f7d7f97',
+                    creatorTime: '2020-09-17 11:47:56',
+                    fileId: '1301201902010001340001',
+                    imgData: null,
+                    imgUrl: '/images/notate/2.png',
+                    pageNo: '1',
+                    typeCode: '1'
+                },
+                {
+                    bookScale: null,
+                    caseId: '11',
+                    creator: '00c7d8ffae6aa409175879851f7d7f97',
+                    creatorTime: '2020-09-17 11:47:56',
+                    fileId: '1301201902010001340001',
+                    imgData: null,
+                    imgUrl: '/images/notate/3.png',
+                    pageNo: '1',
+                    typeCode: '1'
+                }
             ], // 当前材料的批注列表
             activeIndex: 0, // 当前批注上一步或者下一步的图像所在的页面
-            canvasStyle: '', // 父传子 每页canvas样式
+            canvasStyle: 'width:6.36rem;min-height:0.5rem;', // 父传子 每页canvas样式
             // 父传子 canvas大小
             canvasSize: {
                 width: 0,
@@ -287,7 +295,7 @@ export default {
             isEraser: false, // 橡皮擦是否开启
             isArea: false, // 是否在可涂鸦区域
             isMouseUp: true, // 鼠标是否已抬起
-            action: '', // 父传子 fnScale|prev|next|clear|saveAndExit
+            action: '', // 父传子 fnScale|prev|next|clear|save
             // canvas所有操作步骤
             actionStepObjFather: {
                 preDrawAry: [], // 存储当前表面状态数组-上一步
@@ -349,13 +357,13 @@ export default {
                         shape: 'circle',
                         name: '圆形'
                     }
-                ]
-            },
-            // 画笔操作样式
-            brushControlClass: {
-                prevClass: 'i-prev',
-                nextClass: 'i-next',
-                clearClass: 'el-icon-delete'
+                ],
+                // 画笔操作样式
+                brushControlClass: {
+                    prevClass: 'i-prev',
+                    nextClass: 'i-next',
+                    clearClass: 'el-icon-delete'
+                }
             }
         };
     },
@@ -365,17 +373,17 @@ export default {
                 {
                     title: '上一步',
                     action: 'prev',
-                    className: this.brushControlClass.prevClass
+                    className: this.brushOptions.brushControlClass.prevClass
                 },
                 {
                     title: '下一步',
                     action: 'next',
-                    className: this.brushControlClass.nextClass
+                    className: this.brushOptions.brushControlClass.nextClass
                 },
                 {
                     title: '清除',
                     action: 'clear',
-                    className: this.brushControlClass.clearClass
+                    className: this.brushOptions.brushControlClass.clearClass
                 }
             ];
         }
@@ -399,6 +407,8 @@ export default {
     created() {
     },
     mounted() {
+        this.initFile();
+
 
     },
     methods: {
@@ -406,7 +416,35 @@ export default {
 
         }),
 
+        // 初始化材料
+        initFile() {
 
+            /* 材料 */
+            this.showFile = 1; // 清空材料显示
+            this.showAnnotationList = false; // 隐藏批注列表
+            // 还原材料区样式
+            this.materialStyleObj = {
+                pageBoxStyle: 'width:6.36rem;',
+                pageStyle: 'width:6.36rem;min-height:0.5rem;',
+                imgStyle: 'width:6.36rem;min-height:0.5rem;' // 材料区 图片样式
+            };
+            this.noFileMsg = ''; // 无材料显示文字
+            // this.curFile =  {}; // 清空当前文件信息
+            /* DrawCanvas-props */
+            // this.curFileNotationURL = []; // 清空当前批注图片信息
+            this.isWrite = false; // 关闭批注
+            this.action = ''; // 清除之前的操作
+            // 清除canvas所有操作步骤
+            this.actionStepObjFather = {
+                preDrawAry: [], // 存储当前表面状态数组-上一步
+                nextDrawAry: [], // 存储当前表面状态数组-下一步
+                middleAry: [] // 中间数组
+            };
+            /* toolBar */
+            this.showBrushSetting = false; // 隐藏画笔设置
+            this.activeTool = -1; // 不选中任何工具
+            this.action = `initnum${Date.now()}`;
+        },
         // 保存批注
         saveAnnotation() {
             this.$confirm(`确定保存当前批注吗？`, '系統提示', {
@@ -454,7 +492,7 @@ export default {
         emitExitNotation(canvasNo) {
             if (
                 canvasNo === Math.ceil(this.curPageNum / this.canvasPageSize) * 10 ||
-        canvasNo === this.curFile.filePic.length
+        canvasNo === this.curFile.pngList.length
             ) {
                 console.log('emitExitNotation');
                 this.setCurFile(true);
@@ -462,19 +500,71 @@ export default {
         },
         // 设置canvas样式
         emitCanvasStyle(width, height) {
+            console.log(`[${this.curPage}]`, 'emitCanvasStyle');
+
             let rem2px = Number(
                 getComputedStyle(window.document.documentElement)['font-size'].split(
                     'px'
                 )[0]
             );
+            console.log();
             this.canvasSize.width = width;
             this.canvasSize.height = height;
-            this.canvasStyle = `width:${(width / rem2px).toFixed(2)}rem;height:${(
-                height / rem2px
-            ).toFixed(2)}rem`;
+            this.materialStyleObj = {
+                pageBoxStyle: `width:${(width / rem2px).toFixed(2)}rem;`,
+                pageStyle: `width:${(width / rem2px).toFixed(2)}rem;height:${(height / rem2px + 0.02).toFixed(
+                    2
+                )}rem;min-height:0.5rem;`,
+                imgStyle: `width:${(width / rem2px).toFixed(2)}rem;height:${(height / rem2px).toFixed(
+                    2
+                )}rem;min-height:0.5rem;`
+            };
+            this.canvasStyle = this.materialStyleObj.imgStyle;
+            this.$nextTick(() => {
+                console.log(`[${this.curPage}]---emitCanvasStyle---this.canvasStyle`, this.canvasStyle);
+            });
         },
         // 子传父 设置 上一步|下一步|清除 样式
-        emitActionStep() {
+        emitActionStep(action, pObj, mObj, nObj) {
+            switch (action) {
+                case 'clearDraw':
+                    // 父组件 空绘图表面进栈
+                    this.actionStepObjFather.preDrawAry = [];
+                    this.actionStepObjFather.middleAry = [
+                        {
+                            index: mObj.index,
+                            preData: mObj.preData
+                        }
+                    ];
+                    this.actionStepObjFather.nextDrawAry = [];
+                    break;
+                case 'canvasDown':
+                    // 父组件 当前绘图表面
+                    this.actionStepObjFather.preDrawAry.push({
+                        index: pObj.index,
+                        preData: pObj.preData
+                    });
+                    break;
+                case 'canvasUp':
+                    // 父组件 当前绘图表面
+                    this.actionStepObjFather.middleAry.push({
+                        index: mObj.index,
+                        preData: mObj.preData
+                    });
+                    break;
+                case 'resetAllArr':
+                    // 父组件 当前绘图表面
+                    this.actionStepObjFather.middleAry = [];
+                    this.actionStepObjFather.middleAry = this.actionStepObjFather.middleAry.concat(
+                        this.actionStepObjFather.preDrawAry
+                    );
+                    this.actionStepObjFather.middleAry.push({
+                        index: mObj.index,
+                        preData: mObj.preData
+                    });
+                    this.actionStepObjFather.nextDrawAry = [];
+                    break;
+            }
             let prevClass = 'i-prev';
             let nextClass = 'i-next';
             let clearClass = 'el-icon-delete';
@@ -493,9 +583,9 @@ export default {
             } else {
                 clearClass = 'el-icon-delete';
             }
-            this.brushControlClass.prevClass = prevClass;
-            this.brushControlClass.nextClass = nextClass;
-            this.brushControlClass.clearClass = clearClass;
+            this.brushOptions.brushControlClass.prevClass = prevClass;
+            this.brushOptions.brushControlClass.nextClass = nextClass;
+            this.brushOptions.brushControlClass.clearClass = clearClass;
         },
 
         emitActionChange(action) {
@@ -624,8 +714,8 @@ export default {
             if (
                 this.$refs.material &&
         this.curFile &&
-        this.curFile.filePic &&
-        this.curFile.filePic.length > 0
+        this.curFile.pngSize &&
+        this.curFile.pngSize > 0
             ) {
                 let scrollTop = Math.ceil(this.$refs.material.scrollTop);
                 let page = this.$refs.material.children[0].children[0];
@@ -694,60 +784,76 @@ export default {
                 let page = this.$refs.material.children[0].children[0];
                 let pageH = page.offsetHeight;
                 // console.log(pageH);
-                if (pageNum > this.curFile.filePic.length) {
-                    this.jumpToNum = this.curFile.filePic.length;
+                if (pageNum > this.curFile.pngList.length) {
+                    this.jumpToNum = this.curFile.pngList.length;
                     this.$refs.material.scrollTop =
-            pageH * (this.curFile.filePic.length - 1); // 兼容ie
+            pageH * (this.curFile.pngList.length - 1); // 兼容ie
                     // this.$refs.material.scrollTo(0, pageH * (pageNum - 1));//不兼容ie
                 } else {
                     this.$refs.material.scrollTop = pageH * (pageNum - 1); // 兼容ie
                 }
             }
         },
-        // 放大|缩小
-        fnScale(action) {
-            let rem2px = Number(
-                getComputedStyle(window.document.documentElement)['font-size'].split(
-                    'px'
-                )[0]
-            );
+
+        // 放大
+        scaleBigger() {
+            let item = {
+                zoom: 1.5,
+                maxRem: 49
+            };
+            let rem2px = Number(getComputedStyle(window.document.documentElement)['font-size'].split('px')[0]);
             let img = this.$refs.pageBox.children[0].children[0];
             let imgW = img.offsetWidth;
             let imgH = img.offsetHeight;
-            if (action === 'big') {
-                if (imgW * 1.1 >= 12 * rem2px) {
-                    return false;
-                }
-                this.imgStyle = `width:${((imgW * 1.1) / rem2px).toFixed(
-                    2
-                )}rem;height:${((imgH * 1.1) / rem2px).toFixed(2)}rem;`;
-                this.pageStyle = `width:${((imgW * 1.1) / rem2px).toFixed(2)}rem;`;
-                this.canvasStyle = this.imgStyle; // 重新设置canvas画布尺寸
-                this.canvasSize.width = imgW * 1.1;
-                this.canvasSize.height = imgH * 1.1;
-                this.canvasSize.scale = 1.1;
-            } else {
-                if (imgW / 1.1 < 9.59 * rem2px) {
-                    this.canvasSize.scale = 1;
-                }
-                if (imgW / 1.1 < 9.59 * rem2px) {
-                    return false;
-                }
-                this.imgStyle = `width:${(imgW / 1.1 / rem2px).toFixed(2)}rem;height:${(
-                    imgH /
-          1.1 /
-          rem2px
-                ).toFixed(2)}rem`;
-                this.pageStyle = `width:${(imgW / 1.1 / rem2px).toFixed(2)}rem;`;
-                this.canvasStyle = this.imgStyle; // 重新设置canvas画布尺寸
-                this.canvasSize.width = imgW / 1.1;
-                this.canvasSize.height = imgH / 1.1;
-                this.canvasSize.scale = 1 / 1.1;
+            if (imgW * item.zoom >= item.maxRem * rem2px) {
+                return false;
             }
+            this.materialStyleObj = {
+                pageBoxStyle: `width:${((imgW * item.zoom) / rem2px).toFixed(2)}rem;`,
+                pageStyle: `width:${((imgW * item.zoom) / rem2px).toFixed(2)}rem;height:${(
+                    (imgH * item.zoom) / rem2px +
+                    0.02
+                ).toFixed(2)}rem;min-height:0.5rem;`,
+                imgStyle: `width:${((imgW * item.zoom) / rem2px).toFixed(2)}rem;height:${((imgH * item.zoom) / rem2px).toFixed(
+                    2
+                )}rem;min-height:0.5rem;`
+            };
+            this.canvasStyle = this.materialStyleObj.imgStyle; // 重新设置canvas画布尺寸
+            this.canvasSize.width = imgW * item.zoom;
+            this.canvasSize.height = imgH * item.zoom;
+            this.canvasSize.scale = item.zoom;
+            this.action = `fnScalenum${Date.now()}`; // 传到DrawCanvas页面做监听处理
+        },
+        // 缩小
+        scaleSmaller() {
+            let item = {
+                zoom: 1.5,
+                minRem: 6.2
+            };
+            let rem2px = Number(getComputedStyle(window.document.documentElement)['font-size'].split('px')[0]);
+            let img = this.$refs.pageBox.children[0].children[0];
+            let imgW = img.offsetWidth;
+            let imgH = img.offsetHeight;
+            if (imgW / item.zoom < item.minRem * rem2px) {
+                this.canvasSize.scale = 1;
+                return false;
+            }
+            this.materialStyleObj = {
+                pageBoxStyle: `width:${(imgW / item.zoom / rem2px).toFixed(2)}rem;`,
+                pageStyle: `width:${(imgW / item.zoom / rem2px).toFixed(2)}rem;height:${(imgH / item.zoom / rem2px + 0.02).toFixed(
+                    2
+                )}rem;min-height:0.5rem;`,
+                imgStyle: `width:${(imgW / item.zoom / rem2px).toFixed(2)}rem;height:${(imgH / item.zoom / rem2px).toFixed(
+                    2
+                )}rem;min-height:0.5rem;`
+            };
+
+            this.canvasStyle = this.materialStyleObj.imgStyle; // 重新设置canvas画布尺寸
+            this.canvasSize.width = imgW / item.zoom;
+            this.canvasSize.height = imgH / item.zoom;
+            this.canvasSize.scale = 1 / item.zoom;
             this.action = `fnScalenum${Date.now()}`; // 传到DrawCanvas页面做监听处理
         }
-
-
         /* --------------------操作区-结束-------------------- */
     }
 };
@@ -761,7 +867,7 @@ export default {
     color: @text_color_white;
     padding: 30px;
     height: 100%;
-    font-size: @font20px;
+    font-size: @font18px;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -809,7 +915,7 @@ export default {
     .setting-box {
       overflow-y: auto;
       z-index: 3001;
-      font-size: @font22px;
+      font-size: @font20px;
       width: 380px;
       padding: 20px;
       position: absolute;
@@ -934,7 +1040,7 @@ export default {
         padding: 0 10px;
         line-height: 60px;
         background: none;
-        font-size: @font24px;
+        font-size: @font22px;
         border-radius: 0;
         &:not(:first-child) {
           border-left: 1px solid #666;
