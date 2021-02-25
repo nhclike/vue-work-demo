@@ -2,7 +2,7 @@
  * @Author: ShiHuiJun
  * @Date: 2020-03-19 09:36:04
  * @Last Modified by: nihc
- * @Last Modified time: 2021-02-24 17:31:12
+ * @Last Modified time: 2021-02-25 15:04:20
  */
 
 <template>
@@ -54,7 +54,6 @@
               :canvasSize="canvasSize"
               :config="brushOptions.config"
               :isWrite="isWrite"
-              :isEraser="isEraser"
               :isArea="isArea"
               :isMouseUp="isMouseUp"
               :action="action"
@@ -75,9 +74,8 @@
         <div>
           <!-- 手写批注 -->
           <span
-            v-if="!isWrite || isEraser"
             class="btn txt-justify annotation_hand"
-            @click="isWrite=true;isEraser=false;"
+            @click="setBrushShape('line')"
           >&nbsp;批注&nbsp;</span>
           <!-- 批注列表 -->
           <span
@@ -87,9 +85,9 @@
           >批注列表</span>
           <!-- 橡皮擦 -->
           <span
-            v-if="isWrite&&!isEraser"
+            v-if="isWrite"
             class="btn txt-justify annotation_erasure"
-            @click="isEraser=true"
+            @click="setBrushShape('eraser')"
           >&nbsp;橡皮擦&nbsp;</span>
           <!-- 退出批注 -->
           <span
@@ -105,13 +103,12 @@
           >&nbsp;保存&nbsp;</span>
           <!-- 批注设置 -->
           <span
-            v-if="isWrite && !isEraser"
+            v-if="isWrite"
             class="btn txt-justify annotation_set"
             @click.stop="showBrushSetting=!showBrushSetting;"
           >&nbsp;设置&nbsp;</span>
           <!-- 清除本页 -->
           <span
-            v-if="isEraser"
             class="btn txt-justify annotation_erasure"
             @click="brushControl('clear')"
           >清除本页</span>
@@ -292,7 +289,6 @@ export default {
                 scale: 1
             },
             isWrite: false, // 是否开启批注
-            isEraser: false, // 橡皮擦是否开启
             isArea: false, // 是否在可涂鸦区域
             isMouseUp: true, // 鼠标是否已抬起
             action: '', // 父传子 fnScale|prev|next|clear|save
@@ -473,8 +469,6 @@ export default {
             })
                 .then(() => {
                     this.isWrite = false;
-                    this.isEraser = false;
-                    this.action = `saveAndExitnum${Date.now()}`;
                 })
                 .catch(() => {
                     // this.$message.info(`取消批注`);
@@ -487,16 +481,6 @@ export default {
         emitDrawStatus(isArea, isMouseUp) {
             this.isArea = isArea;
             this.isMouseUp = isMouseUp;
-        },
-        // 退出批注模式
-        emitExitNotation(canvasNo) {
-            if (
-                canvasNo === Math.ceil(this.curPageNum / this.canvasPageSize) * 10 ||
-        canvasNo === this.curFile.pngList.length
-            ) {
-                console.log('emitExitNotation');
-                this.setCurFile(true);
-            }
         },
         // 设置canvas样式
         emitCanvasStyle(width, height) {
@@ -606,6 +590,7 @@ export default {
         // 设置画笔粗细
         setBrushShape(shape) {
             this.brushOptions.config.shape = shape;
+            this.isWrite = true;
         },
         // 画笔操作
         brushControl(action) {

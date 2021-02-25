@@ -2,14 +2,21 @@
  * @Author: ShiHuiJun
  * @Date: 2020-04-03 09:40:03
  * @Last Modified by: nihc
- * @Last Modified time: 2021-02-24 17:30:22
+ * @Last Modified time: 2021-02-25 15:00:01
  */
 <template>
   <div class="drawCanvas" :style="canvasStyle">
     <!-- 画板 -->
     <canvas
       ref="canvas"
-      :class="{'canvas':true,'cursorPen':isWrite&&config.shape==='line','cursorEraser':isEraser,'cursorCrosshair':config.shape!=='line'&&isWrite&&!isEraser}"
+      :class="{
+            cursorPen: isWrite && config.shape === 'line',
+            cursorEraser: isWrite && config.shape === 'eraser',
+            cursorCrosshair:
+            isWrite &&
+            config.shape !== 'line' &&
+            config.shape !== 'eraser'
+            }"
       :style="canvasStyle"
       @mousedown="canvasDown($event)"
       @mousemove="canvasMove($event)"
