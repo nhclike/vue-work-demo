@@ -31,6 +31,8 @@ const uploadFileAndPdfView = () => import(/* webpackChunkName: "uploadFileAndPdf
 
 /* 南北视频插件 */
 const NBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NBVideo');
+/* 摄像抓拍插件 */
+const Capture = () => import(/* webpackChunkName: "Capture" */ '@/components/video/Capture');
 
 /* 常用业务功能 */
 /* websocket消息聊天 */
@@ -65,6 +67,11 @@ export default [
                         path: 'NBVideo',
                         name: 'NBVideo',
                         component: NBVideo
+                    },
+                    {
+                        path: 'Capture',
+                        name: 'Capture',
+                        component: Capture
                     },
                     {
                         path: 'ueditor',
