@@ -2,7 +2,7 @@
  * @Author: nihc
  * @Date: 2021-01-19 14:20:51
  * @Last Modified by: nihc
- * @Last Modified time: 2021-02-23 14:55:43
+ * @Last Modified time: 2021-04-07 18:04:56
  */
 /* 主框架-左菜单-组件 */
 
@@ -20,10 +20,10 @@
                 <router-link to="Ntko">Ntko</router-link>
             </li>
             <li>
-                <router-link to="chat">消息聊天</router-link>
+                <router-link to="Chat">消息聊天</router-link>
             </li>
             <li>
-                <router-link to="searchTree">搜索树</router-link>
+                <router-link to="antTree">ant design vue树</router-link>
             </li>
             <li>
                 <router-link to="BaseUpload">基本文件上传</router-link>

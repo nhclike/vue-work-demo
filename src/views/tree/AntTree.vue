@@ -3,12 +3,14 @@
     <search-tree :treeData="treeData" :isSearch="isSearch"></search-tree>
     <button @click="addNode">动态增加节点</button>
     <icon-tree></icon-tree>
+    <define-tree></define-tree>
   </div>
 </template>
 
 <script>
 import SearchTree from '@/components/tree/searchTree';
 import IconTree from '@/components/tree/iconTree';
+import defineTree from '@/components/tree/defineTree';
 let treeData = [{
     'title': '电子卷宗',
     'key': 'dzjz',
@@ -54,7 +56,8 @@ let treeData = [{
 export default {
     components: {
         SearchTree,
-        IconTree
+        IconTree,
+        defineTree
     },
     data() {
         return {

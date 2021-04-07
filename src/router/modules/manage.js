@@ -14,7 +14,8 @@ const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko')
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
 /* 组件 */
 /* tree */
-const searchTree = () => import(/* webpackChunkName: "searchTree" */ '@/views/tree/tree');
+const AntTree = () => import(/* webpackChunkName: "AntTree" */ '@/views/tree/AntTree');
+
 /* 上传插件 */
 const BaseUpload = () => import(/* webpackChunkName: "BaseUpload" */ '@/components/upload/base');
 const VueSimpleUploader = () => import(/* webpackChunkName: "VueSimpleUploader" */ '@/components/upload/VueSimpleUploader');
@@ -36,7 +37,7 @@ const Capture = () => import(/* webpackChunkName: "Capture" */ '@/components/vid
 
 /* 常用业务功能 */
 /* websocket消息聊天 */
-const chat = () => import(/* webpackChunkName: "chat" */ '@/views/chat/chat');
+const Chat = () => import(/* webpackChunkName: "Chat" */ '@/views/chat/Chat');
 
 export default [
     {
@@ -84,14 +85,14 @@ export default [
                         component: Ntko
                     },
                     {
-                        path: 'chat',
-                        name: 'chat',
-                        component: chat
+                        path: 'Chat',
+                        name: 'Chat',
+                        component: Chat
                     },
                     {
-                        path: 'searchTree',
-                        name: 'searchTree',
-                        component: searchTree
+                        path: 'AntTree',
+                        name: 'AntTree',
+                        component: AntTree
                     },
                     {
                         path: 'BaseUpload',

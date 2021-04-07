@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@left-width:150px;
+@left-width:350px;
 @top-height:100px;
 .manage-layout{
   height: 100%;
@@ -54,6 +54,7 @@ export default {
     bottom: 0;
     left: @left-width;
     right: 0;
+    overflow-y: scroll;
   }
 }
 </style>
