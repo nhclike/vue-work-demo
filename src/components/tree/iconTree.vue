@@ -9,8 +9,8 @@
   <div>
     <div style="margin-bottom: 16px">
       showLine: <a-switch v-model="showLine" />
-      <br />
-      <br />
+      <br>
+      <br>
       showIcon: <a-switch v-model="showIcon" />
     </div>
     <a-tree
@@ -21,6 +21,8 @@
     >
       <a-icon slot="icon" type="carry-out" />
       <a-tree-node key="0-0">
+        <a-icon slot="switcherIcon" type="" />
+
         <a-icon slot="icon" type="carry-out" />
         <span slot="title" style="color: #1890ff">parent 1</span>
         <a-tree-node key="0-0-0" title="parent 1-0">
@@ -45,6 +47,8 @@
           <a-icon slot="icon" type="carry-out" />
           <a-tree-node key="0-0-2-0" title="leaf">
             <a-icon slot="icon" type="carry-out" />
+            <a-icon slot="switcherIcon" type="" />
+
           </a-tree-node>
           <a-tree-node key="0-0-2-1" title="leaf">
             <a-icon slot="icon" type="carry-out" />
@@ -58,17 +62,17 @@
 
 <script>
 export default {
-    data() {
-        return {
-            showLine: true,
-            showIcon: false
-        };
-    },
-    methods: {
-        onSelect(selectedKeys, info) {
-            console.log('selected', selectedKeys, info);
-        }
+  data() {
+    return {
+      showLine: true,
+      showIcon: false
     }
-};
+  },
+  methods: {
+    onSelect(selectedKeys, info) {
+      console.log('selected', selectedKeys, info)
+    }
+  }
+}
 </script>
 
