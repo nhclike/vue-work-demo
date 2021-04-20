@@ -22,6 +22,7 @@
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
  //import dat from 'dat.gui';
+ //import '../../../public/adapter.screenshare.js';兼容ie
 //  import tracking from 'tracking/build/tracking-min.js';
 require('tracking/build/tracking-min.js');
 require('tracking/build/data/face-min.js');

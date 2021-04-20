@@ -1,8 +1,8 @@
-/* 新版南北插件可分屏
+/* 新版南北插件可抓拍
  * @Author: nihc
  * @Date: 2021-01-22 15:43:42
- * @Last Modified by: nihc
- * @Last Modified time: 2021-03-19 14:58:36
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2021-04-20 13:06:28
  */
 <template>
     <div id="nbVideo" class="nbVideo" ref="nbVideo" >
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { IEVersion, ActiveXKiller, compressImg, dataURLtoBlob, readImg } from '@/utils/utils';
+import { IEVersion, ActiveXKiller} from '@/utils/utils';
 
 export default {
     name: 'NBVideo',
