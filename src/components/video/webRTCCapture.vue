@@ -1,5 +1,6 @@
 <template>
   <div>
+      <el-button type="primary" @click="initFaceCamera">开始人脸识别</el-button>
       <div class="faceCamera">
             <video
                 ref="video"
@@ -20,23 +21,35 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
-import { requestFullScreen, isIE } from '@/utils/utils';
- import dat from 'dat.gui';
- import tracking from 'tracking/build/tracking-min.js';
+ //import dat from 'dat.gui';
+//  import tracking from 'tracking/build/tracking-min.js';
 require('tracking/build/tracking-min.js');
 require('tracking/build/data/face-min.js');
- require('tracking/examples/assets/stats.min.js');
+// require('tracking/examples/assets/stats.min.js');
 export default {
     data(){
         return {
             isdetected: '请您保持脸部在画面中央!',
-
+            // videos
+            myVideo: {},
+            constraints: {
+                audio: {
+                    noiseSuppression: true,
+                    echoCancellation: true
+                },
+                video: {
+                    width: 400,
+                    height: 300,
+                    frameRate: 30,
+                    // transform: 'scaleX(-1)',
+                    facingMode: 'environment'
+                }
+            },
         }
     },
     mounted(){
-        setTimeout(()=>{
-            this.initFaceCamera()
-        },1000)
+                this.myVideo = document.getElementById('video');
+
     },
     methods:{
          /* --------------------人脸识别-开始-------------------- */
@@ -69,7 +82,7 @@ export default {
             //     .catch(this.getMediaStreamError);
             await this.getUserMedia();
 
-            await this.startPlay();
+            
         },
         // 拿到媒体流
         async getUserMedia() {
@@ -91,9 +104,11 @@ export default {
         // 视频媒体流成功
         getMediaStreamSuccess(stream) {
             window.stream = stream; // make stream available to browser console
-            window.attachMediaStream(this.myVideo, stream);
+            //window.attachMediaStream(this.myVideo, stream);---ie兼容使用
             this.myVideo.srcObject = stream;
             console.log('getMediaStreamSuccess', stream);
+
+            this.startPlay();
         },
 
         // 视频媒体流失败
@@ -110,7 +125,7 @@ export default {
         },
 
         // 开始识别
-        async startPlay() {
+        startPlay() {
             console.log('startPlay');
             this.onTrackTracking();
         },
@@ -299,6 +314,19 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped lang='less'>
+.faceCamera {
+    position: relative;
+    width: 500px;
+    height: 400px;
+    border: 1px solid #ddd;
+    video,
+    canvas {
+        z-index: 999;
+        position: absolute;
+        top: 0;
+        left: 0;
+        // transform: translate(-50%, -50%);
+    }
+}
 </style>

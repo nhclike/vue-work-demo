@@ -1,8 +1,8 @@
 /*
  * @Author: nihc
  * @Date: 2021-01-19 14:20:51
- * @Last Modified by: nihc
- * @Last Modified time: 2021-04-07 18:04:56
+ * @Last Modified by: mikey.zhaopengy.zhaopeng
+ * @Last Modified time: 2021-04-20 11:34:53
  */
 /* 主框架-左菜单-组件 */
 
@@ -48,6 +48,9 @@
             </li>
             <li>
                 <router-link to="Capture">摄像头抓拍</router-link>
+            </li>
+             <li>
+                <router-link to="WebRTCCapture">WebRTCCapture</router-link>
             </li>
         </ul>
 

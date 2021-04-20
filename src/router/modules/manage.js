@@ -34,6 +34,9 @@ const uploadFileAndPdfView = () => import(/* webpackChunkName: "uploadFileAndPdf
 const NBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NBVideo');
 /* 摄像抓拍插件 */
 const Capture = () => import(/* webpackChunkName: "Capture" */ '@/components/video/Capture');
+/* webRTC抓拍 */
+const WebRTCCapture = () => import(/* webpackChunkName: "WebRTCCapture" */ '@/components/video/WebRTCCapture');
+
 
 /* 常用业务功能 */
 /* websocket消息聊天 */
@@ -73,6 +76,11 @@ export default [
                         path: 'Capture',
                         name: 'Capture',
                         component: Capture
+                    },
+                    {
+                        path: 'WebRTCCapture',
+                        name: 'WebRTCCapture',
+                        component: WebRTCCapture
                     },
                     {
                         path: 'ueditor',
