@@ -2,24 +2,23 @@
   <div>
     <div>南北播放插件</div>
     <div>
-      <el-button type="primary" @click="initCameraPhoto">显示插件</el-button>
-      <el-button type="primary" @click="takePhoto">拍照</el-button>
-            <el-button type="primary" @click="closeVideo">关闭播放器</el-button>
+      <el-button type="primary" @click="playVideo">播放</el-button>
+       <el-button type="primary" @click="closeVideo">关闭播放器</el-button>
 
       <img :src="imgSrc" alt="">
     </div>
-    <div
-      class="cameraBox vertical-horizontal-center"
-      ref="cameraBox" >
-      <n-b-video
-          ref="nbVideo"
-          :isShowVideo="showCamera"
-          @videoPlayerLoaded="videoPlayerLoaded"
-          @changeImg="changeImg"
-          :videoWidth="cameraWidth"
-          :videoHeight="cameraHeight"
-          :NBAction="cameraAction"
-      ></n-b-video>
+    <div class="video-box" ref="videoPlayerBox">
+       <n-b-video
+            :url="url"
+            @videoPlayerLoaded="videoPlayerLoaded"
+            :videoWidth="videoWidth"
+            :videoHeight="videoHeight"
+            :isShowVideo="showPlayer"
+            :playMode="playMode"
+            :playList="playList"
+            :NBAction="NBAction"
+            ></n-b-video>
+
     </div>
   </div>
 
@@ -34,60 +33,49 @@ export default {
     },
     data() {
         return {
-            showCamera: false, // 显示photo组件
-            cameraAction: '',
-            cameraHeight: 0,
-            cameraWidth: 0,
-            isLoaded: false,
-            timeOutNum: 2000,
-            imgSrc: ''
+           showPlayer: false,
+            videoWidth: 640,
+            videoHeight: 400,
+            playMode:0,//0直播1点播
+            NBAction:'',
+            playList:[],
+            url: {
+                urls: [], // 复合画面地址
+                liveUrl: '' // 直播流地址
+            }
+           
+            
         };
     },
     mounted() {
         console.log('NBVideo----mounted');
+        setTimeout(()=>{
+            this.showPlayer=true
+        },1000)
     },
     methods: {
         videoPlayerLoaded() {
             console.log('NBVideo---videoPlayerLoaded');
-            this.isLoaded = true;
-            let _this = this;
-            _this.cameraAction = `getCameranum${new Date().getTime()}`;
+            
 
         },
-        initCameraPhoto() {
+        playVideo(index) {
 
-            let _this = this;
-            _this.showCamera = true;
 
-            this.$nextTick(() => {
-                _this.cameraHeight = _this.$refs.cameraBox.clientHeight;
-                _this.cameraWidth = _this.cameraHeight * 16 / 10;
-                console.log('this.cameraHeight', this.cameraHeight, 'this.cameraWidth', this.cameraWidth);
+            // vlc视频播放---触发地址改变
+           
+            //this.url.liveUrl = `rtmp://172.19.82.228:1960/NBVod/mp4|D:\\SNTest\\1\\2`;
+            //this.url.liveUrl = require('../../../public/video/1.mp4');
+            //this.url.liveUrl='rtsp://dmcp:888888@172.19.82.241:554/cam/realmonitor?channel=5&subtype=0'
+            this.url.liveUrl='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'
+            this.url.urls=[];
+            
 
-            });
+            this.NBAction=`playnum${new Date().getTime()}`;
 
-            this.cameraTimer = setInterval(() => {
-                if (_this.isLoaded) {
-                    _this.takePhoto();
-                }
-            }, this.timeOutNum);
-        },
-        takePhoto() {
-            console.log('NBVideo---takePhoto');
-            this.cameraAction = `screenShotnum${new Date().getTime()}`;
-        },
-        changeImg(b64) {
-            console.log(`changeImg${b64}`);
-            let src = 'data:image/png;base64,' + b64;
-            this.imgSrc = src;
         },
         closeVideo() {
-            if (this.cameraTimer) {
-                clearInterval(this.cameraTimer);
-                this.cameraTimer = null;
-            }
-            this.showCamera = false;
-            this.isLoaded = false;
+           this.NBAction=`stopVideonum${new Date().getTime()}`;
         }
     }
 };
@@ -96,7 +84,7 @@ export default {
 <style scoped lang="less">
 @camera_w: 592px;
 @camera_h: 370px;
-.cameraBox {
+.video-box {
     width: @camera_w;
     height: @camera_h;
     z-index: 0;

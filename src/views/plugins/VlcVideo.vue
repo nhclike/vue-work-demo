@@ -43,6 +43,9 @@ export default {
     // }
     },
     watch: {},
+    mounted(){
+      this.playVideo('http://vjs.zencdn.net/v/oceans.mp4')
+    },
     methods: {
         // 切换视频
         playVideo(url) {
@@ -57,6 +60,7 @@ export default {
                 // let mrl = encodeURI(
                 //   'rtmp://172.19.82.130:1960/NBVod/mp4|D:\\NBVideo\\202004\\(2018)黔23行初235号1/(2018)黔23行初235号_0409_141825_CH52000'
                 // );
+                
                 let id = vlc.playlist.add(mrl);
                 vlc.video.aspectRatio = '4:3'; // 获取和设置长宽比使用视频屏幕。该属性采用字符串作为输入值。有效值为：“1:1”，“4:3”，“16:9”，“16:10”，“221:100”和“5:4”
                 let vlcVideo = this.$refs.vlcVideo;

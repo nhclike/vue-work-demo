@@ -1,26 +1,25 @@
 /* 新版南北插件可分屏
  * @Author: nihc
  * @Date: 2021-01-22 15:43:42
- * @Last Modified by: nihc
- * @Last Modified time: 2021-02-23 14:45:51
+ * @Last Modified by: mikey.zhaopengy.zhaopeng
+ * @Last Modified time: 2021-04-20 10:38:29
  */
 <template>
     <div id="nbVideo" class="nbVideo" ref="nbVideo" >
         <div v-if="loadVideoObj">
             <object
                 :id="objId"
-                classid="CLSID:d0511531-6350-473e-9d47-e158eb0c3f5b"
+                classid="CLSID:0327EBC8-681D-43EA-8042-4D267F832C6B"
                 :width="videoWidth"
                 :height="videoHeight"
             ></object>
-            <!-- <img src="" ref="testImg" alt=""> -->
         </div>
         <div v-if="videoError === '0'" class="notSupport">您的浏览器不支持播放该视频,请使用IE浏览器!</div>
     </div>
 </template>
 
 <script>
-import { IEVersion, ActiveXKiller } from '@/utils/utils';
+import { IEVersion, ActiveXKiller, compressImg, dataURLtoBlob, readImg } from '@/utils/utils';
 
 export default {
     name: 'NBVideo',
@@ -83,6 +82,7 @@ export default {
     },
     data() {
         return {
+            curPlayStatus:'',
             videoObj: null, // 视频对象
             loadVideoObj: false,
             videoError: '-1' // -1-可以正常播放,'0'-浏览器不支持, '1'-链接不存在,'2'-直播已结束
@@ -125,9 +125,9 @@ export default {
         isShowVideo: {
             handler(newVal) {
                 if (newVal) {
-                    console.log('isShowVideo---newVal', typeof (newVal));
+                    // console.log('isShowVideo---newVal', typeof (newVal));
                     let _this = this;
-                    console.log('NBVideo---this.videoWidth', this.videoWidth);
+                    // console.log('NBVideo---this.videoWidth', this.videoWidth);
                     if (IEVersion() === -1) {
                         this.videoError = '0';
                         this.$emit('videoPlayerLoaded');
@@ -192,11 +192,10 @@ export default {
                 let _this = this;
                 console.log('NBVideo---this.videoObj', this.videoObj);
                 try {
-                    // _this.videoObj::signals_CallBack_JS(Window_num,URL,PlayStatus){
-                    //     console.log("signals_CallBack_JS,")
-                    // }
+                    _this.videoObj.slots_SetLogLeve(2);
                     _this.setPlayMode();
                     _this.setWinNum();
+
                 } catch (error) {
                     console.log(error);
                     this.$message.error('插件加载出错!');
@@ -220,13 +219,25 @@ export default {
         setWinNum() {
             try {
                 let num = this.videoObj.slots_out_WindowsNum();
+                console.log(`setWinNum---${new Date()}`, num);
+
                 if (num != this.winNum) {
                     this.videoObj.slots_init_windows(this.winNum);
-
+                    this.$emit('emitSetWinNum')
                 }
             } catch (error) {
                 console.log('setWinNum', error);
+            }finally{
+                //console.log('setWinNum---AttachEvent');
+                this.videoObj.AttachEvent(this.callBackFun);
+
             }
+
+        },
+        callBackFun(num,ret){
+            this.curPlayStatus=ret;
+            console.log(`emitStatusChange---${new Date()}`)
+            this.$emit('emitStatusChange',num,ret);
         },
         // 设置定点播放模式并且开始播放---定点播放只在点播有效
         DotPlay() {
@@ -244,38 +255,8 @@ export default {
         },
         // 拉取摄像头
         getCamera() {
-            let _this = this;
-            try {
-                let num = this.videoObj.slots_out_WindowsNum();
-                console.log('getCamera---slots_out_WindowsNum', num);
-                if (num > 0) {
-                    try {
-                        let str = this.videoObj.slots_out_playStatus(1);
-                        console.log('getCamera---slots_out_playStatus', str);
-
-                        if (str == 'Playing') {
-                            console.log('当前已经处于摄像头拉取状态');
-                            return false;
-                        }
-                        else {
-                            this.videoObj.slots_out_playvideo(this.winNum, 'dshow://', ':rtsp-tcp', 1000, 20000);
-                        }
-
-                    } catch (error) {
-                        console.log('getCamera---start---error', error);
-                        this.videoObj.slots_out_playvideo(this.winNum, 'dshow://', ':rtsp-tcp', 1000, 20000);
-
-                    }
-
-                }
-                else {
-                    setTimeout(() => {
-                        _this.getCamera();
-                    }, 500);
-                }
-            } catch (error) {
-                console.log('getCamera---error', error);
-                // this.videoObj.slots_out_playvideo(this.winNum, 'dshow://', ':rtsp-tcp', 1000, 20000);
+            if(this.curPlayStatus!='Playing'){
+                this.videoObj.slots_out_playvideo(this.winNum, 'dshow://', ':rtsp-tcp', 1000, 20000);
 
             }
 

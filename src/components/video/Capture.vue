@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>摄像抓拍插件</div>
+    <div>摄像抓拍插件(ie)</div>
     <div>
       <el-button type="primary" @click="initCameraPhoto">显示插件</el-button>
       <el-button type="primary" @click="takePhoto">拍照</el-button>
