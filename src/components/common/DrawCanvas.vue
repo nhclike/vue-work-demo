@@ -266,32 +266,7 @@ export default {
             }
             this.initDraw(); // 初始化 画板
         },
-        // // 初始化 画板
-        // initDraw() {
-        //     let img = this.$refs.canvas.parentNode.parentNode.children[0];
-        //     let width = img.offsetWidth;
-        //     let height = img.offsetHeight;
-        //     this.$emit('emitCanvasStyle', width, height);
-        //     this.setCanvasBrush(); // 设置画笔样式
-        //     this.initCanvas();
-        //     let preData = this.context.getImageData(
-        //         0,
-        //         0,
-        //         this.context.canvas.width,
-        //         this.context.canvas.height
-        //     );
-        //     // 父组件 空绘图表面进栈
-        //     this.actionStepObjFather.middleAry = [
-        //         {
-        //             index: -1,
-        //             preData: preData
-        //         }
-        //     ];
-        //     // 子组件 空绘图表面进栈
-        //     this.actionStepObj.middleAry = [preData];
-        //     // 子传父
-        //     this.$emit('emitActionStep');
-        // },
+        
         // 初始化 画板
         initDraw() {
             console.log(`[${this.curPage}]`, 'initDraw');
@@ -569,6 +544,7 @@ export default {
         // 是否是PC
         isPc() {
             let userAgentInfo = navigator.userAgent;
+            console.log(userAgentInfo+"userAgentInfo")
             let Agents = [
                 'Android',
                 'iPhone',
@@ -588,8 +564,8 @@ export default {
         },
         // 获取鼠标在canvas 中位置
         getCanvasPosition() {
-            // let position = {};
-            let touch = this.isPc() ? event : event.touches[0]; // 检测触摸屏设备
+           console.log(event);
+            let touch = event.touches&&event.touches.length===1? event.touches[0] :event ; // 检测触摸屏设备
             let material =
         touch.target.parentNode.parentNode.parentNode.parentNode ||
         this.$refs.canvas.parentNode.parentNode.parentNode.parentNode;
