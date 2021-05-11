@@ -12,6 +12,8 @@ const VlcVideo = () => import(/* webpackChunkName: "VlcVideo" */ '@/views/plugin
 /* 富文本编辑器 */
 const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko');
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
+const Wps = () => import(/* webpackChunkName: "Wps" */ '@/views/plugins/Wps');
+
 /* 组件 */
 /* tree */
 const AntTree = () => import(/* webpackChunkName: "AntTree" */ '@/views/tree/AntTree');
@@ -91,6 +93,11 @@ export default [
                         path: 'Ntko',
                         name: 'Ntko',
                         component: Ntko
+                    },
+                    {
+                        path: 'Wps',
+                        name: 'Wps',
+                        component: Wps
                     },
                     {
                         path: 'Chat',

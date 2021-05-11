@@ -4,15 +4,31 @@
     <div class="top">
       <MainHeader></MainHeader>
     </div>
-    <div class="content">
+    <div class="content" v-if="showContent">
       <div class="left">left内容</div>
-      <div class="middle full-height">
-        <!-- 路由匹配到的组件将显示在这里 -->
-        <router-view :name="leftRouterName"></router-view>
+      \<div class="middle full-height pos-r" ref="leftBox">
+            <!-- 路由匹配到的组件将显示在这里 -->
+            <router-view 
+            ref="leftRouter"
+            :name="leftRouterName"         
+            v-if="!slidStatus.rightScale"
+            ></router-view>
+            <div class="controlBox">
+                    <img v-show="!slidStatus.leftScale&&!isShowWPS" @click="leftBigger" src="@/assets/images/icon/icon-bigger.png" alt="">
+                    <img v-show="slidStatus.leftScale" @click="splitScreen" src="@/assets/images/icon/icon-smaller.png" alt="">
+                </div>
       </div>
-      <div class="right full-height">
+      <div class="right full-height pos-r" ref="rightBox" >
         <!-- 路由匹配到的组件将显示在这里 -->
-        <router-view :name="rightRouterName"></router-view>
+        <router-view 
+          ref="rightRouter"
+          v-if="!slidStatus.leftScale"
+          :name="rightRouterName">
+          </router-view>
+         <div class="controlBox">
+              <img v-show="!slidStatus.rightScale" @click="rightBigger" src="@/assets/images/icon/icon-bigger.png" alt="">
+              <img v-show="slidStatus.rightScale" @click="splitScreen" src="@/assets/images/icon/icon-smaller.png" alt="">
+          </div>
       </div>
       <div class="opt-btns pos-r" v-if="optBtns.length>0">
                 <button
@@ -25,25 +41,39 @@
                 <!-- <img src="/images/trial/caseInfo.png" alt=""> -->
                 {{btn.name}}
                 </button>
-            </div>
+       </div>
     </div>
+    <loading-iframe :isLoadingShow="isInitLoadingShow" :loading="initLoading"></loading-iframe>
+
   </div>
 </template>
 
 <script>
 import MainHeader from '@/components/manage/MainHeader';
+import LoadingIframe from '@/components/common/LoadingIframe';
+
 export default {
     name: 'MainLayout',
     components: {
-        MainHeader
+        MainHeader,
+        LoadingIframe
     },
     inject: ['reload'],
     data() {
         return {
             leftRouterName: 'TopicReader',
             rightRouterName: '',
+            isInitLoadingShow: false, // 初始页面加载显示是否显示控制
+            initLoading: {// 初始页面加载显示框
+                text: '正在与审判长建立连接'
+            },
             optBtns: [],
-            activeIndex: -1
+            showContent:false,
+            activeIndex: -1,
+             slidStatus: { // 分屏控制状态
+                leftScale: true,
+                rightScale: false
+            },
         };
     },
     computed: {},
@@ -52,7 +82,17 @@ export default {
     // this.init();
     },
     mounted() {
+                      this.isInitLoadingShow = true;
+
         this.init();
+
+        let _this=this;
+        setTimeout(()=>{
+          _this.showContent=true;
+           _this.$nextTick(() => {
+                        _this.isInitLoadingShow = false;
+                    });
+        },1000*3)
     },
     methods: {
     // 初始化
@@ -71,9 +111,18 @@ export default {
                 {
                     isShow: true,
                     icon: 'caseInfo',
-                    name: '案件信息',
+                    name: '视频播放',
                     leftRouterName: 'TopicReader',
-                    rightRouterName: '',
+                    rightRouterName: 'Videojs',
+                    url: '',
+                    func: 'changeRouter'
+                },
+                 {
+                    isShow: true,
+                    icon: 'caseInfo',
+                    name: 'WPS',
+                    leftRouterName: 'TopicReader',
+                    rightRouterName: 'Wps',
                     url: '',
                     func: 'changeRouter'
                 }
@@ -82,7 +131,12 @@ export default {
         },
         // 路由切换
         changeRouter(item) {
-            if (item.leftRouterName) {
+             // 切换菜单先分屏
+            if (this.slidStatus.leftScale || this.slidStatus.rightScale) {
+                this.splitScreen();
+            }
+            setTimeout(()=>{
+  if (item.leftRouterName) {
                 this.leftRouterName = item.leftRouterName;
             }
             if (item.rightRouterName) {
@@ -97,6 +151,39 @@ export default {
                     // }
                 });
             }
+            },1000)
+          
+        },
+        splitScreen() {
+            this.$refs.rightBox.style.display = 'block';
+            this.$refs.leftBox.style.display = 'block';
+            let lrem = '9.3rem';
+            this.$refs.leftBox.style.width = `${lrem}`;
+            this.$refs.leftBox.style.flex = `0 0 ${lrem}`;
+            this.slidStatus = {
+                leftScale: false,
+                rightScale: false
+            };
+        },
+        leftBigger() {
+            this.$refs.leftBox.style.display = 'block';
+            this.$refs.leftBox.style.flex = 1;
+            this.$refs.rightBox.style.display = 'none';
+            this.slidStatus = {
+                leftScale: true,
+                rightScale: false
+            };
+        },
+        rightBigger() {
+            this.$refs.rightBox.style.display = 'block';
+            this.$refs.rightBox.style.flex = 1;
+            this.$refs.leftBox.style.display = 'none';
+            this.slidStatus = {
+                leftScale: false,
+                rightScale: true
+            };
+
+
         }
     }
 };
@@ -107,19 +194,38 @@ export default {
   background: yellow;
   .content {
     height: calc(100% - @top_menu_h);
-    display: flex;
+    display: flex;  
+      position: relative;
     .left {
-      flex: 1;
-      background: #ddd;
+      width: 400px;
+ padding:0 20px;
+            position: relative;
+      background: #ddd;           
+       position: relative;
+
     }
     .middle {
-      flex: 2;
+      flex:1;
+      width: 930px;
+
     }
     .right {
-      flex: 2;
+      display: none;
+      min-width: 400px;
+    }
+    .controlBox{
+      position: absolute;
+      top:10px;
+      right: 10px;
+      img{
+          width:40px;
+          height: 40px;
+      }
     }
     .opt-btns {
-      flex: 1;
+       flex: 0 0 180px;
+            width: 180px;
+            margin-left: 40px;
       background: red;
     }
   }

@@ -1,8 +1,8 @@
 /* 新版南北插件可分屏
  * @Author: nihc
  * @Date: 2021-01-22 15:43:42
- * @Last Modified by: mikey.zhaopengy.zhaopeng
- * @Last Modified time: 2021-04-20 10:38:29
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2021-05-10 11:10:09
  */
 <template>
     <div id="nbVideo" class="nbVideo" ref="nbVideo" >

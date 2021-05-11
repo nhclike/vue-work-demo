@@ -1,8 +1,8 @@
 /*
  * @Author: nihc
  * @Date: 2021-01-19 14:20:51
- * @Last Modified by: mikey.zhaopengy.zhaopeng
- * @Last Modified time: 2021-04-20 11:34:53
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2021-05-10 11:16:11
  */
 /* 主框架-左菜单-组件 */
 
@@ -13,8 +13,8 @@
             <li>
                 <router-link to="ueditor">百度编译器</router-link>
             </li>
-            <li>
-                <router-link to="videojs">videojs视频播放</router-link>
+             <li>
+                <router-link to="Wps">Wps</router-link>
             </li>
             <li>
                 <router-link to="Ntko">Ntko</router-link>
@@ -42,6 +42,9 @@
             </li>
             <li>
                 <router-link to="VlcVideo">vlc播放</router-link>
+            </li>
+             <li>
+                <router-link to="videojs">videojs视频播放</router-link>
             </li>
             <li>
                 <router-link to="NBVideo">南北插件播放</router-link>
