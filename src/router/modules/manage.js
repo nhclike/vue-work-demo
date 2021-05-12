@@ -9,6 +9,10 @@ import {
 const Videojs = () => import(/* webpackChunkName: "Videojs" */ '@/views/plugins/Videojs');
 const VlcVideo = () => import(/* webpackChunkName: "VlcVideo" */ '@/views/plugins/VlcVideo');
 
+/* 南北视频插件 */
+const NBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NBVideo');
+/* 新版 南北视频插件 */
+const NewNBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NewNBVideo');
 /* 富文本编辑器 */
 const Ntko = () => import(/* webpackChunkName: "Ntko" */ '@/views/plugins/Ntko');
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
@@ -32,8 +36,6 @@ const PdfViewSingle = () => import(/* webpackChunkName: "PdfViewSingle" */ '@/co
 /* 上传并且查看pdf */
 const uploadFileAndPdfView = () => import(/* webpackChunkName: "uploadFileAndPdfView" */ '@/components/PdfView/uploadFileAndPdfView');
 
-/* 南北视频插件 */
-const NBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NBVideo');
 /* 摄像抓拍插件 */
 const Capture = () => import(/* webpackChunkName: "Capture" */ '@/components/video/Capture');
 /* webRTC抓拍 */
@@ -73,6 +75,10 @@ export default [
                         path: 'NBVideo',
                         name: 'NBVideo',
                         component: NBVideo
+                    },{
+                        path: 'NewNBVideo',
+                        name: 'NewNBVideo',
+                        component: NewNBVideo
                     },
                     {
                         path: 'Capture',

@@ -14,7 +14,7 @@
     let docEl = doc.documentElement;
     let resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
     function recalc() {
-        let designWidth = 1920;
+        let designWidth = 2560;
         let clientWidth = docEl.clientWidth;
         if (!clientWidth) { return }
         docEl.style.fontSize = (100 * clientWidth / designWidth) + 'px';

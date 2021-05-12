@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>南北播放插件</div>
+    <div>新版南北播放插件</div>
     <div>
       <el-button type="primary" @click="playVideo">播放</el-button>
        <el-button type="primary" @click="closeVideo">关闭播放器</el-button>
@@ -12,6 +12,7 @@
             :url="url"
             @videoPlayerLoaded="videoPlayerLoaded"
             :videoWidth="videoWidth"
+            :videoHeight="videoHeight"
             :isShowVideo="showPlayer"
             :playMode="playMode"
             :playList="playList"
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-import NBVideo from '@/views/plugins/NBVideo';
+import NBVideo from '@/views/plugins/NewNBVideo';
 
 export default {
     components: {

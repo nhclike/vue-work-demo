@@ -14,7 +14,7 @@
             v-if="!slidStatus.rightScale"
             ></router-view>
             <div class="controlBox">
-                    <img v-show="!slidStatus.leftScale&&!isShowWPS" @click="leftBigger" src="@/assets/images/icon/icon-bigger.png" alt="">
+                    <img v-show="!slidStatus.leftScale" @click="leftBigger" src="@/assets/images/icon/icon-bigger.png" alt="">
                     <img v-show="slidStatus.leftScale" @click="splitScreen" src="@/assets/images/icon/icon-smaller.png" alt="">
                 </div>
       </div>
@@ -68,7 +68,7 @@ export default {
                 text: '正在与审判长建立连接'
             },
             optBtns: [],
-            showContent:false,
+            showContent:true,
             activeIndex: -1,
              slidStatus: { // 分屏控制状态
                 leftScale: true,
@@ -82,17 +82,17 @@ export default {
     // this.init();
     },
     mounted() {
-                      this.isInitLoadingShow = true;
+                    //   this.isInitLoadingShow = true;
 
         this.init();
 
-        let _this=this;
-        setTimeout(()=>{
-          _this.showContent=true;
-           _this.$nextTick(() => {
-                        _this.isInitLoadingShow = false;
-                    });
-        },1000*3)
+        // let _this=this;
+        // setTimeout(()=>{
+        //   _this.showContent=true;
+        //    _this.$nextTick(() => {
+        //                 _this.isInitLoadingShow = false;
+        //             });
+        // },1000*3)
     },
     methods: {
     // 初始化

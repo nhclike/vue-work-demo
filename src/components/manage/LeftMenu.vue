@@ -50,6 +50,9 @@
                 <router-link to="NBVideo">南北插件播放</router-link>
             </li>
             <li>
+                <router-link to="NewNBVideo">新版南北插件播放</router-link>
+            </li>
+            <li>
                 <router-link to="Capture">摄像头抓拍</router-link>
             </li>
              <li>
