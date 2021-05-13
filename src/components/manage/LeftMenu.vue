@@ -2,13 +2,16 @@
  * @Author: nihc
  * @Date: 2021-01-19 14:20:51
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2021-05-10 11:16:11
+ * @Last Modified time: 2021-05-13 14:43:25
  */
 /* 主框架-左菜单-组件 */
 
 <template>
     <div class="left-menu">
         左菜单
+        <a-button id="step2" type="primary" > 
+            第二步
+        </a-button>
         <ul>
             <li>
                 <router-link to="ueditor">百度编译器</router-link>

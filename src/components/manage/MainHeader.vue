@@ -1,8 +1,8 @@
 /*
  * @Author: nihc
  * @Date: 2021-01-19 14:20:43
- * @Last Modified by:   nihc
- * @Last Modified time: 2021-01-19 14:20:43
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2021-05-13 14:42:12
  */
 /* 主框架-头部-组件 */
 
@@ -12,6 +12,11 @@
         <a-button type="primary" @click="goBack">
             返回
         </a-button>
+        <div>
+            <a-button id="step1" type="primary" > 
+                第一步
+            </a-button>
+        </div>
     </div>
 </template>
 <script>

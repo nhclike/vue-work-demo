@@ -62,7 +62,8 @@ module.exports = {
         let pluginsWebpack = [
             // 使用ProvidePlugin加载的模块，需要在eslintrc.js的globals里设置
             new webpack.ProvidePlugin({
-                axios: 'axios'
+                axios: 'axios',
+                introJs: ['intro.js']
             })
         ];
         if (process.env.NODE_ENV === 'production') {

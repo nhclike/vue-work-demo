@@ -18,7 +18,9 @@ import { showLoading, hideLoading } from './utils/loading';// 用于接口请求
 import vfilter from './mixins/filter';// 过滤
 import VueLazyload from 'vue-lazyload';
 import uploader from 'vue-simple-uploader';
-
+import VueIntro from 'vue-introjs';
+import 'intro.js/introjs.css';
+Vue.use(VueIntro);
 let loadingImg = require('@/assets/images/icon/icon-loading.gif');
 let errorImg = require('@/assets/images/icon/icon-error.png');
 Vue.use(uploader);
