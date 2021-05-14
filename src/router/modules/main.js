@@ -4,6 +4,8 @@ import { MainLayout } from '@/layouts';
 /* 插件 */
 const Videojs = () => import(/* webpackChunkName: "Videojs" */ '@/views/plugins/Videojs');
 const TopicReader = () => import(/* webpackChunkName: "Videojs" */ '@/views/common/TopicReader');
+const ImageView = () => import(/* webpackChunkName: "Videojs" */ '@/views/common/ImageView');
+
 const Wps = () => import(/* webpackChunkName: "Wps" */ '@/views/plugins/Wps');
 
 const Ueditor = () => import(/* webpackChunkName: "Ueditor" */ '@/views/plugins/Ueditor');
@@ -24,7 +26,8 @@ export default [
                     TopicReader: TopicReader,
                     Ueditor: Ueditor,
                     Videojs: Videojs,
-                    Wps:Wps
+                    Wps:Wps,
+                    ImageView:ImageView
                 }
             }
         ]

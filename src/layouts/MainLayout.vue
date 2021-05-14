@@ -125,6 +125,15 @@ export default {
                     rightRouterName: 'Wps',
                     url: '',
                     func: 'changeRouter'
+                },
+                 {
+                    isShow: true,
+                    icon: 'caseInfo',
+                    name: '图片查看',
+                    leftRouterName: 'TopicReader',
+                    rightRouterName: 'ImageView',
+                    url: '',
+                    func: 'changeRouter'
                 }
             ];
             this.activeIndex = 0;
@@ -160,6 +169,9 @@ export default {
             let lrem = '9.3rem';
             this.$refs.leftBox.style.width = `${lrem}`;
             this.$refs.leftBox.style.flex = `0 0 ${lrem}`;
+           
+         
+            this.$refs.rightBox.style.flex = "1";
             this.slidStatus = {
                 leftScale: false,
                 rightScale: false
@@ -211,7 +223,7 @@ export default {
     }
     .right {
       display: none;
-      min-width: 400px;
+      flex:1;
     }
     .controlBox{
       position: absolute;
