@@ -10,7 +10,7 @@ module.exports = {
   ],
   exclude:[
     '/public'
-  ]
+  ],
   globals: {// 使用 globals 指出你要使用的全局变量.将变量设置为 true 将允许变量被重写,或 false 将不允许被重写(只读)
     'axios': false,// 全局使用axios
     'videojs': false,
