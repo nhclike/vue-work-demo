@@ -2,7 +2,7 @@
  * @Author: nihc
  * @Date: 2021-01-19 14:20:51
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2021-05-13 14:43:25
+ * @Last Modified time: 2021-05-14 11:45:52
  */
 /* 主框架-左菜单-组件 */
 
@@ -45,6 +45,9 @@
             </li>
             <li>
                 <router-link to="VlcVideo">vlc播放</router-link>
+            </li>
+             <li>
+                <router-link to="Flv">Flv播放</router-link>
             </li>
              <li>
                 <router-link to="videojs">videojs视频播放</router-link>

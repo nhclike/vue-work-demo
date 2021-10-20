@@ -41,8 +41,8 @@ export default {
             url: {
                 urls: [], // 复合画面地址
                 liveUrl: '' // 直播流地址
-            }
-           
+            },
+            imgSrc:""
             
         };
     },

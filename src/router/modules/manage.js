@@ -8,6 +8,7 @@ import {
 /* 视频播放 */
 const Videojs = () => import(/* webpackChunkName: "Videojs" */ '@/views/plugins/Videojs');
 const VlcVideo = () => import(/* webpackChunkName: "VlcVideo" */ '@/views/plugins/VlcVideo');
+const Flv = () => import(/* webpackChunkName: "VlcVideo" */ '@/views/plugins/Flv');
 
 /* 南北视频插件 */
 const NBVideo = () => import(/* webpackChunkName: "NBVideo" */ '@/components/video/NBVideo');
@@ -70,6 +71,11 @@ export default [
                         path: 'VlcVideo',
                         name: 'VlcVideo',
                         component: VlcVideo
+                    },
+                    {
+                        path: 'Flv',
+                        name: 'Flv',
+                        component: Flv
                     },
                     {
                         path: 'NBVideo',
